@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Spring AOP"
+title:  "Spring AOP (1)"
 subtitle: "1. AOP를 사용해야 하는 이유"
 date:   2018-07-15 22:28:13 +0900
 background: '/img/posts/06.jpg'
@@ -8,7 +8,7 @@ background: '/img/posts/06.jpg'
 
 
 
-프로젝트 중 Custom Annotation을 구현해서 사용해야 할 일이 생겼다. 
+개발 하던 중에 Custom Annotation을 구현해서 사용해야 할 일이 생겼다. 
 Custom Annotation을 구현하기 위해선 Spring AOP와 AspectJ의 기능을 사용하여 구현해야 하는데, 이번 기회에  다시 한번 Spring AOP에 대해 정리 해보려고 이 포스팅을 기록 하게 되었다.
 
 
@@ -23,6 +23,7 @@ Custom Annotation을 구현하기 위해선 Spring AOP와 AspectJ의 기능을 �
 2. AOP에서 사용되는 용어 정리
 3. Spring AOP
 4. AspectJ
+5. Spring Custom Annotation
 
 
 
