@@ -23,7 +23,7 @@ Custom Annotation을 구현하기 위해선 Spring AOP와 AspectJ의 기능을 �
 2. AOP에서 사용되는 용어 정리
 3. Spring AOP
 4. AspectJ
-5. Spring Custom Annotation
+5. Custom Annotation
 
 
 
