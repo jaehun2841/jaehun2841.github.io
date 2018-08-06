@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Spring AOP (3) | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="앞서 AOP에대한 간단한 예시와 개념을 살펴보았다. 이번 포스트에서는 Spring에서 제공하는 AOP 기능과 작동방식에 대해서 알아보도록 하겠다. Spring AOPAOP란 횡단 관심사 (Cross Cutting Concern) 을 한데 모아 로직을 설계한다음런타임(Runtime) 시, 클래스 로드 (Load Time) 시, 컴파일(Compile Time)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring AOP (3)">
+<meta property="og:url" content="http://yoursite.com/2018/07/21/2018-07-21-spring-aop3/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="앞서 AOP에대한 간단한 예시와 개념을 살펴보았다. 이번 포스트에서는 Spring에서 제공하는 AOP 기능과 작동방식에 대해서 알아보도록 하겠다. Spring AOPAOP란 횡단 관심사 (Cross Cutting Concern) 을 한데 모아 로직을 설계한다음런타임(Runtime) 시, 클래스 로드 (Load Time) 시, 컴파일(Compile Time)">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://camo.githubusercontent.com/d799bd0ae9b0df6a67b6d2c69a29f1a8eba1d8d2/687474703a2f2f6366696c6532362e75662e746973746f72792e636f6d2f696d6167652f32343237303333373531344630464635313445334336">
+<meta property="og:image" content="https://images.techhive.com/images/idge/imported/article/jvw/2000/11/jw-1110-proxy-100157716-orig.gif">
+<meta property="og:image" content="http://www.baeldung.com/wp-content/uploads/2017/10/springaop-process.png">
+<meta property="og:image" content="https://dhsim86.github.io/static/assets/img/blog/web/2017-09-11-toby_spring_06_aop_2/00.png">
+<meta property="og:updated_time" content="2018-07-24T15:54:43.604Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring AOP (3)">
+<meta name="twitter:description" content="앞서 AOP에대한 간단한 예시와 개념을 살펴보았다. 이번 포스트에서는 Spring에서 제공하는 AOP 기능과 작동방식에 대해서 알아보도록 하겠다. Spring AOPAOP란 횡단 관심사 (Cross Cutting Concern) 을 한데 모아 로직을 설계한다음런타임(Runtime) 시, 클래스 로드 (Load Time) 시, 컴파일(Compile Time)">
+<meta name="twitter:image" content="https://camo.githubusercontent.com/d799bd0ae9b0df6a67b6d2c69a29f1a8eba1d8d2/687474703a2f2f6366696c6532362e75662e746973746f72792e636f6d2f696d6167652f32343237303333373531344630464635313445334336">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-2018-07-21-spring-aop3" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/07/21/2018-07-21-spring-aop3/" class="article-date">
+  <time datetime="2018-07-21T03:52:33.000Z" itemprop="datePublished">2018-07-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Spring AOP (3)
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>앞서 AOP에대한 간단한 예시와 개념을 살펴보았다.</p>
+<p>이번 포스트에서는 Spring에서 제공하는 AOP 기능과 작동방식에 대해서 알아보도록 하겠다.</p>
+<h1 id="Spring-AOP"><a href="#Spring-AOP" class="headerlink" title="Spring AOP"></a>Spring AOP</h1><p>AOP란 <code>횡단 관심사 (Cross Cutting Concern)</code> 을 한데 모아 로직을 설계한다음<br>런타임(Runtime) 시, 클래스 로드 (Load Time) 시, 컴파일(Compile Time) 시, 횡단 로직을 핵심 로직에 적용하여 작동하게 해준다. </p>
+<p>이 중에서 Spring AOP는 Proxy를 이용하여 런타임 위빙(Runtime Weaving)을 이용하여 횡단 로직을 수행 할 수 있도록 한다.   Spring AOP에서 사용되는 Proxy는 2가지가 있다.<br>한가지는 JDK 1.3 부터 적용되기 시작한 JDK Dynamic Proxy가 있다. 이는 Java 라이브러리에서 제공하는 Proxy이다.<br>또 다른 한가지는 CGLIB Proxy가 있다. CGLIB를 사용하기 위해서는 개발하는 프로젝트에 CGLIB 라이브러리를 추가해야 사용이 가능하다.</p>
+<h1 id="Proxy란"><a href="#Proxy란" class="headerlink" title="Proxy란?"></a>Proxy란?</h1><p><img src="https://camo.githubusercontent.com/d799bd0ae9b0df6a67b6d2c69a29f1a8eba1d8d2/687474703a2f2f6366696c6532362e75662e746973746f72792e636f6d2f696d6167652f32343237303333373531344630464635313445334336" alt="Proxy구성도"></p>
+<blockquote>
+<p>Proxy란 마치 자신이 클라이언트가 사용하려고 하는 실제 대상인 것처럼 위장해서 클라이언트의 요청을 받아주는 것을 대리자, 대리인과 같은 역할을 하는 객체의 의미한다.</p>
+<p>그리고 프록시를 통해 최종적으로 요청을 위임받아 처리하는 실제 오브젝트를 타깃(Target) 또는 실체(Real Object) 라고 부른다.</p>
+<p>토비의 스프링 vol.1 (p. 430)</p>
+</blockquote>
+<p>토비의 스프링 책에서는 Proxy에 대한 정의를 위와 같이 하고 있다. 실제 Target이 담당하는 역할을 요청을 대리 받아서 요청 이전, 이후에 대한 추가적인 로직을 추가 할 수 있는 객체이다. 이렇게 하면 실제 Target이 담당하는 역할에 대해서는 관여 하지 않으면서 추가적인 역할을 추가 할 수 있기 때문이다. </p>
+<p>Spring에서는 Proxy를 이용해 객체지향의 5대원칙 중 하나인 OCP(Open-Close Principal : 개방폐쇄의 원칙)을 적용하고 있다.</p>
+<blockquote>
+<p>OCP (Open-Close Principal : 개방 폐쇄의 원칙)</p>
+<p><strong>개방-폐쇄 원칙</strong>(OCP, Open-Closed Principle)은 ‘소프트웨어 개체(클래스, 모듈, 함수 등등)는 확장에 대해 열려 있어야 하고, 수정에 대해서는 닫혀 있어야 한다.’는 프로그래밍 원칙이다.  </p>
+</blockquote>
+<p>실제 Target에 대한 수정을 하지 않으면서, Proxy를 통해 추가적인 코드를 작성 하여 기능을 확장 시킬 수 있음을 의미한다.</p>
+<h1 id="Proxy-vs-Proxy-Pattern"><a href="#Proxy-vs-Proxy-Pattern" class="headerlink" title="Proxy vs Proxy Pattern"></a>Proxy vs Proxy Pattern</h1><p>일반적으로 사용하는 하는 Proxy라는 용어와 디자인패턴에서 말하는 프록시 패턴(Proxy Pattern)은 구분할 필요가 있다.<br>비슷한 개념이지만, 내용이 조금 다르다.</p>
+<p>일반적으로 부르는 Proxy는 실제 Target의 기능을 수행하면서 기능을 확장하거나 추가 하는 실제 객체(Object)를 의미한다.</p>
+<p>Proxy Pattern은 실제로 Target에 대한 기능을 확장하거나, 추가하지 않는다. 그저 클라이언트가 타깃에 접근하는 방식을 변경해 주는 역할을 한다.</p>
+<h1 id="JDK-Dynamic-Proxy"><a href="#JDK-Dynamic-Proxy" class="headerlink" title="JDK Dynamic Proxy"></a>JDK Dynamic Proxy</h1><p><img src="https://images.techhive.com/images/idge/imported/article/jvw/2000/11/jw-1110-proxy-100157716-orig.gif" alt="JDK Dynamic Proxy"></p>
+<p>JDK Dynamic Proxy는 JDK 1.3+ 부터 제공되는 Proxy Factory에 의해 런타임 시 동적으로 만들어 지는 오브젝트이다.<br>JDK Dynamic Proxy는 반드시 Interface가 정의 되어있고, Interface에 대한 명세를 기준으로 Proxy를 생성한다.<br>따라서 Interface 선언에 대한 강제성이 있다는 단점이 있다.<br>이전에는 직접 수동으로 Proxy 객체를 만들어서 사용하는 경우도 있었으나, 요즘은 자동 프록시 생성기라는 모듈을 이용하여 Dynamic Proxy를 생성한다. </p>
+<p>내부적으로 Dynamic Proxy에서는 InvocationHandler라는 Interface를 구현하여 만들어지는데 InvocationHandler의 invoke라는 함수를 Override하여 Proxy의 위임 기능을 수행한다. 이 과정에서 Object에 대해 Reflection기능을 사용하여 기능을 구현하기 때문에 퍼포먼스의 하락의 원인이 되기도 한다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ExamDynamicHandler</span> <span class="keyword">implements</span> <span class="title">InvocationHandler</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> ExamInterface target; <span class="comment">// 타깃 객체에 대한 클래스를 직접 참조하는것이 아닌 Interface를 이용</span></span><br><span class="line">     </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">ExamDynamicHandler</span><span class="params">(ExamInterface target)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.target = target;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">invoke</span><span class="params">(Object proxy, Method method, Object[] args)</span></span></span><br><span class="line"><span class="function">            <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">        <span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">        <span class="comment">// 메소드에 대한 명세, 파라미터등을 가져오는 과정에서 Reflection 사용</span></span><br><span class="line">        String ret = (String)method.invoke(target, args); <span class="comment">//타입 Safe하지 않는 단점이 있다.</span></span><br><span class="line">        <span class="keyword">return</span> ret.toUpperCase(); <span class="comment">//메소드 기능에 대한 확장</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="CGLIB-Proxy"><a href="#CGLIB-Proxy" class="headerlink" title="CGLIB Proxy"></a>CGLIB Proxy</h1><p>CGLIB Proxy는 순수 Java JDK 라이브러리를 이용하는 것이 아닌 CGLIB라는 외부 라이브러리를 추가해야만 사용할 수 있다.<br>실제 CGLIB의 Enhancer라는 클래스를 바탕으로 Proxy를 생성하며, JDK Dynamic Proxy의 단점인 Interface가 없어도 Proxy를 생성 할 수 있다. CGLIB Proxy는 Target Class를 상속받아 생성된다. 그렇기 때문에 개발자는 Proxy를 생성 하기 위해 굳이 Interface를 만들어야 하는 수고를 덜 수 있다.</p>
+<p>하지만, 상속을 이용하는 만큼 final이나 private과 같이 상속에 대해 Override를 지원하지 않는 경우 Proxy에서 해당 메소드에 대한 Aspect를 적용할 수 없다는 단점이 있다. </p>
+<p>CGLIB Proxy의 경우 실제 바이트 코드를 조작하여 JDK Dynamic Proxy보다는 퍼포먼스가 상대적으로 빠른 장점이 있다.</p>
+<p><img src="http://www.baeldung.com/wp-content/uploads/2017/10/springaop-process.png" alt="CGLIB Proxy"></p>
+<ul>
+<li><p>CGLIB Proxy 설정법</p>
+</li>
+<li><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">spring.aop.proxy-target-class=false</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">aop:config</span> <span class="attr">proxy-target-class</span>=<span class="string">"true"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">aop:config</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">aop:aspectj-autoproxy</span> <span class="attr">proxy-target-class</span>=<span class="string">"true"</span>/&gt;</span> <span class="comment">&lt;!-- AspectJ를 사용하는 경우 --&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//AOP를 사용하는 경우 Interface가 있더라도 cglib사용(target class기반)을 강제한다</span></span><br><span class="line"><span class="meta">@EnableAsync</span>(proxyTargetClass = <span class="keyword">true</span>)</span><br><span class="line"><span class="meta">@EnableCaching</span>(proxyTargetClass = <span class="keyword">true</span>)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="Spring-Bean에-대한-Proxy는"><a href="#Spring-Bean에-대한-Proxy는" class="headerlink" title="Spring Bean에 대한 Proxy는?"></a>Spring Bean에 대한 Proxy는?</h1><p>Spring에서 Bean으로 등록된 객체는 싱글톤으로 등록되어 IoC 컨테이너에서 관리 된다.<br>하지만 Bean 객체에 대해 Spring AOP를 적용하는 경우 Proxy가 생성 될 텐데.. 이 경우 이 Bean을 DI하여 사용하는 곳에서는 어떻게 Proxy를 주입하여 사용할까?</p>
+<p><img src="https://dhsim86.github.io/static/assets/img/blog/web/2017-09-11-toby_spring_06_aop_2/00.png" alt="00.png"></p>
+<p>Spring에서는 <code>자동 프록시 생성기</code> 라는 것이 있다.</p>
+<p>빈 후처리기들 중에서 자동으로 프록시를 생성하기 위해  <code>DefaultAdvisorAutoProxyCreator</code> 라는 클래스를 사용한다.<br>이 클래스는 어드바이저를 이용한 <code>자동 프록시 생성기</code> 이다. 빈 오브젝트의 일부를 프록시로 포장하고, 프록시를 빈으로 대신 등록시킬 수 있다.</p>
+<p>DefaultAdvisorAutoProxyCreator 빈 후처리가 등록되어 있다면, 스프링은 빈 오브젝트를 만들 때마다 후처리기에게 빈을 보낸다.</p>
+<ol>
+<li>후처리기는 <code>빈으로 등록된 모든 어드바이저 내의 포인트컷을 이용해</code> 전달받은 빈이 프록시 적용 대상인지 확인한다.</li>
+<li>프록시 적용 대상이면 내장된 프록시 생성기를 통해 현재 빈에 대한 <code>프록시를 생성하고 어드바이저를 연결한다.</code></li>
+<li>프록시가 생성되면 전달받은 Target Bean 오브젝트 대신에 Proxy 오브젝트를 스프링 컨테이너에게 돌려준다.</li>
+<li>컨테이너는 빈 후처리가 돌려준 Proxy 오브젝트를 빈으로 등록한다.</li>
+</ol>
+<p>이 후처리기를 통해 일일이 ProxyFactoryBean을 빈으로 등록하지 않아도 여러 타깃 오브젝트에 자동으로 프록시를 적용시킬 수 있다.</p>
+<h1 id="요약"><a href="#요약" class="headerlink" title="요약.."></a>요약..</h1><ul>
+<li>Spring AOP는 무조건 Proxy 기반의 RTW(Run Time Weaving)을 적용한 AOP방식이다.</li>
+<li>Spring AOP에서 사용하는 Proxy는 JDK Dynamic Proxy와 CGLIB Proxy를 사용한다.<ul>
+<li>JDK Dynamic Proxy는 Interface 기반으로 생성 된다. (반드시 Interface가 있어야지만 생성가능하다)</li>
+<li>CGLIB Proxy는 Class에 대한 Proxy생성을 지원한다 (상속을 이용)<br>따라서 final이나 private Method에 대한 AOP 불가 (상속 된 Proxy 객체 생성 시, Override가 불가하기 때문)</li>
+</ul>
+</li>
+<li>Spring AOP에서는 Method에 대해서만 JoinPoint를 지원한다.<br>(그 이상의 Join Point를 이용하기 위해서는 AspectJ와 같은 모듈을 이용해야 한다.)</li>
+</ul>
+<h1 id="참고"><a href="#참고" class="headerlink" title="참고"></a>참고</h1><p>토비의 스프링 vol.1</p>
+<p><a href="http://blog.naver.com/PostView.nhn?blogId=tmondev&amp;logNo=220556587811" target="_blank" rel="noopener">http://blog.naver.com/PostView.nhn?blogId=tmondev&amp;logNo=220556587811</a></p>
+<p><a href="https://ko.wikipedia.org/wiki/%EA%B0%9C%EB%B0%A9-%ED%8F%90%EC%87%84_%EC%9B%90%EC%B9%99" target="_blank" rel="noopener">https://ko.wikipedia.org/wiki/%EA%B0%9C%EB%B0%A9-%ED%8F%90%EC%87%84_%EC%9B%90%EC%B9%99</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/07/21/2018-07-21-spring-aop3/" data-id="cjkic64ot0002vcyah7q4nbtg" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/07/24/2018-07-24-spring-aop5/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Spring AOP (5)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/07/21/2018-07-21-spring-aop4/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Spring AOP (4)</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/08/06/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2018/07/24/2018-07-24-spring-aop5/">Spring AOP (5)</a>
+          </li>
+        
+          <li>
+            <a href="/2018/07/21/2018-07-21-spring-aop3/">Spring AOP (3)</a>
+          </li>
+        
+          <li>
+            <a href="/2018/07/21/2018-07-21-spring-aop4/">Spring AOP (4)</a>
+          </li>
+        
+          <li>
+            <a href="/2018/07/20/2018-07-20-spring-aop2/">Spring AOP (2)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

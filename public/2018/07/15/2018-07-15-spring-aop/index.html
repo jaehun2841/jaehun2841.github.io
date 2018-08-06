@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Spring AOP (1) | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="개발 하던 중에 Custom Annotation을 구현해서 사용해야 할 일이 생겼다.Custom Annotation을 구현하기 위해선 Spring AOP와 AspectJ의 기능을 사용하여 구현해야 하는데, 이번 기회에  다시 한번 Spring AOP에 대해 정리 해보려고 이 포스팅을 기록 하게 되었다. 들어가면서..정리하고자 하는 내용  AOP를 사용해야하">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring AOP (1)">
+<meta property="og:url" content="http://yoursite.com/2018/07/15/2018-07-15-spring-aop/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="개발 하던 중에 Custom Annotation을 구현해서 사용해야 할 일이 생겼다.Custom Annotation을 구현하기 위해선 Spring AOP와 AspectJ의 기능을 사용하여 구현해야 하는데, 이번 기회에  다시 한번 Spring AOP에 대해 정리 해보려고 이 포스팅을 기록 하게 되었다. 들어가면서..정리하고자 하는 내용  AOP를 사용해야하">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-07-26T03:02:55.442Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring AOP (1)">
+<meta name="twitter:description" content="개발 하던 중에 Custom Annotation을 구현해서 사용해야 할 일이 생겼다.Custom Annotation을 구현하기 위해선 Spring AOP와 AspectJ의 기능을 사용하여 구현해야 하는데, 이번 기회에  다시 한번 Spring AOP에 대해 정리 해보려고 이 포스팅을 기록 하게 되었다. 들어가면서..정리하고자 하는 내용  AOP를 사용해야하">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-2018-07-15-spring-aop" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/07/15/2018-07-15-spring-aop/" class="article-date">
+  <time datetime="2018-07-15T13:28:13.000Z" itemprop="datePublished">2018-07-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Spring AOP (1)
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>개발 하던 중에 Custom Annotation을 구현해서 사용해야 할 일이 생겼다.<br>Custom Annotation을 구현하기 위해선 Spring AOP와 AspectJ의 기능을 사용하여 구현해야 하는데, 이번 기회에  다시 한번 Spring AOP에 대해 정리 해보려고 이 포스팅을 기록 하게 되었다.</p>
+<h1 id="들어가면서"><a href="#들어가면서" class="headerlink" title="들어가면서.."></a>들어가면서..</h1><p>정리하고자 하는 내용</p>
+<ol>
+<li>AOP를 사용해야하는 이유</li>
+<li>AOP에서 사용되는 용어 정리</li>
+<li>Spring AOP</li>
+<li>AspectJ</li>
+<li>Custom Annotation</li>
+</ol>
+<p>내용이 많아 질 것 같아서 위의 순서대로 별도로 포스트를 작성할 예정이다.</p>
+<h1 id="1-AOP를-사용-해야-하는-이유"><a href="#1-AOP를-사용-해야-하는-이유" class="headerlink" title="1. AOP를 사용 해야 하는 이유"></a>1. AOP를 사용 해야 하는 이유</h1><h2 id="AOP란"><a href="#AOP란" class="headerlink" title="AOP란?"></a>AOP란?</h2><p> AOP(Aspect Oriented Programming) 란 우리말로 관점지향 프로그래밍이라고 한다.<br>객체지향의 5대원칙 중에는 단일책임의 원칙 (Single Responsibility Programming 이하 SRP) 라는 원칙이 있다.<br>하나의 클래스, 메서드는 하나의 역할만을 가진다는 원칙이다. 하지만 객체지향 프로그래밍(OOP)를 기반으로 로직을 설계하다 보면 단일책임의 원칙을 지키지 못하는 경우가 다반사로 발생한다.</p>
+<p>예를 들어 결제를 담당하는 소스가 있다고 할 때</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> PaymentResponse <span class="title">doPaymentByCash</span><span class="params">(PaymentRequest paymentRequest)</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//결제 요청에 대한 현금 결제처리</span></span><br><span class="line">    PaymentResponse response = paymentModule.paymentCash(paymentRequest);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//결제 요청에 대한 로그 데이터 DB Insert</span></span><br><span class="line">    paymentLogRepository.insert(paymentRequest, response);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> response;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> PaymentResponse <span class="title">doPaymentByCreditCard</span><span class="params">(PaymentRequest paymentRequest)</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//결제 요청에 대한 카드 결제 처리</span></span><br><span class="line">    PaymentResponse response = paymentModule.paymentCreditCard(paymentRequest);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//결제 요청에 대한 로그 데이터 DB Insert</span></span><br><span class="line">    paymentLogRepository.insert(paymentRequest, response);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> response;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>위의 doPaymentByXX라는 메서드는 실제 결제 요청 데이터에 대해 결제를 수행하는 메서드이다.<br>결제 처리 아랫쪽의 로그 데이터를 DB에 저장하는 부분은 doPaymentByXX라는 메서드 명에 어울리지 않는다.<br>굳이 변경하자면 doPaymentByXXWithLog 정도로 메서드명을 변경해야 의미가 맞겠지만, SRP의 원칙에 맞지 않는다고 생각한다.</p>
+<p>여기서 로그 데이터를 삽입하는 로직은 결제 로직에 대해서는 횡단 로직으로 다른 관심사로 볼 수 있다.<br>뿐만 아니라 결제 수단 별로 나뉘어진 메서드에 대해 중복되는 로직으로 볼 수 있다.</p>
+<p>이런 경우 우리는 결제 로그 삽입 이라는 다른 관심사로 분리하여 코드를 작성 할 수 있다.</p>
+<p>그리고 이렇게 횡단 관심사로 분리되어진 공통 로직을 프로그램이<br>컴파일 시에, 런타임 시에, 클래스가 로드되는 시점에 각 로직을 삽입 해주는 것을 AOP라는 개념으로 볼 수 있다.</p>
+<p>AOP를 적용한다면 아래처럼 코드를 만들 수 있겠다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> PaymentResponse <span class="title">doPaymentByCash</span><span class="params">(PaymentRequest paymentRequest)</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//결제 요청에 대한 현금 결제처리</span></span><br><span class="line">    PaymentResponse response = paymentModule.paymentCash(paymentRequest);</span><br><span class="line">    <span class="keyword">return</span> response;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> PaymentResponse <span class="title">doPaymentByCreditCard</span><span class="params">(PaymentRequest paymentRequest)</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//결제 요청에 대한 카드 결제 처리</span></span><br><span class="line">    PaymentResponse response = paymentModule.paymentCreditCard(paymentRequest);</span><br><span class="line">    <span class="keyword">return</span> response;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Aspect</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PaymentLogAdvisor</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> PaymentLogRepository paymentLogRepository;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@AfterReturning</span>(<span class="string">"execution(* com.example.payment.doPayment*(..))"</span>, returning=<span class="string">"paymentResponse"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">afterPayment</span><span class="params">(JoinPoint jp, PaymentResponse paymentResponse)</span> </span>&#123;</span><br><span class="line">        Object[] args = jp.getArgs();</span><br><span class="line">        <span class="keyword">if</span>(args.length == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> illegalArgumentException(<span class="string">"argument is none"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>(!(args[<span class="number">0</span>] <span class="keyword">instanceof</span> PaymentRequest)) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> Exception(<span class="string">"argument is not PaymentRequest Type"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        PaymentRequest paymentRequest = (PaymentRequest) args[<span class="number">0</span>];</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//결제 로그 삽입</span></span><br><span class="line">        paymentLogRepository.insert(paymentRequest, paymentResponse);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/07/15/2018-07-15-spring-aop/" data-id="cjkic64ol0000vcyajb249auo" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/07/20/2018-07-20-spring-aop2/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Spring AOP (2)
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">July 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/08/06/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2018/07/24/2018-07-24-spring-aop5/">Spring AOP (5)</a>
+          </li>
+        
+          <li>
+            <a href="/2018/07/21/2018-07-21-spring-aop3/">Spring AOP (3)</a>
+          </li>
+        
+          <li>
+            <a href="/2018/07/21/2018-07-21-spring-aop4/">Spring AOP (4)</a>
+          </li>
+        
+          <li>
+            <a href="/2018/07/20/2018-07-20-spring-aop2/">Spring AOP (2)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
