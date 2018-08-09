@@ -139,7 +139,8 @@ asset_folder: /
 
 # CDN settings, and CDN folder will always be considered to have its own domain and start from the root.
 enable_cdn: true
-cdn_folder: jaehun2841.github.io
+#cdn_folder: localhost:4000
+cdn_folder: jaehun2841.github.io/<%= post_slug %>
 cdn_use_https: false
 
 # Selectors and attribute names for getting the elements to update.
