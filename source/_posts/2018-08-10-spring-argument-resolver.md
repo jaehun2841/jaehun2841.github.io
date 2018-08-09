@@ -34,7 +34,7 @@ Spring에서는 `HandlerMethodArgumentResolver`라는 인터페이스를 제공�
 
 # Argument Resolver 동작 방식
 
-![Dispatch순서](Dispatch순서.jpg)
+![Dispatch순서](/Dispatch-Seq.jpg)
 
 
 
@@ -51,7 +51,7 @@ Spring에서는 `HandlerMethodArgumentResolver`라는 인터페이스를 제공�
 
 
 
-![RequestMappingHandlerAdapter](RequestMappingHandlerAdapter.png)
+![RequestMappingHandlerAdapter](/RequestMappingHandlerAdapter.png)
 
 
 
@@ -226,7 +226,7 @@ Controller 메소드의 파라미터에 @ClientIP 어노테이션이 붙은 파�
 
 실행 결과
 
-![argument-resolver실행결과](argument-resolver실행결과.png)
+![argument-resolver실행결과](/argument-resolver-result.png)
 
 
 
