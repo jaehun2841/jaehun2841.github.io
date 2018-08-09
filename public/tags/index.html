@@ -136,6 +136,13 @@
 
                         
                         <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
                             <a href="/archive/">Archives</a>
                         </li>
                         
@@ -144,13 +151,6 @@
                         
                         <li>
                             <a href="/tags/">Tags</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
-                            <a href="/about/">About</a>
                         </li>
                         
                     
@@ -200,9 +200,7 @@
             <!-- 标签云 -->
             <div id='tag_cloud' class="tags">
                 
-                    <a href="#Hexo" title="Hexo" rel="0">Hexo</a>
-                
-                    <a href="#Blog" title="Blog" rel="0">Blog</a>
+                    <a href="#Spring" title="Spring" rel="1">Spring</a>
                 
             </div>
 
@@ -210,16 +208,28 @@
 
             
             <div class="one-tag-list">
-                <span class="fa fa-tag listing-seperator" id="Hexo">
-                    <span class="tag-text">Hexo</span>
+                <span class="fa fa-tag listing-seperator" id="Spring">
+                    <span class="tag-text">Spring</span>
                 </span>
                 
-            </div>
-            
-            <div class="one-tag-list">
-                <span class="fa fa-tag listing-seperator" id="Blog">
-                    <span class="tag-text">Blog</span>
-                </span>
+                  <!-- <li class="listing-item">
+                  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+                  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+                  </li> -->
+                 <div class="post-preview">
+                     <a href="/2018/08/10/2018-08-10-spring-argument-resolver/">
+                        <h2 class="post-title">
+                            Spring Argument Resovler
+                        </h2>
+                        
+                            <h3 class="post-subtitle">
+                                Controller를 깔끔하게 해주는 Argument Resolver
+                            </h3>
+                        
+                    </a>
+                    <!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
+                </div>
+                <hr>
                 
             </div>
             

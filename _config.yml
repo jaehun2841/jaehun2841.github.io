@@ -129,6 +129,23 @@ highlight:
   auto_detect: false
   tab_replace:
 
+# assets
+asset_path:
+enable: true
+
+# Asset folder, used when post asset folder is not enabled.
+# For example, the following asset folder configuration will make hexo to use "/r12f-assets/post-assets/2017-01-16-Hello-World" as the base URL in one of my post.
+asset_folder: /
+
+# CDN settings, and CDN folder will always be considered to have its own domain and start from the root.
+enable_cdn: true
+cdn_folder: jaehun2841.github.io
+cdn_use_https: false
+
+# Selectors and attribute names for getting the elements to update.
+selectors:
+  img[src]: 'src'
+
 # Category & Tag
 default_category: uncategorized
 category_map:
