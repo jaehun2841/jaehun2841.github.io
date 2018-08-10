@@ -8,7 +8,7 @@
 
     <url>
         <loc>http://yoursite-url/2018/08/10/2018-08-10-httprequest-client-ip/</loc>
-        <lastmod>2018-08-10T14:53:01.706Z</lastmod>
+        <lastmod>2018-08-10T14:56:46.968Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -31,7 +31,7 @@
     </url>
 
     <url>
-        <loc>http://yoursite-url/2018/07/20/2018-07-20-spring-aop2/</loc>
+        <loc>http://yoursite-url/2018/07/15/2018-07-15-spring-aop/</loc>
         <lastmod>2018-08-08T13:44:40.030Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -47,7 +47,7 @@
     </url>
 
     <url>
-        <loc>http://yoursite-url/2018/07/15/2018-07-15-spring-aop/</loc>
+        <loc>http://yoursite-url/2018/07/20/2018-07-20-spring-aop2/</loc>
         <lastmod>2018-08-08T13:44:40.030Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
