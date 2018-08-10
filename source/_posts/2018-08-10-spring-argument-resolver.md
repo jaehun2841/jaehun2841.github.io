@@ -11,24 +11,23 @@ typora-copy-images-to: ./2018-08-10-spring-argument-resolver
 
 
 
-회사 업무 중에 이미 개발 된 API의 Controller에서 요청을 보낸 Client의 IP 정보를 보내달라는 수정 사항이 들어 왔다.
-처음에는 Javascript로 Client IP를 찾아서 Controller의 메소드의 Parameter로 보내야 하나.. 하고 생각 했지만, 적용해야 하는 부분이 여러군데 있었고, Client IP를 굳이 script로 찾기가 번거로웠다.
+회사 업무 중에 이미 개발 된 API의 Controller에 요청을 보낸 Client의 IP 정보를 보내달라는 수정 사항이 들어 왔다.
+처음에는 Javascript로 Client IP를 찾아서 Controller의 메소드의 Parameter로 보내야 하나.. 하고 생각 했지만, 적용해야 하는 부분이 여러군데 있었고, Client IP를 script로 찾기가 번거로웠다.
 
 그러던 와중 HttpServletRequest 객체에 Client IP정도는 있지 않을까? 하는 고민을 해보았고, 바로 검색해보았다.
 아니나 다를까 HttpServletRequest에서 Client IP를 구할 수 있었다.
 
-하지만 이미 만들어진 Controller의 메소드에서 HttpServletRequest객체에서 Client IP를 조회하는 소스를 중복해서 넣기는 번거럽고 꾀나 길었다.. (한 10줄 정도는 된다.)
+하지만 이미 만들어진 Controller의 메소드에서 HttpServletRequest객체의 Client IP를 조회하는 소스를 중복해서 넣는 것은 번거럽고 꾀나 길었다.. (Client IP를 구하는 코드가 한 10줄 정도는 된다.)
 
 그래서 중간에 Filter나 Interceptor로 해볼까..? 하다가 Argument Resolver라는 기능을 발견하여 사용해보았다.
-그에 대한 기록을 위해 해당 포스팅을 작성한다.
+그에 대한 기록을 위해 포스팅을 작성한다.
 
 
 
 # Spring Argument Resolver
 
-Spring Argument Resolver는 `Controller에 들어오는 파라미터를 가공`해야 하거나 (ex. 암호화 된 내용 복호화), 파라미터를 추가하거나 수정해야 하는 경우에 사용한다. 사실 Argument Resolver가 없어도 개발하는데 문제는 없다. 각기 Controller에서 해당로직을 수행할 수 있기 때문이다. 하지만, 이는 중복 코드를 양산하고 유지보수 용이성이 떨어지는 코딩 방법이다.
-Argument Resolver를 이용하면 Controller의 파라미터에 대한 공통 기능을 제공 할 수 있다.
-Spring에서는 `HandlerMethodArgumentResolver`라는 인터페이스를 제공하여 개발자에게 기능을 확장 할 수 있도록 기능을 제공한다. 
+Spring Argument Resolver는 `Controller에 들어오는 파라미터를 가공` 하거나 (ex. 암호화 된 내용 복호화), 파라미터를 추가하거나 수정해야 하는 경우에 사용한다. 사실 Argument Resolver가 없어도 개발하는데 문제는 없다. Controller에서 파라미터를 가공/추가/수정 할 수 있기 때문이다. 하지만, 이러한 방식은 중복 코드를 양산하게 되며,  깔끔한 코드를 작성하기 어렵게 만든다. Spring에서 제공하는 Argument Resolver를 이용하면 Controller의 파라미터에 대한 공통 기능을 제공 할 수 있다.
+Spring에서는 `HandlerMethodArgumentResolver`라는 인터페이스를 사용하여 개발자가 기능을 확장 할 수 있도록 해준다.
 
 
 
@@ -65,12 +64,10 @@ RequestHandlerMappingAdapter.java > getDefaultArgumentResolvers
 
 # Custom Argument Resolver 만들기
 
-내가 업무 중에 처한 상황을 기반으로 설명을 하자면, HttpServletRequest로 부터 Client IP정보를 얻을 수 있다는 정보를 알아 냈다. (자세한건 여기에..)
+내가 업무 중에 처한 상황을 바탕으로 설명을 하자면, HttpServletRequest로 부터 Client IP정보를 얻을 수 있다는 정보를 알아 냈다. (자세한건 여기에..)
 
 기존에 있던 Controller에서 바로 clientIp를 파라미터로 받아서 처리 할 수 있도록 해 볼 예정이다.
-Custom Argument Resolver를 만들기 위해서는 HandlerMethodArgumentResolver` 인터페이스를 구현하여 만든다.
-
-
+Custom Argument Resolver를 만들기 위해서는 `HandlerMethodArgumentResolver` 인터페이스를 구현하여 만든다.
 
 ```java
 package com.example.springstudy.resolver;
