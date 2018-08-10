@@ -105,7 +105,7 @@ set JAVA_OPTS=%JAVA_OPTS% %LOGGING_MANAGER% -Djava.net.preferIPv4Stack=true
 2. 개발 환경에서 VM 속성 추가 하기
    1. 사용 중인 IDE에서 VM Options에 `-Djava.net.preferIPv4Stack=true` 를 추가한다.
 
-![ide설정](./ide설정.png)
+![ide setting](./ide setting.png)
 
 
 
