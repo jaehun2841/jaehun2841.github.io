@@ -11,16 +11,13 @@ typora-copy-images-to: ./2018-08-10-spring-argument-resolver
 
 
 
-회사 업무 중에 이미 개발 된 API의 Controller에 요청을 보낸 Client의 IP 정보를 보내달라는 수정 사항이 들어 왔다.
-처음에는 Javascript로 Client IP를 찾아서 Controller의 메소드의 Parameter로 보내야 하나.. 하고 생각 했지만, 적용해야 하는 부분이 여러군데 있었고, Client IP를 script로 찾기가 번거로웠다.
+회사 업무 중에 이미 개발 된 API의 Controller에 요청을 보낸 Client의 IP 정보를 보내달라는 수정 사항이 들어 왔다. 처음에는 Javascript로 Client IP를 찾아서 Controller의 메소드의 Parameter로 보내야 하나.. 하고 생각 했지만, 적용해야 하는 부분이 여러군데 있었고, Client IP를 script로 찾기가 번거로웠다.
 
-그러던 와중 HttpServletRequest 객체에 Client IP정도는 있지 않을까? 하는 고민을 해보았고, 바로 검색해보았다.
-아니나 다를까 HttpServletRequest에서 Client IP를 구할 수 있었다.
+그러던 와중 HttpServletRequest 객체에 Client IP정도는 있지 않을까? 하는 고민을 해보았고, 바로 검색해보았다. 아니나 다를까 HttpServletRequest에서 Client IP를 구할 수 있었다.
 
 하지만 이미 만들어진 Controller의 메소드에서 HttpServletRequest객체의 Client IP를 조회하는 소스를 중복해서 넣는 것은 번거럽고 꾀나 길었다.. (Client IP를 구하는 코드가 한 10줄 정도는 된다.)
 
-그래서 중간에 Filter나 Interceptor로 해볼까..? 하다가 Argument Resolver라는 기능을 발견하여 사용해보았다.
-그에 대한 기록을 위해 포스팅을 작성한다.
+그래서 중간에 Filter나 Interceptor로 해볼까..? 하다가 Argument Resolver라는 기능을 발견하여 사용해보았다. 그에 대한 기록을 위해 포스팅을 작성한다.
 
 
 
