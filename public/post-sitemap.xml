@@ -8,7 +8,7 @@
 
     <url>
         <loc>http://yoursite-url/2018/08/11/2018-08-11-spring-dispatcher-servlet/</loc>
-        <lastmod>2018-08-12T09:15:51.050Z</lastmod>
+        <lastmod>2018-08-12T09:25:11.005Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -47,7 +47,7 @@
     </url>
 
     <url>
-        <loc>http://yoursite-url/2018/07/15/2018-07-15-spring-aop/</loc>
+        <loc>http://yoursite-url/2018/07/21/2018-07-21-spring-aop3/</loc>
         <lastmod>2018-08-08T13:44:40.030Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -55,7 +55,7 @@
     </url>
 
     <url>
-        <loc>http://yoursite-url/2018/07/21/2018-07-21-spring-aop3/</loc>
+        <loc>http://yoursite-url/2018/07/15/2018-07-15-spring-aop/</loc>
         <lastmod>2018-08-08T13:44:40.030Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>

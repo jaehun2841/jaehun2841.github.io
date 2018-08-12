@@ -4,7 +4,11 @@ catalog: true
 date: 2018-08-11 17:17:36
 subtitle:
 header-img:
-tags: Spring, core
+Categories:
+ - Spring
+tags: 
+ - Spring
+ - core
 typora-root-url: ./2018-08-11-spring-dispatcher-servlet
 typora-copy-images-to: ./2018-08-11-spring-dispatcher-servlet
 ---
