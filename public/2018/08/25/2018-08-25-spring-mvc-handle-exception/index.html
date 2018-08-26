@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          Spring AOP (1) - Carrey`s 기술블로그
+          Spring MVC 예외처리 방법 - Carrey`s 기술블로그
         
     </title>
 
-    <link rel="canonical" href="http://yoursite-url/2018/07/15/2018-07-15-spring-aop/">
+    <link rel="canonical" href="http://yoursite-url/2018/08/25/2018-08-25-spring-mvc-handle-exception/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="../../../../css/bootstrap.min.css">
@@ -69,7 +69,7 @@
 <style type="text/css">
     header.intro-header{
         
-            background-image: url('undefined')
+            background-image: url('null')
             /*post*/
         
     }
@@ -91,11 +91,11 @@
                         <div class="tags">
                             
                         </div>
-                        <h1>Spring AOP (1)</h1>
-                        <h2 class="subheading">1. AOP를 사용해야 하는 이유</h2>
+                        <h1>Spring MVC 예외처리 방법</h1>
+                        <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by Carrey on
-                            2018-07-15
+                            2018-08-25
                         </span>
                     </div>
                 
@@ -212,36 +212,12 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <p>개발 하던 중에 Custom Annotation을 구현해서 사용해야 할 일이 생겼다.<br>
-Custom Annotation을 구현하기 위해선 Spring AOP와 AspectJ의 기능을 사용하여 구현해야 하는데, 이번 기회에  다시 한번 Spring AOP에 대해 정리 해보려고 이 포스팅을 기록 하게 되었다.</p>
-<h1><span id="들어가면서">들어가면서…</span></h1>
-<p>정리하고자 하는 내용</p>
-<ol>
-<li>AOP를 사용해야하는 이유</li>
-<li>AOP에서 사용되는 용어 정리</li>
-<li>Spring AOP</li>
-<li>AspectJ</li>
-<li>Custom Annotation</li>
-</ol>
-<p>내용이 많아 질 것 같아서 위의 순서대로 별도로 포스트를 작성할 예정이다.</p>
-<h1><span id="1-aop를-사용-해야-하는-이유">1. AOP를 사용 해야 하는 이유</span></h1>
-<h2><span id="aop란">AOP란?</span></h2>
-<p>AOP(Aspect Oriented Programming) 란 우리말로 관점지향 프로그래밍이라고 한다.<br>
-객체지향의 5대원칙 중에는 단일책임의 원칙 (Single Responsibility Programming 이하 SRP) 라는 원칙이 있다.<br>
-하나의 클래스, 메서드는 하나의 역할만을 가진다는 원칙이다. 하지만 객체지향 프로그래밍(OOP)를 기반으로 로직을 설계하다 보면 단일책임의 원칙을 지키지 못하는 경우가 다반사로 발생한다.</p>
-<p>예를 들어 결제를 담당하는 소스가 있다고 할 때</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> PaymentResponse <span class="title">doPaymentByCash</span><span class="params">(PaymentRequest paymentRequest)</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//결제 요청에 대한 현금 결제처리</span></span><br><span class="line">    PaymentResponse response = paymentModule.paymentCash(paymentRequest);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//결제 요청에 대한 로그 데이터 DB Insert</span></span><br><span class="line">    paymentLogRepository.insert(paymentRequest, response);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> response;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> PaymentResponse <span class="title">doPaymentByCreditCard</span><span class="params">(PaymentRequest paymentRequest)</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//결제 요청에 대한 카드 결제 처리</span></span><br><span class="line">    PaymentResponse response = paymentModule.paymentCreditCard(paymentRequest);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//결제 요청에 대한 로그 데이터 DB Insert</span></span><br><span class="line">    paymentLogRepository.insert(paymentRequest, response);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> response;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>위의 doPaymentByXX라는 메서드는 실제 결제 요청 데이터에 대해 결제를 수행하는 메서드이다.<br>
-결제 처리 아랫쪽의 로그 데이터를 DB에 저장하는 부분은 doPaymentByXX라는 메서드 명에 어울리지 않는다.<br>
-굳이 변경하자면 doPaymentByXXWithLog 정도로 메서드명을 변경해야 의미가 맞겠지만, SRP의 원칙에 맞지 않는다고 생각한다.</p>
-<p>여기서 로그 데이터를 삽입하는 로직은 결제 로직에 대해서는 횡단 로직으로 다른 관심사로 볼 수 있다.<br>
-뿐만 아니라 결제 수단 별로 나뉘어진 메서드에 대해 중복되는 로직으로 볼 수 있다.</p>
-<p>이런 경우 우리는 결제 로그 삽입 이라는 다른 관심사로 분리하여 코드를 작성 할 수 있다.</p>
-<p>그리고 이렇게 횡단 관심사로 분리되어진 공통 로직을 프로그램이<br>
-컴파일 시에, 런타임 시에, 클래스가 로드되는 시점에 각 로직을 삽입 해주는 것을 AOP라는 개념으로 볼 수 있다.</p>
-<p>AOP를 적용한다면 아래처럼 코드를 만들 수 있겠다.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> PaymentResponse <span class="title">doPaymentByCash</span><span class="params">(PaymentRequest paymentRequest)</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//결제 요청에 대한 현금 결제처리</span></span><br><span class="line">    PaymentResponse response = paymentModule.paymentCash(paymentRequest);</span><br><span class="line">    <span class="keyword">return</span> response;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> PaymentResponse <span class="title">doPaymentByCreditCard</span><span class="params">(PaymentRequest paymentRequest)</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//결제 요청에 대한 카드 결제 처리</span></span><br><span class="line">    PaymentResponse response = paymentModule.paymentCreditCard(paymentRequest);</span><br><span class="line">    <span class="keyword">return</span> response;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Aspect</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PaymentLogAdvisor</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> PaymentLogRepository paymentLogRepository;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@AfterReturning</span>(<span class="string">"execution(* com.example.payment.doPayment*(..))"</span>, returning=<span class="string">"paymentResponse"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">afterPayment</span><span class="params">(JoinPoint jp, PaymentResponse paymentResponse)</span> </span>&#123;</span><br><span class="line">        Object[] args = jp.getArgs();</span><br><span class="line">        <span class="keyword">if</span>(args.length == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> illegalArgumentException(<span class="string">"argument is none"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>(!(args[<span class="number">0</span>] <span class="keyword">instanceof</span> PaymentRequest)) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> Exception(<span class="string">"argument is not PaymentRequest Type"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        PaymentRequest paymentRequest = (PaymentRequest) args[<span class="number">0</span>];</span><br><span class="line">        </span><br><span class="line">        <span class="comment">//결제 로그 삽입</span></span><br><span class="line">        paymentLogRepository.insert(paymentRequest, paymentResponse);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+                <p>여기에 추가적으로 Exception 핸들링 관련 내용도 추가하면 좋을듯</p>
+<p>@ControllerAdvice</p>
+<p>@ExceptionHandler</p>
+<p>등등</p>
+<h1><span id="참조">참조</span></h1>
+<p><a href="https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc" target="_blank" rel="noopener">https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc</a></p>
 
                 
 
@@ -250,9 +226,13 @@ Custom Annotation을 구현하기 위해선 Spring AOP와 AspectJ의 기능을 �
                 <ul class="pager">
                     
                         <li class="previous">
-                            <a href="/2018/07/20/2018-07-20-spring-aop2/" data-toggle="tooltip" data-placement="top" title="Spring AOP (2)">&larr; Previous Post</a>
+                            <a href="/2018/08/25/2018-08-18-spring-filter-interceptor/" data-toggle="tooltip" data-placement="top" title="Spring Filter와 Interceptor">&larr; Previous Post</a>
                         </li>
                     
+                    
+                        <li class="next">
+                            <a href="/2018/08/11/2018-08-11-spring-dispatcher-servlet/" data-toggle="tooltip" data-placement="top" title="Spring Dispatcher Servlet">Next Post &rarr;</a>
+                        </li>
                     
                 </ul>
 
@@ -275,6 +255,17 @@ Custom Annotation을 구현하기 위해선 Spring AOP와 AspectJ의 기능을 �
             
             <!-- Tabe of Content -->
             <!-- Table of Contents -->
+
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">참조</span></a></li></ol>
+        
+        </div>
+      </aside>
+    
 
                 
             <!-- Sidebar Container -->
@@ -308,8 +299,8 @@ Custom Annotation을 구현하기 위해선 Spring AOP와 AspectJ의 기능을 �
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "your-disqus-ID";
-    var disqus_identifier = "http://yoursite-url/2018/07/15/2018-07-15-spring-aop/";
-    var disqus_url = "http://yoursite-url/2018/07/15/2018-07-15-spring-aop/";
+    var disqus_identifier = "http://yoursite-url/2018/08/25/2018-08-25-spring-mvc-handle-exception/";
+    var disqus_url = "http://yoursite-url/2018/08/25/2018-08-25-spring-mvc-handle-exception/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
