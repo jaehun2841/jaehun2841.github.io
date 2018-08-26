@@ -1,10 +1,16 @@
 ---
-title: Spring MVC 예외처리 방법
+title: Spring Handle Exception
 catalog: true
-date: 2018-08-25 18:16:41
-subtitle:
+date: 2018-08-27 19:30:26
+subtitle: Spring에서 지원하는 다양한 예외처리 방법
 header-img:
-tags:
+Categories:
+ - Spring
+tags: 
+ - Spring
+ - Spring Core
+typora-root-url: ./2018-08-25-spring-mvc-handle-exception
+typora-copy-images-to: ./2018-08-25-spring-mvc-handle-exception
 ---
 
 

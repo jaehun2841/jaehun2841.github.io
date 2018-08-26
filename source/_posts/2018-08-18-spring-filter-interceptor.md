@@ -32,8 +32,8 @@ Filter의 경우는 거의 사용해 본 적이 없는데, 자주 쓰는 Interce
 
 
 
-그림에서 보면 가장먼저 눈에 띄는 것은 Filter와 Interceptor의 실행 위치이다.
-Filter는 Dispatcher Servlet 이전에 실행된다. 정확히는 WAS내의 ApplicationContext에서 등록된 필터가 실행 된다. Filter는 `J2EE표준스펙`이며, Servlet 2.3에 등장하였다. 따라서 Spring Framework가 아니어도 Servlet Filter를 사용할 수 있다. 
+그림에서 보면 가장 먼저 눈에 띄는 것은 Filter와 Interceptor의 실행 위치이다.
+Filter는 Dispatcher Servlet 이전에 실행된다. 정확히는 WAS내의 ApplicationContext에서 등록된 필터가 실행 된다. Filter는 `J2EE 표준스펙`이며, Servlet 2.3에 등장하였다. 따라서 Spring Framework가 아니어도 Servlet Filter를 사용할 수 있다. 
 
 Interceptor의 실행 위치는 DispatchetServlet 내부에서 실행이 되고 있다.
 따라서 Interceptor는 `Spring Framework에서 제공하는 API`이며, 전후처리에 대한 편리한 인터페이스를 제공하고 있다. 공통적으로 Spring에서는 전후처리기로 많이 사용하고 있다. AOP와 함께 핵심 로직에 영향을 주지 않고 요청을 가로채어 처리하는 Spring의 큰 특징 중 하나로 생각된다.
