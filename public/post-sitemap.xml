@@ -7,8 +7,16 @@
     </url>
 
     <url>
-        <loc>http://yoursite-url/2018/08/27/2018-08-25-spring-mvc-handle-exception/</loc>
-        <lastmod>2018-08-26T08:22:17.117Z</lastmod>
+        <loc>http://yoursite-url/2018/08/30/2018-08-25-spring-mvc-handle-exception/</loc>
+        <lastmod>2018-08-29T15:34:38.119Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://yoursite-url/2018/08/30/2018-08-29-java-exception/</loc>
+        <lastmod>2018-08-29T15:34:26.350Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -16,7 +24,7 @@
 
     <url>
         <loc>http://yoursite-url/2018/08/25/2018-08-18-spring-filter-interceptor/</loc>
-        <lastmod>2018-08-26T08:17:23.508Z</lastmod>
+        <lastmod>2018-08-26T08:24:22.063Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 

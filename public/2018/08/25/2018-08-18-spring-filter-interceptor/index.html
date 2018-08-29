@@ -146,14 +146,14 @@
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
@@ -224,8 +224,8 @@ Filter의 경우는 거의 사용해 본 적이 없는데, 자주 쓰는 Interce
 <p><img src="./spring-request-lifecycle.jpg" alt="spring-request-lifecycle"></p>
 <p>이 이미지가 Spring MVC 구조를 가장 잘 보여주는 도식도 인 것 같아 첨부하였다.<br>
 (많은 블로그에서 이 이미지를 사용하고 있는점은 안 비밀이다.)</p>
-<p>그림에서 보면 가장먼저 눈에 띄는 것은 Filter와 Interceptor의 실행 위치이다.<br>
-Filter는 Dispatcher Servlet 이전에 실행된다. 정확히는 WAS내의 ApplicationContext에서 등록된 필터가 실행 된다. Filter는 <code>J2EE표준스펙</code>이며, Servlet 2.3에 등장하였다. 따라서 Spring Framework가 아니어도 Servlet Filter를 사용할 수 있다.</p>
+<p>그림에서 보면 가장 먼저 눈에 띄는 것은 Filter와 Interceptor의 실행 위치이다.<br>
+Filter는 Dispatcher Servlet 이전에 실행된다. 정확히는 WAS내의 ApplicationContext에서 등록된 필터가 실행 된다. Filter는 <code>J2EE 표준스펙</code>이며, Servlet 2.3에 등장하였다. 따라서 Spring Framework가 아니어도 Servlet Filter를 사용할 수 있다.</p>
 <p>Interceptor의 실행 위치는 DispatchetServlet 내부에서 실행이 되고 있다.<br>
 따라서 Interceptor는 <code>Spring Framework에서 제공하는 API</code>이며, 전후처리에 대한 편리한 인터페이스를 제공하고 있다. 공통적으로 Spring에서는 전후처리기로 많이 사용하고 있다. AOP와 함께 핵심 로직에 영향을 주지 않고 요청을 가로채어 처리하는 Spring의 큰 특징 중 하나로 생각된다.</p>
 <h1><span id="filter">Filter</span></h1>
@@ -314,7 +314,7 @@ Filter는 Dispatcher Servlet 이전에 실행된다. 정확히는 WAS내의 Appl
                 <ul class="pager">
                     
                         <li class="previous">
-                            <a href="/2018/08/27/2018-08-25-spring-mvc-handle-exception/" data-toggle="tooltip" data-placement="top" title="Spring 예외처리 기법">&larr; Previous Post</a>
+                            <a href="/2018/08/30/2018-08-29-java-exception/" data-toggle="tooltip" data-placement="top" title="Java Exception">&larr; Previous Post</a>
                         </li>
                     
                     

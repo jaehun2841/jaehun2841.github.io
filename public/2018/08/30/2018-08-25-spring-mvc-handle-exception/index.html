@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          Spring 예외처리 기법 - Carrey`s 기술블로그
+          Spring Handle Exception - Carrey`s 기술블로그
         
     </title>
 
-    <link rel="canonical" href="http://yoursite-url/2018/08/27/2018-08-25-spring-mvc-handle-exception/">
+    <link rel="canonical" href="http://yoursite-url/2018/08/30/2018-08-25-spring-mvc-handle-exception/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="../../../../css/bootstrap.min.css">
@@ -95,11 +95,11 @@
                               <a class="tag" href="/tags/#Spring Core" title="Spring Core">Spring Core</a>
                             
                         </div>
-                        <h1>Spring 예외처리 기법</h1>
+                        <h1>Spring Handle Exception</h1>
                         <h2 class="subheading">Spring에서 지원하는 다양한 예외처리 방법</h2>
                         <span class="meta">
                             Posted by Carrey on
-                            2018-08-27
+                            2018-08-30
                         </span>
                     </div>
                 
@@ -146,14 +146,14 @@
 
                         
                         <li>
-                            <a href="/archive/">Archives</a>
+                            <a href="/about/">About</a>
                         </li>
                         
                     
 
                         
                         <li>
-                            <a href="/about/">About</a>
+                            <a href="/archive/">Archives</a>
                         </li>
                         
                     
@@ -216,12 +216,24 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <p>여기에 추가적으로 Exception 핸들링 관련 내용도 추가하면 좋을듯</p>
-<p>@ControllerAdvice</p>
-<p>@ExceptionHandler</p>
-<p>등등</p>
+                <h1><span id="들어가며">들어가며</span></h1>
+<p>Spring에서 제공하는 예외처리 방법에는 유용한 방법들이 몇가지 있다.<br>
+Dispatcher Servlet내에서는 몇가지 Exception Resolver를 제공하여 예외처리를 할 수 있도록 돕고 있다.<br>
+또한 @ControllerAdvice를 이용하여 Web Application 전역에 대한 Exception 처리를 위한 API를 제공한다.<br>
+내용과 간단한 사용법에 대한 포스팅을 작성하고자 한다.</p>
+<h1><span id="spring-handlerexceptionresolver">Spring HandlerExceptionResolver</span></h1>
+<h2><span id="handlerexceptionresolver">HandlerExceptionResolver</span></h2>
+<h2><span id="annotationmethodhandlerexceptionresolver">AnnotationMethodHandlerExceptionResolver</span></h2>
+<h2><span id="responsestatusexceptionresolver">ResponseStatusExceptionResolver</span></h2>
+<h2><span id="defaulthandlerexceptionresolver">DefaultHandlerExceptionResolver</span></h2>
+<h2><span id="simplemappingexceptionresolver">SimpleMappingExceptionResolver</span></h2>
+<h1><span id="spring-global-exception-handling">Spring Global Exception Handling</span></h1>
+<h2><span id="controlleradvice">@ControllerAdvice</span></h2>
 <h1><span id="참조">참조</span></h1>
-<p><a href="https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc" target="_blank" rel="noopener">https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc</a></p>
+<p><a href="https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc" target="_blank" rel="noopener">https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc</a><br>
+<a href="http://www.nextree.co.kr/p3239/" target="_blank" rel="noopener">http://www.nextree.co.kr/p3239/</a><br>
+<a href="http://springsource.tistory.com/7" target="_blank" rel="noopener">http://springsource.tistory.com/7</a><br>
+<a href="http://stewie38.tistory.com/59" target="_blank" rel="noopener">http://stewie38.tistory.com/59</a></p>
 
                 
 
@@ -231,7 +243,7 @@
                     
                     
                         <li class="next">
-                            <a href="/2018/08/25/2018-08-18-spring-filter-interceptor/" data-toggle="tooltip" data-placement="top" title="Spring Filter와 Interceptor">Next Post &rarr;</a>
+                            <a href="/2018/08/30/2018-08-29-java-exception/" data-toggle="tooltip" data-placement="top" title="Java Exception">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
@@ -261,7 +273,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">참조</span></a></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">들어가며</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Spring HandlerExceptionResolver</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">HandlerExceptionResolver</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">AnnotationMethodHandlerExceptionResolver</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.3.</span> <span class="toc-nav-text">ResponseStatusExceptionResolver</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.4.</span> <span class="toc-nav-text">DefaultHandlerExceptionResolver</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.5.</span> <span class="toc-nav-text">SimpleMappingExceptionResolver</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">Spring Global Exception Handling</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">@ControllerAdvice</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">참조</span></a></li></ol>
         
         </div>
       </aside>
@@ -303,8 +315,8 @@
 <script type="text/javascript">
     /* * * CONFIGURATION VARIABLES * * */
     var disqus_shortname = "your-disqus-ID";
-    var disqus_identifier = "http://yoursite-url/2018/08/27/2018-08-25-spring-mvc-handle-exception/";
-    var disqus_url = "http://yoursite-url/2018/08/27/2018-08-25-spring-mvc-handle-exception/";
+    var disqus_identifier = "http://yoursite-url/2018/08/30/2018-08-25-spring-mvc-handle-exception/";
+    var disqus_url = "http://yoursite-url/2018/08/30/2018-08-25-spring-mvc-handle-exception/";
 
     (function() {
         var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
