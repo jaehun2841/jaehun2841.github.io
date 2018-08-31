@@ -2,15 +2,29 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
     <url>
-        <loc>http://yoursite-url/tags/Spring/</loc>
+        <loc>http://yoursite-url/tags/core/</loc>
         <lastmod>2018-08-12T09:25:11.005Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>http://yoursite-url/tags/core/</loc>
-        <lastmod>2018-08-12T09:25:11.005Z</lastmod>
+        <loc>http://yoursite-url/tags/Java/</loc>
+        <lastmod>2018-08-29T15:34:26.350Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yoursite-url/tags/Spring/</loc>
+        <lastmod>2018-08-29T15:34:38.119Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yoursite-url/tags/Spring-Core/</loc>
+        <lastmod>2018-08-29T15:34:38.119Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

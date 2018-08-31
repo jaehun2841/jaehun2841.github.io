@@ -14,28 +14,28 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          About - Carrey`s 기술블로그
+          Spring Handle Exception - Carrey`s 기술블로그
         
     </title>
 
-    <link rel="canonical" href="http://yoursite-url/about/">
+    <link rel="canonical" href="http://yoursite-url/2018/08/30/2018-08-25-spring-mvc-handle-exception/">
 
     <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../css/bootstrap.min.css">
 
     <!-- Custom CSS --> 
-    <link rel="stylesheet" href="../css/beantech.min.css">
+    <link rel="stylesheet" href="../../../../css/beantech.min.css">
     
     <!-- Pygments Highlight CSS -->
-    <link rel="stylesheet" href="../css/highlight.css">
+    <link rel="stylesheet" href="../../../../css/highlight.css">
 
-    <link rel="stylesheet" href="../css/widget.css">
+    <link rel="stylesheet" href="../../../../css/widget.css">
 
-    <link rel="stylesheet" href="../css/rocket.css">
+    <link rel="stylesheet" href="../../../../css/rocket.css">
 
-    <link rel="stylesheet" href="../css/signature.css">
+    <link rel="stylesheet" href="../../../../css/signature.css">
 
-    <link rel="stylesheet" href="../css/toc.css">
+    <link rel="stylesheet" href="../../../../css/toc.css">
 
     <!-- Custom Fonts -->
     <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
@@ -69,8 +69,8 @@
 <style type="text/css">
     header.intro-header{
         
-            background-image: url('/img/header_img/Iron-Man-3.jpg')
-            /*page*/
+            background-image: url('null')
+            /*post*/
         
     }
     
@@ -87,10 +87,20 @@
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 
-                    <div class="site-heading">
-                        <h1>About</h1>
-                        <!--<hr class="small">-->
-                        <span class="subheading">Wish for the Best, Prepare for the Worst</span>
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#Spring" title="Spring">Spring</a>
+                            
+                              <a class="tag" href="/tags/#Spring Core" title="Spring Core">Spring Core</a>
+                            
+                        </div>
+                        <h1>Spring Handle Exception</h1>
+                        <h2 class="subheading">Spring에서 지원하는 다양한 예외처리 방법</h2>
+                        <span class="meta">
+                            Posted by Carrey on
+                            2018-08-30
+                        </span>
                     </div>
                 
 
@@ -193,190 +203,166 @@
 
 
     <!-- Main Content -->
-    <!-- Main Content -->
-<div class="container">
-    <div class="row">
-        
+    <!-- Modify by Yu-Hsuan Yen -->
 
-<!-- USE SIDEBAR -->
-    <!-- Post Container -->
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
             <div class="
-                col-lg-8 col-lg-offset-1
-                col-md-8 col-md-offset-1
-                col-sm-12
-                col-xs-12
-                post-container
-            ">
-            
-                <blockquote>
-<p>光有好奇心而不去實踐，等於自願放棄成功機會<br>
-別為自己畫地自限，Just Do It！！</p>
-</blockquote>
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
 
+                <h1><span id="들어가며">들어가며</span></h1>
+<p>Spring에서 제공하는 예외처리 방법에는 유용한 방법들이 몇가지 있다.<br>
+Dispatcher Servlet내에서는 몇가지 Exception Resolver를 제공하여 예외처리를 할 수 있도록 돕고 있다.<br>
+또한 @ControllerAdvice를 이용하여 Web Application 전역에 대한 Exception 처리를 위한 API를 제공한다.<br>
+내용과 간단한 사용법에 대한 포스팅을 작성하고자 한다.</p>
+<h1><span id="spring-handlerexceptionresolver">Spring HandlerExceptionResolver</span></h1>
+<h2><span id="handlerexceptionresolver">HandlerExceptionResolver</span></h2>
+<h2><span id="annotationmethodhandlerexceptionresolver">AnnotationMethodHandlerExceptionResolver</span></h2>
+<h2><span id="responsestatusexceptionresolver">ResponseStatusExceptionResolver</span></h2>
+<h2><span id="defaulthandlerexceptionresolver">DefaultHandlerExceptionResolver</span></h2>
+<h2><span id="simplemappingexceptionresolver">SimpleMappingExceptionResolver</span></h2>
+<h1><span id="spring-global-exception-handling">Spring Global Exception Handling</span></h1>
+<h2><span id="controlleradvice">@ControllerAdvice</span></h2>
+<h1><span id="참조">참조</span></h1>
+<p><a href="https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc" target="_blank" rel="noopener">https://spring.io/blog/2013/11/01/exception-handling-in-spring-mvc</a><br>
+<a href="http://www.nextree.co.kr/p3239/" target="_blank" rel="noopener">http://www.nextree.co.kr/p3239/</a><br>
+<a href="http://springsource.tistory.com/7" target="_blank" rel="noopener">http://springsource.tistory.com/7</a><br>
+<a href="http://stewie38.tistory.com/59" target="_blank" rel="noopener">http://stewie38.tistory.com/59</a></p>
 
-                <!-- 如果开启评论功能 -->
                 
-                    <hr>
 
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
                     
+                    
+                        <li class="next">
+                            <a href="/2018/08/30/2018-08-29-java-exception/" data-toggle="tooltip" data-placement="top" title="Java Exception">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
 
-                    
-                    <!-- disqus 评论框 start -->
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
                     <div class="comment">
                         <div id="disqus_thread" class="disqus-thread"></div>
                     </div>
-                    <!-- disqus 评论框 end -->
-                    
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
 
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">들어가며</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Spring HandlerExceptionResolver</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">HandlerExceptionResolver</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">AnnotationMethodHandlerExceptionResolver</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.3.</span> <span class="toc-nav-text">ResponseStatusExceptionResolver</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.4.</span> <span class="toc-nav-text">DefaultHandlerExceptionResolver</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.5.</span> <span class="toc-nav-text">SimpleMappingExceptionResolver</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">Spring Global Exception Handling</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">@ControllerAdvice</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">참조</span></a></li></ol>
+        
+        </div>
+      </aside>
+    
 
-                    
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
 
-                    
-                    <!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
-                    <script type="text/javascript">
-                        /* * * CONFIGURATION VARIABLES * * */
-                        var disqus_shortname = "your-disqus-ID";
-                        var disqus_identifier = "http://yoursite-url/about/index.html";
-                        var disqus_url = "http://yoursite-url/about/index.html";
-
-                        (function() {
-                            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-                            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-                            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-                        })();
-
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Spring" title="Spring">Spring</a>
                         
-                    </script>
-                    <!-- disqus 公共JS代码 end -->
-                    
+                          <a class="tag" href="/tags/#Spring Core" title="Spring Core">Spring Core</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
                 
             </div>
-
-          <!-- Sidebar Container -->
-<div class="
-    col-lg-3 col-lg-offset-0
-    col-md-3 col-md-offset-0
-    col-sm-12
-    col-xs-12
-    sidebar-container
-">
-    
-        <!-- Featured Tags -->
-
-<section>
-    <!-- no hr -->
-    <h5><a href="/tags/">FEATURED TAGS</a></h5>
-    <div class="tags">
-        
-            
-            <a href="/tags/#Spring" title="Spring" rel="5">Spring</a>
-            
-        
-            
-        
-            
-            <a href="/tags/#Spring Core" title="Spring Core" rel="2">Spring Core</a>
-            
-        
-            
-        
+        </div>
     </div>
-</section>
+</article>
 
-        <hr>
-    
-        <!-- Short About -->
-<section class="visible-md visible-lg">
-    <h5><a href="/about/">ABOUT ME</a></h5>
-    <div class="short-about">
 
-        
-            <img id = "avatar_pic" src="/img/ironman-draw.png" />
-        
 
-        
-            <p>일을 하면서 배우는 지식과 별도로 공부한 지식을 정리한 블로그입니다.</p>
-        
 
-        <!-- SNS Link -->
-        <ul class="list-inline">
-            
-            
-            
+<!-- disqus embedded js code start (one page only need to embed once) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "your-disqus-ID";
+    var disqus_identifier = "http://yoursite-url/2018/08/30/2018-08-25-spring-mvc-handle-exception/";
+    var disqus_url = "http://yoursite-url/2018/08/30/2018-08-25-spring-mvc-handle-exception/";
 
-            
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus embedded js code start end -->
 
-            
 
-            
-                <li>
-                    <a target="_blank"  href="https://github.com/jaehun2841">
-                        <span class="fa-stack fa-lg">
-                            <i class="fa fa-circle fa-stack-2x"></i>
-                            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                        </span>
-                    </a>
-                </li>
-            
-            
-            
-            
-        </ul>
-    </div>
-</section>
-        <hr>
-    
-        
-  <h5>RECENT POSTS</h3>
-  <div class="widget">
-    <ul>
-      
-        <li>
-          <a href="../2018/08/30/2018-08-25-spring-mvc-handle-exception/">Spring Handle Exception</a>
-        </li>
-      
-        <li>
-          <a href="../2018/08/30/2018-08-29-java-exception/">Java Exception</a>
-        </li>
-      
-        <li>
-          <a href="../2018/08/25/2018-08-18-spring-filter-interceptor/">Spring Filter와 Interceptor</a>
-        </li>
-      
-        <li>
-          <a href="../2018/08/11/2018-08-11-spring-dispatcher-servlet/">Spring Dispatcher Servlet</a>
-        </li>
-      
-        <li>
-          <a href="../2018/08/10/2018-08-10-httprequest-client-ip/">Spring에서 Client IP구하기</a>
-        </li>
-      
-    </ul>
-  </div>
 
-        <hr>
-    
-        <!-- Friends Blog -->
 
-        <hr>
-    
-        
-    <h5>ARCHIVES</h5>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="../archives/2018/08/">August 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="../archives/2018/07/">July 2018</a><span class="archive-list-count">5</span></li></ul>
-    </div>
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
 
-        <hr>
-    
-        <!-- Categories -->
-
-        <hr>
-    
-</div>
-
-        
-    </div>
-</div>
 
 
     <!-- Footer -->
@@ -428,13 +414,13 @@
 </footer>
 
 <!-- jQuery -->
-<script src="../js/jquery.min.js"></script>
+<script src="../../../../js/jquery.min.js"></script>
 
 <!-- Bootstrap Core JavaScript -->
-<script src="../js/bootstrap.min.js"></script>
+<script src="../../../../js/bootstrap.min.js"></script>
 
 <!-- Custom Theme JavaScript -->
-<script src="../js/hux-blog.min.js"></script>
+<script src="../../../../js/hux-blog.min.js"></script>
 
 
 <!-- async load function -->
