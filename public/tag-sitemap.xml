@@ -9,22 +9,22 @@
     </url>
 
     <url>
-        <loc>http://yoursite-url/tags/Java/</loc>
-        <lastmod>2018-08-29T15:34:26.350Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://yoursite-url/tags/Spring/</loc>
-        <lastmod>2018-08-29T15:34:38.119Z</lastmod>
+        <lastmod>2018-08-31T15:30:56.279Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>http://yoursite-url/tags/Spring-Core/</loc>
-        <lastmod>2018-08-29T15:34:38.119Z</lastmod>
+        <lastmod>2018-08-31T15:30:56.279Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yoursite-url/tags/Java/</loc>
+        <lastmod>2018-08-31T15:30:56.284Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
