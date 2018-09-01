@@ -7,6 +7,14 @@
     </url>
 
     <url>
+        <loc>http://yoursite-url/2018/09/01/2018-09-01-servlet/</loc>
+        <lastmod>2018-09-01T07:34:38.027Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://yoursite-url/2018/08/30/2018-08-29-java-exception/</loc>
         <lastmod>2018-08-31T15:30:56.284Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -79,7 +87,7 @@
     </url>
 
     <url>
-        <loc>http://yoursite-url/2018/07/21/2018-07-21-spring-aop3/</loc>
+        <loc>http://yoursite-url/2018/07/22/2018-07-22-spring-aop4/</loc>
         <lastmod>2018-08-08T13:44:40.030Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
@@ -87,7 +95,7 @@
     </url>
 
     <url>
-        <loc>http://yoursite-url/2018/07/22/2018-07-22-spring-aop4/</loc>
+        <loc>http://yoursite-url/2018/07/21/2018-07-21-spring-aop3/</loc>
         <lastmod>2018-08-08T13:44:40.030Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
