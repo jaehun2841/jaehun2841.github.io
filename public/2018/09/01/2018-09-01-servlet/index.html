@@ -14,7 +14,7 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          2018-09-01-Servlet - Carrey`s 기술블로그
+          Servlet이란? - Carrey`s 기술블로그
         
     </title>
 
@@ -69,7 +69,7 @@
 <style type="text/css">
     header.intro-header{
         
-            background-image: url('./servlet.png')
+            background-image: url('null')
             /*post*/
         
     }
@@ -95,8 +95,8 @@
                               <a class="tag" href="/tags/#J2EE" title="J2EE">J2EE</a>
                             
                         </div>
-                        <h1>2018-09-01-Servlet</h1>
-                        <h2 class="subheading"></h2>
+                        <h1>Servlet이란?</h1>
+                        <h2 class="subheading">Servlet.. 항상 이름만 들어본 그대여</h2>
                         <span class="meta">
                             Posted by Carrey on
                             2018-09-01
@@ -216,20 +216,21 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <p><img src="/servlet.png" alt="servlet"></p>
+                <p><img src="./servlet.png" alt="servlet"></p>
 <h1><span id="들어가며">들어가며</span></h1>
 <p>약 4년 동안 개발하면서, Spring core에 대한 공부를 하지 않고, “이렇게 코딩하면 이렇게 동작하네~” 라는 생각만 가지고 개발을 해왔었다. 근 1~2달 간 Spring core 부분에 관심을 가지며 동작 원리에 대한 지식을 습득하였다. 그러면서 “이게 이래서 이렇게 동작하는구나~” 라고 개인적으로 Spring에 대한 insight를 높일 수 있었고, 이런 점들은 실제 개발 시 뚜렷하게 나타났다.</p>
 <p>최근 Dispatcher Servlet에 대한 Spring MVC에 대한 공부를 진행하면서, Spring 이전 기술인 Servlet에 대해 한번은 공부하고 넘어가야 겠다고 생각했다. 이번 기회에 4년동안 이름만 들어봤던 Servlet에 대한 포스팅을 써보게 되었다.</p>
+<br>
 <h1><span id="servlet">Servlet</span></h1>
-<p>servlet이 뭐지? 실제 대학 시절 JSP를 배웠지만, 교수님이 Servlet에 대한 내용을 강의를 하지 않았다. (교수님이 약간 프로그래밍 지식이 부족하신 분이다.) 그 때 그랬으면 스스로 Servlet에 대한 스터디라도 해봤어야 했는데… 이제와서 알아보게 되었다.</p>
+<p>Servlet이 뭐지?  대학 시절 JSP를 배웠지만, 교수님이 Servlet에 대한 내용을 강의를 하지 않았다. (교수님이 약간 프로그래밍 지식이 부족하신 분이다.) 그 때 그랬으면 스스로 Servlet에 대한 스터디라도 해봤어야 했는데… 이제와서 알아보게 되었다.</p>
 <p>Servlet의 정의에 대해 찾아보게 되었다. (출처 : <a href="https://ko.wikipedia.org/wiki/%EC%9E%90%EB%B0%94_%EC%84%9C%EB%B8%94%EB%A6%BF" target="_blank" rel="noopener">wikipedia</a>)</p>
 <blockquote>
-<p>**자바 서블릿(Java Servlet)**은 자바를 사용하여 웹페이지를 동적으로 생성하는 서버측 프로그램 혹은 그 사양을 말하며, 흔히 &quot;서블릿&quot;이라 불린다. 자바 서블릿은 웹 서버의 성능을 향상하기 위해 사용되는 자바 클래스의 일종이다.</p>
+<p>자바 서블릿(Java Servlet)은 자바를 사용하여 웹페이지를 동적으로 생성하는 서버측 프로그램 혹은 그 사양을 말하며, 흔히 &quot;서블릿&quot;이라 불린다. 자바 서블릿은 웹 서버의 성능을 향상하기 위해 사용되는 자바 클래스의 일종이다.</p>
 </blockquote>
 <p>결국은 <code>웹 서버에서 돌아가는 Java 코드</code>라는 뜻이다.<br>
 Java 코드 이긴 코드인데 무작정 연습예제 만들 듯이 짜는 코드가 아니다.<br>
 <code>HttpServlet</code> 이라는 Class를 상속하여 만든 Class를 Servlet Class로 사용 할 수 있다.</p>
-<p>**Servlet의 특징 **</p>
+<h2><span id="servlet의-특징"><strong>Servlet의 특징</strong></span></h2>
 <ul>
 <li>Servlet이란 Java 기반의 웹 어플리케이션 프로그래밍 기술</li>
 <li>흔히 Java로 만든 CGI(Common Gateway Interface)라고들 한다.</li>
@@ -243,16 +244,97 @@ Java 코드 이긴 코드인데 무작정 연습예제 만들 듯이 짜는 코�
 여기서 주의 해야 할 내용은 클라이언트 요청 별로 Thread가 생성 되기 때문에 하나의 Servlet에 동시 다발적으로 여러 Thread에 대한 접근이 이루어지게 된다. 따라서 Servlet에 대한 코드는 멀티스레드 환경에 대한 동기화처리가 필요하다.</li>
 <li>요즘은 거의 Servlet을 사용하지는 않는다. 특히 Spring에서는 Spring MVC라는 강력한 구조가 있기 때문에 Spring에서는 웬만하면 Servlet생성을 하지 않는다.<br>
 (오히려 Servlet을 생성하는게 더 귀찮다. 별도로 설정해야 되고, Dispatcher Servlet에서 지원하는 강려크(?) 한 기능을 사용하지 못한다.)</li>
+<li><code>MVC에서 컨트롤러로 이용됨..</code> 이라고 다른 블로그에 많이들 써있는데…<br>
+솔직히 맞는 얘기가 아니라고 생각한다.<br>
+Spring MVC에서 Servlet이 하던 역할을 Controller단에서 @RequestMapping 어노테이션을 이용해 서블릿의 기능과 유사하게 만들어 놓은 것 뿐이다.<br>
+실제 URL-Pattern에 따른 Servlet-mapping 방식과 @RequestMapping 어노테이션을 이용한 mappingHandler처리 시, 유사하게 만들어 놓은 것 뿐이라는 의미이다.<br>
+따라서 Spring MVC에서 서블릿이 컨트롤러로 이용된다는 것은 엄연히 틀린 말이다.</li>
 </ul>
+<br>
 <h1><span id="servlet-container">Servlet Container</span></h1>
-<p>Servlet container 소개</p>
-<p>Servlet container의 역할?</p>
-<p>WAS란?</p>
-<p>DD (Deploy Descriptor : 배포 서술자)</p>
+<p>Servlet이라는 Java Class를 만들었으면, 당연히 이 Class를 실행 시켜주는 프로세스가 있어야 하지 않을까?<br>
+당연히 있다. WAS라고 불리우는 프로그램이 있다.<br>
+Java 진영에서 자주 사용하는 WAS는 단연 으뜸으로 <code>Apache Tomcat</code>이 있다.<br>
+(다른거로는 <code>Jeus</code>나, <code>jBoss</code> 같은 것들이 있다. 하지만 Apache Tomcat이 Spring, JSP진영에서는 거의 표준이다 싶이 사용되니 Apache Tomcat을 기준으로 적었다.)</p>
+<p>WAS에는 Servlet들을 관리 하는 Servlet Container가 있고 이러한 일들을 해준다.</p>
+<ul>
+<li>
+<p>Web Server (apache, nginx)와의 통신 지원</p>
+<ul>
+<li>클라이언트 요청(Request)에 대한 Socket 통신 지원</li>
+</ul>
+</li>
+<li>
+<p>Servlet Lifecycle 관리</p>
+</li>
+<li>
+<p>Client 접근 URL에 대한 Servlet Mapping</p>
+</li>
+<li>
+<p>클라이언트 요청(Request)에 대한 멀티 스레드 관리</p>
+</li>
+<li>
+<p>선언적인 보안관리</p>
+<ul>
+<li>보안에 대한 코드를 Servlet 내부에 작성하지 않아도 된다.</li>
+<li>Servlet Filter와 같은 Filter에서 보안에 대한 처리가 가능하기 때문</li>
+<li>DD (배포 서술자 : Deploy Descriptor (web.xml))에 보안 관련 설정을 할 수 있다.<br>
+대표적인 예로 Spring Security가 있다.</li>
+</ul>
+</li>
+</ul>
+<br>
 <h1><span id="servlet-lifecycle">Servlet LifeCycle</span></h1>
-<p>servlet lifecycle 그림</p>
+<p><img src="./Servlet-life-cycle.png" alt="Servlet-life-cycle"></p>
+<p>Servlet의 LifeCycle은 3단계로 이루어 진다.</p>
+<ul>
+<li>init()
+<ul>
+<li>WAS Load후 최초로 Servlet에 대한 요청이 들어올 때 실행 된다.</li>
+<li>주로 Servlet 객체에 대한 초기화 로직을 작성한다.</li>
+<li>실행 중 Servlet의 코드가 변경 될 경우, 기존 Servlet을 Destroy 시키고<br>
+다시 서블릿 생성과 동시에 init()이 실행</li>
+</ul>
+</li>
+<li>service()
+<ul>
+<li>Servlet 객체 생성 이후 GET, POST, PUT, DELETE 메소드에 대한 메소드가 실행된다.<br>
+(doGet(), doPost(), doPut(), doDel())</li>
+</ul>
+</li>
+<li>destroy()
+<ul>
+<li>WAS shutdown 시 호출 된다.</li>
+<li>주로 Servlet 객체에서 사용하던 자원의 해제 용도로 사용된다</li>
+<li>자원 해제 된 객체는 JVM의 Garbage Collector에서 처리한다.</li>
+</ul>
+</li>
+</ul>
+<br>
+<h1><span id="servlet-설정하기">Servlet 설정하기</span></h1>
+<h2><span id="servlet-class-생성하기">Servlet class 생성하기</span></h2>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.springstudy.demo3.servlet;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> lombok.extern.slf4j.Slf4j;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.ServletException;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServlet;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Slf</span>4j</span><br><span class="line"><span class="meta">@WebServlet</span>(name=<span class="string">"demoServlet"</span>, url-pattern=<span class="string">"/servlet/demo"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DemoServlet</span> <span class="keyword">extends</span> <span class="title">HttpServlet</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doGet</span><span class="params">(HttpServletRequest req, HttpServletResponse resp)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        log.info(<span class="string">"doGet() 실행실행실행!!!"</span>);</span><br><span class="line">        Thread thread = Thread.currentThread();</span><br><span class="line">        log.info(<span class="string">"Thread ID : "</span> + thread.getId());</span><br><span class="line">        <span class="keyword">super</span>.doGet(req, resp);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doPost</span><span class="params">(HttpServletRequest req, HttpServletResponse resp)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.doPost(req, resp);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">destroy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        log.info(<span class="string">"Servlet destroy()"</span>);</span><br><span class="line">        <span class="keyword">super</span>.destroy();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> <span class="keyword">throws</span> ServletException </span>&#123;</span><br><span class="line">        log.info(<span class="string">"Servlet init()"</span>);</span><br><span class="line">        <span class="keyword">super</span>.init();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>@WebServlet 어노테이션을 이용하면 web.xml이나 별도의 Java config 설정없이 Servlet을 등록 할 수 있다.<br>
+(단, Spring boot - Embedded WAS에서는 해당 설정이 잘 안먹는다.)</p>
+<p>기본적으로 Servlet 클래스 생성은 <code>HttpServlet</code> 클래스를 상속 받아 생성한다.<br>
+HttpServlet내의 init, destroy, doGet, doPost에 대한 Override 후 기능을 확장하도록 한다.</p>
+<h2><span id="webxml-기반-설정">web.xml 기반 설정</span></h2>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>demoServlet<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>com.example.springstudy.demo3.servlet.DemoServlet<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>demoServlet<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span> </span><br><span class="line">    <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/servlet/demo<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span> </span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>web.xml에 servlet 클래스를 선언하고 <servlet-mapping> 태그를 통해 url-pattern이나 init-data와 같은 메타 데이터를 추가 할 수 있다.</servlet-mapping></p>
+<h2><span id="java-config-기반-설정">Java Config 기반 설정</span></h2>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.example.springstudy.demo3.config;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.example.springstudy.demo3.servlet.DemoServlet;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.web.servlet.ServletRegistrationBean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DemoServletConfig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> ServletRegistrationBean <span class="title">demoServletRegistrationBean</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        ServletRegistrationBean demoServletRegistrationBean = <span class="keyword">new</span> ServletRegistrationBean();</span><br><span class="line">        demoServletRegistrationBean.setServlet(<span class="keyword">new</span> DemoServlet());</span><br><span class="line">        demoServletRegistrationBean.addUrlMappings(<span class="string">"/servlet/demo"</span>);</span><br><span class="line">        <span class="keyword">return</span> demoServletRegistrationBean;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>@Configuration 어노테이션을 이용하여 Java config 설정을 할 수 있다.<br>
+ServletRegistrationBean을 생성하여 등록하고자 하는 Servlet 클래스와 url-pattern과 같은 메타 정보를 설정 할 수 있다.</p>
+<br>
 <h1><span id="jsp-vs-servlet">JSP vs Servlet</span></h1>
-<p>jsp랑 servlet의 차이점</p>
+<p><strong>JSP와 Servlet의 차이점</strong></p>
+<ul>
+<li>JSP는 html 파일에 스크립트릿으로 Java 코드가 들어간 형태</li>
+<li>Servlet은 html 태그가 out.println(&quot;<html>&quot;) 형태로 들어간 형태</html></li>
+</ul>
+<h2><span id="jsp-gt-servlet-변환-과정">JSP -&gt; Servlet 변환 과정</span></h2>
+<p><img src="./jspToServlet.jpeg" alt="jspToServlet"></p>
+<p>Servlet의 최종 형태는 out.println(&quot;<html>&quot;) 과 같은 형태로 html 파일을 인코딩 해야 하는데, 가독성도 떨어지고 유지보수 성도 좋지 않다. 그러한 번거로움을 jsp가 대신 해준다고 볼 수 있다.</html></p>
 <h1><span id="참조">참조</span></h1>
 <p><a href="http://mangkyu.tistory.com/14" target="_blank" rel="noopener">http://mangkyu.tistory.com/14</a><br>
 <a href="http://breath91.tistory.com/entry/Servlet-%EC%9D%B4%EB%9E%80-%EB%AC%B4%EC%97%87%EC%9D%B8%EA%B0%80" target="_blank" rel="noopener">http://breath91.tistory.com/entry/Servlet-이란-무엇인가</a><br>
@@ -296,7 +378,7 @@ Java 코드 이긴 코드인데 무작정 연습예제 만들 듯이 짜는 코�
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">들어가며</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Servlet</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">Servlet Container</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">Servlet LifeCycle</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">JSP vs Servlet</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">참조</span></a></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">들어가며</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Servlet</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">Servlet의 특징</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">Servlet Container</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">Servlet LifeCycle</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">Servlet 설정하기</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">5.1.</span> <span class="toc-nav-text">Servlet class 생성하기</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">5.2.</span> <span class="toc-nav-text">web.xml 기반 설정</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">5.3.</span> <span class="toc-nav-text">Java Config 기반 설정</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">JSP vs Servlet</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">6.1.</span> <span class="toc-nav-text">JSP -&gt; Servlet 변환 과정</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">참조</span></a></li></ol>
         
         </div>
       </aside>
