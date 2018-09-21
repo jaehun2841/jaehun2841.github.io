@@ -14,28 +14,28 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          Carrey`s 기술블로그
+          2018-09-21-Spring-Ioc-2 - Carrey`s 기술블로그
         
     </title>
 
-    <link rel="canonical" href="http://yoursite-url/archives/2/">
+    <link rel="canonical" href="http://yoursite-url/2018/09/21/2018-09-21-spring-ioc-2/">
 
     <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../../css/bootstrap.min.css">
 
     <!-- Custom CSS --> 
-    <link rel="stylesheet" href="../../css/beantech.min.css">
+    <link rel="stylesheet" href="../../../../css/beantech.min.css">
     
     <!-- Pygments Highlight CSS -->
-    <link rel="stylesheet" href="../../css/highlight.css">
+    <link rel="stylesheet" href="../../../../css/highlight.css">
 
-    <link rel="stylesheet" href="../../css/widget.css">
+    <link rel="stylesheet" href="../../../../css/widget.css">
 
-    <link rel="stylesheet" href="../../css/rocket.css">
+    <link rel="stylesheet" href="../../../../css/rocket.css">
 
-    <link rel="stylesheet" href="../../css/signature.css">
+    <link rel="stylesheet" href="../../../../css/signature.css">
 
-    <link rel="stylesheet" href="../../css/toc.css">
+    <link rel="stylesheet" href="../../../../css/toc.css">
 
     <!-- Custom Fonts -->
     <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
@@ -69,8 +69,8 @@
 <style type="text/css">
     header.intro-header{
         
-            background-image: url('/img/header_img/home-bg-2-dark.png') 
-            /*config*/
+            background-image: url('null')
+            /*post*/
         
     }
     
@@ -87,10 +87,18 @@
             <div class="row">
                 <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
                 
-                    <div class="site-heading">
-                        <h1>Carrey`s 기술블로그</h1>
-                        <!--<hr class="small">-->
-                        <span class="subheading">돈이 되는 블로그</span>
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#Spring" title="Spring">Spring</a>
+                            
+                        </div>
+                        <h1>2018-09-21-Spring-Ioc-2</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by Carrey on
+                            2018-09-21
+                        </span>
                     </div>
                 
 
@@ -193,291 +201,180 @@
 
 
     <!-- Main Content -->
-    <!-- Main Content -->
-<div class="container">
-    <div class="row">
-        
+    <!-- Modify by Yu-Hsuan Yen -->
 
-<!-- USE SIDEBAR -->
-    <!-- Post Container -->
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
             <div class="
-                col-lg-8 col-lg-offset-1
-                col-md-8 col-md-offset-1
-                col-sm-12
-                col-xs-12
-                post-container
-            ">
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1><span id="ioc란">IoC란?</span></h1>
+<p>커플링 감소</p>
+<h1><span id="container가-도데체-뭐야">Container가 도데체 뭐야?</span></h1>
+<p>Container란 객체의 생명주기를 관리해줘 이건 모든 Container의 공통점이야</p>
+<p>얼마전에 공부한 Servlet container도 서블릿의 생명주기를 관리 해줬어</p>
+<p>Container는 객체들에 대한 추가적인 기능을 제공해</p>
+<p>접근권한 제어, 트랜잭션 같은 기능을 제공해주지</p>
+<h1><span id="ioc-container">IoC Container</span></h1>
+<p>IoC 컨테이너는 스프링에서 사용하려는 POJO객체들을 bean이라는 이름하에 관리해주는 컨테이너야</p>
+<p>Bean의 생성부터 소멸까지 생명주기를 관리 해주지</p>
+<p>또 Spring Security, Transaction과 같은 기능을 Container가 관리해주지</p>
+<p>객체 간의 dependency가 있는 경우 객체를 injection 해줘</p>
+<h1><span id="di란">DI란?</span></h1>
+<p>DI란 Dependency Injection의 의미로 IoC를 구현한 대표적인 예야</p>
+<p>Pojo 객체내의 종속적인 객체를 IoC Container에서 직접 객체를 Injection해주는 걸 의미해</p>
+<p>스프링 개발에서는 99프로 DI방식을 통해 개발자가 직접 필요한 객체를 선언하지 않고</p>
+<p>IoC Container에서 넣어줘서 사용해 —&gt; 이거는 Bean 초기화시에 이루어져</p>
+<p>DL (Dependency Lookup) 이라는 기능도 있는데 이거는 거의 사용하지는 않아</p>
+<p>이 기능은 IoC Container에서 Bean의 메타정보를 이용해서 개발자가 Bean을 직접 찾는 행위야</p>
+<h1><span id="di-구현방식">DI 구현방식</span></h1>
+<p>생성자</p>
+<p>setter</p>
+<p>메소드</p>
+<h1><span id="beanfactory-amp-applicationcontext">BeanFactory &amp; ApplicationContext</span></h1>
+<h1><span id="bean이란">Bean이란</span></h1>
+<p>POJO(Plain Old Java Object)를 IoC Container에서 관리 하는 단위야</p>
+<h1><span id="bean-생명주기">Bean 생명주기</span></h1>
+<p>Bean생성, 소멸</p>
+<h1><span id="bean-scope">Bean Scope</span></h1>
+<p>5가지정도 있지?</p>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2018/09/21/2018-09-12-spring-ioc/" data-toggle="tooltip" data-placement="top" title="Spring IoC & DI(!) - IoC 등장배경(과정)">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2018/09/01/2018-09-01-servlet/" data-toggle="tooltip" data-placement="top" title="Servlet이란?">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                    <div class="comment">
+                        <div id="disqus_thread" class="disqus-thread"></div>
+                    </div>
+                
+                <!-- disqus comment end -->
+            </div>
             
-                <!-- Main Content -->
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
 
-
-<div class="post-preview">
-
-    <a href="/2018/07/22/2018-07-22-spring-aop4/">
-        <h2 class="post-title">
-            Spring AOP (4)
-        </h2>
-        <h3 class="post-subtitle">
-            4. AspectJ
-        </h3>
-        <div class="post-content-preview">
-            AspectJ란?
-
-AspectJ는 PARC에서 개발한 자바 프로그래밍 언어용 관점 지향 프로그래밍 (AOP) 확장 기능이다. 이클립스 재단 오픈 소스 프로젝트에서 독립형 또는 이클립스로 통합하여 이용 가능하다. AspectJ는 최종 사용자를 위한 단순함과 이용성을 강조함으로써 폭넓게 사용되는 AOP에 대한 디 팩터 표준(사실 상 표준)이 되었다.
-
-......
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">IoC란?</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Container가 도데체 뭐야?</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">IoC Container</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">DI란?</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">DI 구현방식</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">BeanFactory &amp; ApplicationContext</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">Bean이란</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">8.</span> <span class="toc-nav-text">Bean 생명주기</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">9.</span> <span class="toc-nav-text">Bean Scope</span></a></li></ol>
+        
         </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by Carrey on
-            2018-07-22
-        </p>
-        <div class="tags">
-            
-        </div>
+      </aside>
     
 
-</div>
-<hr>
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
 
-<div class="post-preview">
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Spring" title="Spring">Spring</a>
+                        
+                    </div>
+                </section>
+                
 
-    <a href="/2018/07/21/2018-07-21-spring-aop3/">
-        <h2 class="post-title">
-            Spring AOP (3)
-        </h2>
-        <h3 class="post-subtitle">
-            3. Spring AOP
-        </h3>
-        <div class="post-content-preview">
-            앞서 AOP에대한 간단한 예시와 개념을 살펴보았다.
-이번 포스트에서는 Spring에서 제공하는 AOP 기능과 작동방식에 대해서 알아보도록 하겠다.
-Spring AOP
-AOP란 횡단 관심사 (Cross Cutting Concern) 을 한데 모아 로직을 설계한다음
-런타임(Runtime) 시, 클래스 로드 (Load Time) 시, 컴파일(Compile ......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by Carrey on
-            2018-07-21
-        </p>
-        <div class="tags">
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2018/07/20/2018-07-20-spring-aop2/">
-        <h2 class="post-title">
-            Spring AOP (2)
-        </h2>
-        <h3 class="post-subtitle">
-            2. AOP에서 사용되는 용어 정리
-        </h3>
-        <div class="post-content-preview">
-            앞선 포스팅에선 간단하게 AOP의 필요성과 간단한 예제 코드를 통해 풀어보는 방법을 적어보았다.
-여기서는 AOP의 개념적인 의미에 대해서 정리해보고 AOP 세상에서 사용되는 용어들에 대한 정리 해보았다.
-AOP(Aspect Oriented Programming) 란?
-AOP의 등장배경
-AOP의 등장배경을 알기 위해 프로그래밍의 패러다임을 살펴보면, 오......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by Carrey on
-            2018-07-20
-        </p>
-        <div class="tags">
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2018/07/15/2018-07-15-spring-aop/">
-        <h2 class="post-title">
-            Spring AOP (1)
-        </h2>
-        <h3 class="post-subtitle">
-            1. AOP를 사용해야 하는 이유
-        </h3>
-        <div class="post-content-preview">
-            개발 하던 중에 Custom Annotation을 구현해서 사용해야 할 일이 생겼다.
-Custom Annotation을 구현하기 위해선 Spring AOP와 AspectJ의 기능을 사용하여 구현해야 하는데, 이번 기회에  다시 한번 Spring AOP에 대해 정리 해보려고 이 포스팅을 기록 하게 되었다.
-들어가면서…
-정리하고자 하는 내용
-
-AOP를 사......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by Carrey on
-            2018-07-15
-        </p>
-        <div class="tags">
-            
-        </div>
-    
-
-</div>
-<hr>
-
-
-
-<!-- Pager -->
-
-<ul class="pager">
-    
-        <li class="previous">
-            <a href="/">&larr; Newer Posts</a>
-        </li>
-    
-    
-</ul>
-
-
-
-                <!-- 如果开启评论功能 -->
+                <!-- Friends Blog -->
                 
             </div>
-
-          <!-- Sidebar Container -->
-<div class="
-    col-lg-3 col-lg-offset-0
-    col-md-3 col-md-offset-0
-    col-sm-12
-    col-xs-12
-    sidebar-container
-">
-    
-        <!-- Featured Tags -->
-
-<section>
-    <!-- no hr -->
-    <h5><a href="/tags/">FEATURED TAGS</a></h5>
-    <div class="tags">
-        
-            
-            <a href="/tags/#Spring" title="Spring" rel="8">Spring</a>
-            
-        
-            
-        
-            
-            <a href="/tags/#Spring Core" title="Spring Core" rel="2">Spring Core</a>
-            
-        
-            
-        
-            
-        
+        </div>
     </div>
-</section>
+</article>
 
-        <hr>
-    
-        <!-- Short About -->
-<section class="visible-md visible-lg">
-    <h5><a href="/about/">ABOUT ME</a></h5>
-    <div class="short-about">
 
-        
-            <img id = "avatar_pic" src="/img/ironman-draw.png" />
-        
 
-        
-            <p>일을 하면서 배우는 지식과 별도로 공부한 지식을 정리한 블로그입니다.</p>
-        
 
-        <!-- SNS Link -->
-        <ul class="list-inline">
-            
-            
-            
+<!-- disqus embedded js code start (one page only need to embed once) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "your-disqus-ID";
+    var disqus_identifier = "http://yoursite-url/2018/09/21/2018-09-21-spring-ioc-2/";
+    var disqus_url = "http://yoursite-url/2018/09/21/2018-09-21-spring-ioc-2/";
 
-            
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus embedded js code start end -->
 
-            
 
-            
-                <li>
-                    <a target="_blank"  href="https://github.com/jaehun2841">
-                        <span class="fa-stack fa-lg">
-                            <i class="fa fa-circle fa-stack-2x"></i>
-                            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                        </span>
-                    </a>
-                </li>
-            
-            
-            
-            
-        </ul>
-    </div>
-</section>
-        <hr>
-    
-        
-  <h5>RECENT POSTS</h3>
-  <div class="widget">
-    <ul>
-      
-        <li>
-          <a href="../../2018/09/21/2018-09-12-spring-ioc/">Spring IoC &amp; DI(!) - IoC 등장배경(과정)</a>
-        </li>
-      
-        <li>
-          <a href="../../2018/09/21/2018-09-21-spring-ioc-2/">2018-09-21-Spring-Ioc-2</a>
-        </li>
-      
-        <li>
-          <a href="../../2018/09/01/2018-09-01-servlet/">Servlet이란?</a>
-        </li>
-      
-        <li>
-          <a href="../../2018/08/30/2018-08-25-spring-mvc-handle-exception/">Spring Handle Exception</a>
-        </li>
-      
-        <li>
-          <a href="../../2018/08/30/2018-08-29-java-exception/">Java Exception</a>
-        </li>
-      
-    </ul>
-  </div>
 
-        <hr>
-    
-        <!-- Friends Blog -->
 
-        <hr>
-    
-        
-    <h5>ARCHIVES</h5>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="../2018/09/">September 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="../2018/08/">August 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="../2018/07/">July 2018</a><span class="archive-list-count">5</span></li></ul>
-    </div>
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
 
-        <hr>
-    
-        <!-- Categories -->
-
-        <hr>
-    
-</div>
-
-        
-    </div>
-</div>
 
 
     <!-- Footer -->
@@ -529,13 +426,13 @@ AOP를 사......
 </footer>
 
 <!-- jQuery -->
-<script src="../../js/jquery.min.js"></script>
+<script src="../../../../js/jquery.min.js"></script>
 
 <!-- Bootstrap Core JavaScript -->
-<script src="../../js/bootstrap.min.js"></script>
+<script src="../../../../js/bootstrap.min.js"></script>
 
 <!-- Custom Theme JavaScript -->
-<script src="../../js/hux-blog.min.js"></script>
+<script src="../../../../js/hux-blog.min.js"></script>
 
 
 <!-- async load function -->
