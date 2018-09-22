@@ -4,5 +4,10 @@ subtitle:
 date: {{ date }}
 catalog: true
 header-img:
-tags:
+Categories:
+ - Spring
+tags: 
+ - Spring
+typora-root-url: {{ title }}
+typora-copy-images-to: {{ title }}
 ---
