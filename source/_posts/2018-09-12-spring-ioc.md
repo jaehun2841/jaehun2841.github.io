@@ -35,7 +35,7 @@ A --> B 라고 표현한다 (UML에서는 클래스 간의 Dependency를 점선�
 
 ## 클래스 -> 클래스 호출 관계
 
-![image-20180921143924788](/image-20180921143924788.png)
+![image-20180921143924788](./image-20180921143924788.png)
 
 ~~~java
 public class Student {
@@ -102,7 +102,7 @@ Breakfast/Lunch/Dinner클래스를 자세히 보면… getInfo() 메소드가 �
 그렇게 되면 eat이라는 메소드 하나만으로도 아침~저녁을 먹을 수 있는 기능을 구현할 수 있다.
 위에서 말로 한 얘기를 코드로 풀어보면..
 
-![image-20180921145310488](/image-20180921145310488.png)
+![image-20180921145310488](./image-20180921145310488.png)
 
 
 
@@ -153,7 +153,7 @@ Restaurant입장에서는 개발자가 생성한 객체가 아닌 `외부로 부
 
 팩토리 패턴으로 만든 코드를 만들게 된다면, 아래와 같이 만들 수 있을 것이다.
 
-![image-20180921153027741](/image-20180921153027741.png)
+![image-20180921153027741](./image-20180921153027741.png)
 
 ~~~java
 public class Student {
@@ -228,7 +228,8 @@ public class Student {
     private EatFactory eatFactory;
     
     public static void main(String[] args) {
-
+        
+		SpringApplication.run(SpringStudyApplication.class, args);
         //식사 시작
         restaurant.eat(eatFactory.get(Meal.BREAKFAST));
         restaurant.eat(eatFactory.get(Meal.LUNCH));
