@@ -30,15 +30,22 @@
     </url>
 
     <url>
-        <loc>http://yoursite-url/tags/Spring/</loc>
+        <loc>http://yoursite-url/tags/WAS/</loc>
         <lastmod>2018-10-21T09:40:14.654Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>http://yoursite-url/tags/WAS/</loc>
-        <lastmod>2018-10-21T09:40:14.654Z</lastmod>
+        <loc>http://yoursite-url/tags/Spring/</loc>
+        <lastmod>2018-10-21T10:25:29.714Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yoursite-url/tags/Java-Config/</loc>
+        <lastmod>2018-10-21T10:25:29.714Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
