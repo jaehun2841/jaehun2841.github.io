@@ -7,6 +7,14 @@
     </url>
 
     <url>
+        <loc>http://yoursite-url/2018/10/21/2018-10-21-spring-context/</loc>
+        <lastmod>2018-10-21T09:32:26.778Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://yoursite-url/2018/09/22/2018-09-21-spring-ioc-2/</loc>
         <lastmod>2018-09-22T08:58:20.365Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -87,14 +95,6 @@
     </url>
 
     <url>
-        <loc>http://yoursite-url/2018/07/15/2018-07-15-spring-aop/</loc>
-        <lastmod>2018-08-08T13:44:40.030Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
         <loc>http://yoursite-url/2018/07/20/2018-07-20-spring-aop2/</loc>
         <lastmod>2018-08-08T13:44:40.030Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -112,6 +112,14 @@
 
     <url>
         <loc>http://yoursite-url/2018/07/22/2018-07-22-spring-aop4/</loc>
+        <lastmod>2018-08-08T13:44:40.030Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://yoursite-url/2018/07/15/2018-07-15-spring-aop/</loc>
         <lastmod>2018-08-08T13:44:40.030Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>

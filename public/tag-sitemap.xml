@@ -31,7 +31,14 @@
 
     <url>
         <loc>http://yoursite-url/tags/Spring/</loc>
-        <lastmod>2018-09-22T08:58:20.365Z</lastmod>
+        <lastmod>2018-10-21T09:32:26.778Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yoursite-url/tags/WAS/</loc>
+        <lastmod>2018-10-21T09:32:26.778Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
