@@ -231,16 +231,15 @@ Bean의 생성 위치 상, AOP를 적용할 수 없었기 때문에 발생한 �
 <li>Spring에서 ApplicationContext란 BeanFactory를 상속받고 있는 Context</li>
 <li>Spring에서 root-context.xml, applicationContext.xml 파일은 ApplicationContext 생성 시 필요한<br>
 설정정보를 담은 파일 (Bean 선언 등…)</li>
-<li>Spring에서 생성되는Bean에 대한 IoC Container (또는 Bean Container)</li>
-<li>Spring에서 생성하는 모든 Bean은 Application Context에 생성된다.</li>
+<li>Spring에서 생성되는 Bean에 대한 IoC Container (또는 Bean Container)</li>
 <li>특정 Servlet설정과 관계 없는 설정을 한다 (@Service, @Repository, @Configuration, @Component)</li>
 <li>서로 다른 여러 Servlet에서 공통적으로 공유해서 사용할 수 있는 Bean을 선언한다.</li>
 <li><strong>Application Context에 정의된 Bean은 Servlet Context에 정의 된 Bean을 사용할 수 없다.</strong></li>
 </ul>
 <h2><span id="servlet-context-servlet-contextxml">Servlet-Context (servlet-context.xml)</span></h2>
 <ul>
-<li>Servlet단위로 생성되는 context</li>
-<li>Spring에서 servlet context.xml 파일은 DispatcherServlet 생성 시에 필요한 설정 정보를 담은 파일<br>
+<li>Servlet 단위로 생성되는 context</li>
+<li>Spring에서 servlet-context.xml 파일은 DispatcherServlet 생성 시에 필요한 설정 정보를 담은 파일<br>
 (Interceptor, Bean생성, ViewResolver등…)</li>
 <li>URL설정이 있는 Bean을 생성 (@Controller, Interceptor)</li>
 <li>Application Context를 자신의 부모 Context로 사용한다.</li>
@@ -281,8 +280,10 @@ Servlet Context에 선언된 Bean을 사용한다.</li>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">"com.myapp.core, com.myapp.app"</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- Component-scan대상에서 @Controller annotation Class는 제외한다. --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">context:exclude-filter</span> <span class="attr">type</span>=<span class="string">"annotation"</span> <span class="attr">expression</span>=<span class="string">"org.springframework.stereotype.Controller"</span>/&gt;</span> </span><br><span class="line"><span class="tag">&lt;/<span class="name">context:component-scan</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>Servlet-Context.xml</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">"com.myapp.app"</span> <span class="attr">use-default-filters</span>=<span class="string">"false"</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- Component-scan대상은 @Controller annotation Class만 scan한다. --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">context:include-filter</span> <span class="attr">type</span>=<span class="string">"annotation"</span> <span class="attr">expression</span>=<span class="string">"org.springframework.stereotype.Controller"</span>/&gt;</span> </span><br><span class="line"><span class="tag">&lt;/<span class="name">context:component-scan</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>Servlet-Context.xml 설정 시, use-default-filters 속성을 false로 처리 하였다.<br>
-use-default-filters 속성은 원래 default가 true인데, @Compont Annotation(@Controller, @Service, @Repository등…) 의 클래스를 자동으로 Bean으로 등록해 주는 filter속성이다. 따라서 위의 필터를 false로 변경하고, scan할 대상에 대한 Annotation만 include-filter에 추가하였다.</p>
+<p>Servlet-Context.xml 설정 시, <code>use-default-filters</code> 속성을 <code>false</code>로 처리 하였다.<br>
+<code>use-default-filters</code> 속성은 원래 <code>default가 true</code>인데,<br>
+@Compont Annotation(@Controller, @Service, @Repository등…) 의 <code>클래스를 자동으로 Bean으로 등록해 주는 filter속성</code>이다.<br>
+따라서 위의 필터를 false로 변경하고, scan할 대상에 대한 Annotation만 include-filter에 추가하였다.</p>
 <h1><span id="참조">참조</span></h1>
 <ul>
 <li><a href="http://hoonmaro.tistory.com/31" target="_blank" rel="noopener">http://hoonmaro.tistory.com/31</a></li>
