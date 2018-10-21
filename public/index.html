@@ -213,6 +213,40 @@
 
 <div class="post-preview">
 
+    <a href="/2018/10/21/2018-10-21-spring-context/">
+        <h2 class="post-title">
+            Application-Context와 Servlet-Context
+        </h2>
+        <h3 class="post-subtitle">
+            AOP가 적용되지 않아서...
+        </h3>
+        <div class="post-content-preview">
+            들어가며
+회사 업무 중에 AOP를 이용하여 개발 중에 AOP가 제대로 설정이 되지 않는 문제가 있었다.
+문제의 원인은 Component-scan 위치에 따른 Bean 생성 위치에 있었다.
+core가 되는 프로젝트는 applicationContext에서 component-scan을 통해 bean을 생성 하고 있었고,
+각 endpoint가 되는 프로젝트내......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Carrey on
+            2018-10-21
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Spring" title="Spring">Spring</a>
+            
+              <a href="/tags/#WAS" title="WAS">WAS</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
     <a href="/2018/09/22/2018-09-21-spring-ioc-2/">
         <h2 class="post-title">
             Spring IoC & DI(2)
@@ -489,37 +523,6 @@ Spring MVC Framework의 유일한 Front Controller인 DispatcherServlet은 Sprin
 </div>
 <hr>
 
-<div class="post-preview">
-
-    <a href="/2018/07/24/2018-07-24-spring-aop5/">
-        <h2 class="post-title">
-            Spring AOP (5)
-        </h2>
-        <h3 class="post-subtitle">
-            5. Custom Annotation Pointcut
-        </h3>
-        <div class="post-content-preview">
-            AOP를 어느정도 공부하고 회사 업무에 써먹어 보기로 했다.
-결제에 대한 로그 데이터를 DB에 Insert하는 로직을 AOP로 구현하고 코드 리뷰를 딱! 올렸다.
-AOP사용 시 주의 할 부분에 대한 리뷰가 달렸다.
-아래의 리뷰와 같다.
-
-메소드 명에 대한 와일드 카드 처리는 AOP를 설정한지 모르는 다른 개발자가 똑같은 prefix로 시작하는 경우 의......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by Carrey on
-            2018-07-24
-        </p>
-        <div class="tags">
-            
-        </div>
-    
-
-</div>
-<hr>
-
 
 
 <!-- Pager -->
@@ -556,13 +559,15 @@ AOP사용 시 주의 할 부분에 대한 리뷰가 달렸다.
     <div class="tags">
         
             
-            <a href="/tags/#Spring" title="Spring" rel="8">Spring</a>
-            
-        
+            <a href="/tags/#Spring" title="Spring" rel="9">Spring</a>
             
         
             
             <a href="/tags/#Spring Core" title="Spring Core" rel="2">Spring Core</a>
+            
+        
+            
+        
             
         
             
@@ -621,6 +626,10 @@ AOP사용 시 주의 할 부분에 대한 리뷰가 달렸다.
     <ul>
       
         <li>
+          <a href="2018/10/21/2018-10-21-spring-context/">Application-Context와 Servlet-Context</a>
+        </li>
+      
+        <li>
           <a href="2018/09/22/2018-09-21-spring-ioc-2/">Spring IoC &amp; DI(2)</a>
         </li>
       
@@ -636,10 +645,6 @@ AOP사용 시 주의 할 부분에 대한 리뷰가 달렸다.
           <a href="2018/08/30/2018-08-25-spring-mvc-handle-exception/">Spring Handle Exception</a>
         </li>
       
-        <li>
-          <a href="2018/08/30/2018-08-29-java-exception/">Java Exception</a>
-        </li>
-      
     </ul>
   </div>
 
@@ -652,7 +657,7 @@ AOP사용 시 주의 할 부분에 대한 리뷰가 달렸다.
         
     <h5>ARCHIVES</h5>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="archives/2018/09/">September 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2018/08/">August 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2018/07/">July 2018</a><span class="archive-list-count">5</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="archives/2018/10/">October 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2018/09/">September 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2018/08/">August 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2018/07/">July 2018</a><span class="archive-list-count">5</span></li></ul>
     </div>
 
         <hr>

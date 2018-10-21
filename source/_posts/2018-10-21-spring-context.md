@@ -39,8 +39,7 @@ Bean의 생성 위치 상, AOP를 적용할 수 없었기 때문에 발생한 �
 * Spring에서 ApplicationContext란 BeanFactory를 상속받고 있는 Context
 * Spring에서 root-context.xml, applicationContext.xml 파일은 ApplicationContext 생성 시 필요한
   설정정보를 담은 파일 (Bean 선언 등..)
-* Spring에서 생성되는Bean에 대한 IoC Container (또는 Bean Container)
-* Spring에서 생성하는 모든 Bean은 Application Context에 생성된다.
+* Spring에서 생성되는 Bean에 대한 IoC Container (또는 Bean Container)
 * 특정 Servlet설정과 관계 없는 설정을 한다 (@Service, @Repository, @Configuration, @Component)
 * 서로 다른 여러 Servlet에서 공통적으로 공유해서 사용할 수 있는 Bean을 선언한다.
 * **Application Context에 정의된 Bean은 Servlet Context에 정의 된 Bean을 사용할 수 없다.**
@@ -49,8 +48,8 @@ Bean의 생성 위치 상, AOP를 적용할 수 없었기 때문에 발생한 �
 
 ## Servlet-Context (servlet-context.xml)
 
-* Servlet단위로 생성되는 context
-* Spring에서 servlet context.xml 파일은 DispatcherServlet 생성 시에 필요한 설정 정보를 담은 파일
+* Servlet 단위로 생성되는 context
+* Spring에서 servlet-context.xml 파일은 DispatcherServlet 생성 시에 필요한 설정 정보를 담은 파일
   (Interceptor, Bean생성, ViewResolver등..)
 * URL설정이 있는 Bean을 생성 (@Controller, Interceptor)
 * Application Context를 자신의 부모 Context로 사용한다.
@@ -152,8 +151,10 @@ Servlet-Context.xml
 </context:component-scan>
 ~~~
 
-Servlet-Context.xml 설정 시, use-default-filters 속성을 false로 처리 하였다.
-use-default-filters 속성은 원래 default가 true인데, @Compont Annotation(@Controller, @Service, @Repository등..) 의 클래스를 자동으로 Bean으로 등록해 주는 filter속성이다. 따라서 위의 필터를 false로 변경하고, scan할 대상에 대한 Annotation만 include-filter에 추가하였다.
+Servlet-Context.xml 설정 시, `use-default-filters` 속성을 `false`로 처리 하였다.
+`use-default-filters` 속성은 원래 `default가 true`인데, 
+@Compont Annotation(@Controller, @Service, @Repository등..) 의 `클래스를 자동으로 Bean으로 등록해 주는 filter속성`이다. 
+따라서 위의 필터를 false로 변경하고, scan할 대상에 대한 Annotation만 include-filter에 추가하였다.
 
 
 
