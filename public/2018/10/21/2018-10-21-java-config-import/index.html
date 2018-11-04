@@ -240,8 +240,7 @@ xml을 로드해서 전체 Bean을 올리는게 아닌, 필요한 Bean 설정만
 사용법은 간단하다. @ImportResource Annotation value에 배열 형태로 선언만 해주면 되기 때문이다.</p>
 <p>예시는 아래와 같다.</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@ImportResource</span>(value = &#123;</span><br><span class="line">		<span class="string">"classpath:applicationContextForExternalMember.xml"</span>,    <span class="comment">//External-Member</span></span><br><span class="line">		<span class="string">"classpath*:applicationContextForExternalAPI.xml"</span>,      <span class="comment">//External-API</span></span><br><span class="line">		<span class="string">"classpath*:applicationContextForExternalLogger.xml"</span>    <span class="comment">//External-Logger</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ExternalConfig</span> </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>위와같이 설정하면, @Configuration Annotation에 의해 Component-scan 되는 시점에 해당 파일들이 import되어<br>
-Configuration 설정이 적용된다.</p>
+<p>위와같이 설정하면, @Configuration Annotation에 의해 Component-scan 되는 시점에 해당 파일들이 import되어 Configuration 설정이 적용된다.</p>
 
                 
 
