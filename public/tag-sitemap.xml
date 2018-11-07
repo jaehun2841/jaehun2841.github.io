@@ -45,21 +45,21 @@
 
     <url>
         <loc>http://yoursite-url/tags/Spring/</loc>
-        <lastmod>2018-11-07T14:38:40.858Z</lastmod>
+        <lastmod>2018-11-07T14:46:51.007Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>http://yoursite-url/tags/Spring-Boot/</loc>
-        <lastmod>2018-11-07T14:38:40.858Z</lastmod>
+        <lastmod>2018-11-07T14:46:51.007Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>http://yoursite-url/tags/EHCache/</loc>
-        <lastmod>2018-11-07T14:38:40.858Z</lastmod>
+        <lastmod>2018-11-07T14:46:51.007Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
