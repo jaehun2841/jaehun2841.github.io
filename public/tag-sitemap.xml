@@ -3,63 +3,70 @@
 
     <url>
         <loc>http://yoursite-url/tags/core/</loc>
-        <lastmod>2018-08-12T09:25:11.005Z</lastmod>
+        <lastmod>2018-11-11T17:22:09.438Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>http://yoursite-url/tags/Spring-Core/</loc>
-        <lastmod>2018-08-31T15:30:56.279Z</lastmod>
+        <lastmod>2018-11-11T17:22:09.441Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>http://yoursite-url/tags/Java/</loc>
-        <lastmod>2018-08-31T15:30:56.284Z</lastmod>
+        <lastmod>2018-11-11T17:22:09.447Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>http://yoursite-url/tags/J2EE/</loc>
-        <lastmod>2018-09-01T08:39:18.530Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>http://yoursite-url/tags/WAS/</loc>
-        <lastmod>2018-10-21T09:40:14.654Z</lastmod>
+        <lastmod>2018-11-11T17:22:09.449Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>http://yoursite-url/tags/Java-Config/</loc>
-        <lastmod>2018-10-21T10:28:15.034Z</lastmod>
+        <lastmod>2018-11-11T17:22:09.462Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>http://yoursite-url/tags/Spring/</loc>
-        <lastmod>2018-11-07T14:46:51.007Z</lastmod>
+        <loc>http://yoursite-url/tags/WAS/</loc>
+        <lastmod>2018-11-11T17:22:09.462Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>http://yoursite-url/tags/Spring-Boot/</loc>
-        <lastmod>2018-11-07T14:46:51.007Z</lastmod>
+        <lastmod>2018-11-11T17:22:09.463Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>http://yoursite-url/tags/EHCache/</loc>
-        <lastmod>2018-11-07T14:46:51.007Z</lastmod>
+        <lastmod>2018-11-11T17:22:09.463Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yoursite-url/tags/Spring/</loc>
+        <lastmod>2018-11-25T09:09:34.997Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yoursite-url/tags/SpEL/</loc>
+        <lastmod>2018-11-25T09:09:34.997Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
