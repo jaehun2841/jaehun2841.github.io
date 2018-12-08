@@ -213,6 +213,130 @@
 
 <div class="post-preview">
 
+    <a href="/2018/12/01/2018-12-01-docker-4/">
+        <h2 class="post-title">
+            Docker기반 Redis 구축하기 - (4) Docker-Compose 설치 및 사용방법
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            Docker-Compose 이란?
+기존에는 Docker를 이용해서 1개의 이미지를 바탕으로 하나의 소프트웨어에 대한 컨테이너를 만들 수 있었습니다.
+하지만 목표는 Web Server도 설치하고, DB도 설치하고, IDE도 설치해서 한 세트로 배포를 해주고 싶은데… 지금까지 배운 방법으로는 Docker image를 내가 필요한 것만큼 다운받아서 Cont......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Carrey on
+            2018-12-01
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Docker" title="Docker">Docker</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2018/12/01/2018-12-01-docker-3/">
+        <h2 class="post-title">
+            Docker기반 Redis 구축하기 - (3)Dockerfile
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            Dockerfile 이란?
+이전 예제에서는 Docker Hub에 등록된 이미지를 다운받아서 사용하였고, 이미지를 바탕으로 Container를 생성 할 수 있었습니다. Docker Hub에는 각 소프트웨어에 대한 공식이미지도 있지만, Docker Hub 사용자들이 공식이미지를 바탕으로 커스터마이징하여 배포한 이미지도 등록되어 있습니다.
+어떻게 이미지를 ......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Carrey on
+            2018-12-01
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Docker" title="Docker">Docker</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2018/11/28/2018-11-28-docker-2/">
+        <h2 class="post-title">
+            Docker기반 Redis 구축하기 - (2)Docker 설치 및 사용방법
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            들어가며
+지난 장에서는 Docker에 대한 개념, Image와 컨테이너, VM과의 차이점등을 그림으로 설명하였습니다.
+이번 장부터는 Docker를 linux서버에 설치하는 과정을 설명하고자 합니다.
+(Linux서버 설치는 hyper-v를 이용하여 vm으로 설치 하였습니다. &lt;차후에 hyper-v 설정기를 올릴 예정입니다.&gt;)
+Windows,......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Carrey on
+            2018-11-28
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Docker" title="Docker">Docker</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2018/11/25/2018-11-25-docker-1/">
+        <h2 class="post-title">
+            Docker기반 Redis 구축하기 - (1)Docker란 무엇인가?
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            Docker란 무엇인가?
+
+Docker란 Linux 컨테이너(Container) 기반의 오픈소스 가상화 플랫폼 입니다.
+위의 Docker 이미지처럼 선박에 화물을 수송하는 이미지를 떠올리면 이해하기가 쉬운데, 실제 선박에는 자동차, 오토바이, 전자제품등 여러 물건을 담을 수 있습니다.
+선박에 대한 이미지를 유지한 채, Web Service 운영환경을 ......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Carrey on
+            2018-11-25
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Docker" title="Docker">Docker</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
     <a href="/2018/11/25/2018-11-25-spel-expression-2/">
         <h2 class="post-title">
             SpEL Expression(2)
@@ -423,136 +547,6 @@ Ca......
 </div>
 <hr>
 
-<div class="post-preview">
-
-    <a href="/2018/10/21/2018-10-21-spring-context/">
-        <h2 class="post-title">
-            Application-Context와 Servlet-Context
-        </h2>
-        <h3 class="post-subtitle">
-            AOP가 적용되지 않아서...
-        </h3>
-        <div class="post-content-preview">
-            들어가며
-회사 업무 중에 AOP를 이용하여 개발 중에 AOP가 제대로 설정이 되지 않는 문제가 있었다.
-문제의 원인은 Component-scan 위치에 따른 Bean 생성 위치에 있었다.
-core가 되는 프로젝트는 applicationContext에서 component-scan을 통해 bean을 생성 하고 있었고,
-각 endpoint가 되는 프로젝트내......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by Carrey on
-            2018-10-21
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#Spring" title="Spring">Spring</a>
-            
-              <a href="/tags/#WAS" title="WAS">WAS</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2018/09/22/2018-09-21-spring-ioc-2/">
-        <h2 class="post-title">
-            Spring IoC & DI(2)
-        </h2>
-        <h3 class="post-subtitle">
-            Spring IoC와 DI
-        </h3>
-        <div class="post-content-preview">
-            IoC란?
-Inversion of Control (제어의 역전) 이라는 의미로 사용되고 있다.
-보통의 프로그램에서는 개발자가 필요한 객체를 직접 new를 통해 생성하여 사용한다.
-하지만 Spring과 같은 프레임워크에서는 흐름의 주체가 Container가 되어 Container에서 객체의 생성과 소멸을 관리하며
-개발자가 개발한 애플리케이션 코드를 호출......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by Carrey on
-            2018-09-22
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#Spring" title="Spring">Spring</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2018/09/21/2018-09-12-spring-ioc/">
-        <h2 class="post-title">
-            Spring IoC & DI(1) - IoC 등장배경(과정)
-        </h2>
-        <h3 class="post-subtitle">
-            IoC/DI의 발전과정
-        </h3>
-        <div class="post-content-preview">
-            IoC 등장배경
-IoC의 등장배경을 알기 위해서는 EJB나 Spring과 같은 프레임워크를 사용하기 이전 시대의 개발 방식에 대해 얘기를 해야한다.
-온고지신(?)이라 하였던가… IoC를 이해하기 위해 옛날이야기를 해보도록 하겠다.
-태초에 Java로 만든 프로그램은 main()이라는 메소드에서 시작이 되었다.
-main() 메소드 내에서 필요한 클래스를 ......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by Carrey on
-            2018-09-21
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#Spring" title="Spring">Spring</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2018/09/01/2018-09-01-servlet/">
-        <h2 class="post-title">
-            Servlet이란?
-        </h2>
-        <h3 class="post-subtitle">
-            Servlet.. 항상 이름만 들어본 그대여
-        </h3>
-        <div class="post-content-preview">
-            
-들어가며
-약 4년 동안 개발하면서, Spring core에 대한 공부를 하지 않고, “이렇게 코딩하면 이렇게 동작하네~” 라는 생각만 가지고 개발을 해왔었다. 근 1~2달 간 Spring core 부분에 관심을 가지며 동작 원리에 대한 지식을 습득하였다. 그러면서 “이게 이래서 이렇게 동작하는구나~” 라고 개인적으로 Spring에 대한 insight......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by Carrey on
-            2018-09-01
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#Spring" title="Spring">Spring</a>
-            
-              <a href="/tags/#J2EE" title="J2EE">J2EE</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
 
 
 <!-- Pager -->
@@ -597,15 +591,19 @@ main() 메소드 내에서 필요한 클래스를 ......
             
         
             
+        
+            
             <a href="/tags/#EHCache" title="EHCache" rel="2">EHCache</a>
+            
+        
+            
+            <a href="/tags/#Docker" title="Docker" rel="4">Docker</a>
             
         
             
         
             
             <a href="/tags/#Spring Core" title="Spring Core" rel="2">Spring Core</a>
-            
-        
             
         
             
@@ -668,23 +666,23 @@ main() 메소드 내에서 필요한 클래스를 ......
     <ul>
       
         <li>
+          <a href="2018/12/01/2018-12-01-docker-4/">Docker기반 Redis 구축하기 - (4) Docker-Compose 설치 및 사용방법</a>
+        </li>
+      
+        <li>
+          <a href="2018/12/01/2018-12-01-docker-3/">Docker기반 Redis 구축하기 - (3)Dockerfile</a>
+        </li>
+      
+        <li>
+          <a href="2018/11/28/2018-11-28-docker-2/">Docker기반 Redis 구축하기 - (2)Docker 설치 및 사용방법</a>
+        </li>
+      
+        <li>
+          <a href="2018/11/25/2018-11-25-docker-1/">Docker기반 Redis 구축하기 - (1)Docker란 무엇인가?</a>
+        </li>
+      
+        <li>
           <a href="2018/11/25/2018-11-25-spel-expression-2/">SpEL Expression(2)</a>
-        </li>
-      
-        <li>
-          <a href="2018/11/21/2018-11-21-spel-expression/">SpEL Expression(1)</a>
-        </li>
-      
-        <li>
-          <a href="2018/11/07/2018-11-04-ehcache-config-for-springboot/">EHCache 설정방법 (Spring Boot)</a>
-        </li>
-      
-        <li>
-          <a href="2018/11/07/2018-11-04-ehcache-config-for-springframework/">EHCache 설정방법 (Spring Framework)</a>
-        </li>
-      
-        <li>
-          <a href="2018/11/07/2018-10-03-spring-ehcache/">Cache에 대하여.. (Spring+EHCache)</a>
         </li>
       
     </ul>
@@ -699,7 +697,7 @@ main() 메소드 내에서 필요한 클래스를 ......
         
     <h5>ARCHIVES</h5>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="archives/2018/11/">November 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2018/10/">October 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2018/09/">September 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2018/08/">August 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2018/07/">July 2018</a><span class="archive-list-count">5</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2018/11/">November 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2018/10/">October 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2018/09/">September 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2018/08/">August 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2018/07/">July 2018</a><span class="archive-list-count">5</span></li></ul>
     </div>
 
         <hr>
