@@ -213,6 +213,231 @@
 
 <div class="post-preview">
 
+    <a href="/2018/12/07/2018-12-07-docker-11/">
+        <h2 class="post-title">
+            Docker기반 Redis 구축하기 - (11) Redis-Cli Docker로 사용하기
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            들어가며
+Redis를 운영하다 보면 redis-cli를 주로 사용하게 되는데
+항상 docker exec 명령을 통해 docker container 내의 redis-cli를 사용하여 불편한 점이 많았습니다.
+찾아보니 간단하게 Docker로 Redis-cli를 사용할 방법이 있어 기록을 남기게 되었습니다.
+Docker로 Redis-cli 접속하기
+1234......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Carrey on
+            2018-12-07
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Docker" title="Docker">Docker</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2018/12/03/2018-12-03-docker-10/">
+        <h2 class="post-title">
+            Docker기반 Redis 구축하기 - (10) Redis Cluster Mode 설정하기
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            들어가며
+이전 장 까지 했던 Redis 구조는 Redis Replication + Redis Sentinel을 이용한 failover 기능을 구성하고 있었습니다. Spring Application에서 Jedis를 이용하여 Application sharding을 구성하여 사용을 하였습니다. 이렇게 Redis를 잘 사용하나 싶었지만, 최근 Spring C......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Carrey on
+            2018-12-03
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Docker" title="Docker">Docker</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2018/12/03/2018-12-03-redis-stats/">
+        <h2 class="post-title">
+            Docker기반 Redis 구축하기 - (9) Redis-Stats을 이용한 모니터링
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            Redis-stats
+Redis-stat은 대표적인 오픈소스 Redis 모니터링 도구입니다.
+Ruby 기반으로 동작하는 프로그램이며, Ruby만 설치되어 있다면 설치가 간편하고 Web 또는 Console로 Redis 서버를 모니터링 할 수 있습니다.
+비슷한 모니터링 도구로 Redmon, RedisLive등이 있지만… Redis 4이상 버전을 아직 지원......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Carrey on
+            2018-12-03
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Docker" title="Docker">Docker</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2018/12/02/2018-12-02-docker-8/">
+        <h2 class="post-title">
+            Docker기반 Redis 구축하기 - (8) HAProxy를 이용한 분산처리 환경 구축하기
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            HAProxy란?
+HAProxy는 기존의 하드웨어 스위치(L4/L7)을 대체하는 소프트웨어 로드밸런서입니다.
+로드 밸런싱이란 부하 분산을 위해서 가상IP를 통해 여러서버에 접속하도록 트래픽을 분배해 주는 기능을 의미합니다.
+Redis-Cluster에 HAProxy가 필요한 이유
+Redis Cluster에서는 Failover가 일어날 수 있습니다.
+처음......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Carrey on
+            2018-12-02
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Docker" title="Docker">Docker</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2018/12/02/2018-12-02-docker-7/">
+        <h2 class="post-title">
+            Docker기반 Redis 구축하기 - (7) Docker를 이용한 Redis Sentinel 설치하기
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            Redis Sentinel이란?
+Redis Cluster 운영환경에서 Master-Slave 관계를 가진 Redis가 있습니다.
+시스템 오류나 알수 없는 원인으로 인해 Master Redis가 down되어 연결이 중단 되면, 사용자나 Application에서는 Redis Master를 통해 데이터를 등록 할 수 없게 됩니다.
+이런 경우 Slave Re......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Carrey on
+            2018-12-02
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Docker" title="Docker">Docker</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2018/12/01/2018-12-01-docker-6/">
+        <h2 class="post-title">
+            Docker기반 Redis 구축하기 - (6) Docker를 이용한 Redis Cluster 설치하기
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            Redis Cluster 구성도
+
+간단하게 정리하면.
+
+각 서버 별로 Redis 3대를 설치. Master 1개, Slave 2개로 구성하여 Replication을 지원할 수 있도록 Cluster를 구성하였습니다.
+각 서버 별로 Sentinel 3대를 설치. 양대비 원리에 맞추어 홀수개로 설정 하였습니다.
+각각의 서버의 Sentinel 3대가 서버의 ......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Carrey on
+            2018-12-01
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Docker" title="Docker">Docker</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
+    <a href="/2018/12/01/2018-12-01-docker-5/">
+        <h2 class="post-title">
+            Docker기반 Redis 구축하기 - (5) Docker Network구조
+        </h2>
+        <h3 class="post-subtitle">
+            
+        </h3>
+        <div class="post-content-preview">
+            Docker Network 모드
+Docker에서 제공하는 Network 모드는 총 4개 입니다.
+(추가적으로 2개의 모드가 더 있습니다. Overlay, Macvlan 모드가 있지만 Docker Swarm과 관련된 내용이므로 이번 장에서는 기술 하지 않겠습니다.)
+
+Bridge 모드
+Container 모드 (이것도 Bridge 모드의 일종)
+Host ......
+        </div>
+    </a>
+    
+        <p class="post-meta" style="margin: 10px 0;">
+            Posted by Carrey on
+            2018-12-01
+        </p>
+        <div class="tags">
+            
+              <a href="/tags/#Docker" title="Docker">Docker</a>
+            
+        </div>
+    
+
+</div>
+<hr>
+
+<div class="post-preview">
+
     <a href="/2018/12/01/2018-12-01-docker-4/">
         <h2 class="post-title">
             Docker기반 Redis 구축하기 - (4) Docker-Compose 설치 및 사용방법
@@ -245,7 +470,7 @@
 
     <a href="/2018/12/01/2018-12-01-docker-3/">
         <h2 class="post-title">
-            Docker기반 Redis 구축하기 - (3)Dockerfile
+            Docker기반 Redis 구축하기 - (3) Dockerfile
         </h2>
         <h3 class="post-subtitle">
             
@@ -275,7 +500,7 @@
 
     <a href="/2018/11/28/2018-11-28-docker-2/">
         <h2 class="post-title">
-            Docker기반 Redis 구축하기 - (2)Docker 설치 및 사용방법
+            Docker기반 Redis 구축하기 - (2) Docker 설치 및 사용방법
         </h2>
         <h3 class="post-subtitle">
             
@@ -296,250 +521,6 @@ Windows,......
         <div class="tags">
             
               <a href="/tags/#Docker" title="Docker">Docker</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2018/11/25/2018-11-25-docker-1/">
-        <h2 class="post-title">
-            Docker기반 Redis 구축하기 - (1)Docker란 무엇인가?
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            Docker란 무엇인가?
-
-Docker란 Linux 컨테이너(Container) 기반의 오픈소스 가상화 플랫폼 입니다.
-위의 Docker 이미지처럼 선박에 화물을 수송하는 이미지를 떠올리면 이해하기가 쉬운데, 실제 선박에는 자동차, 오토바이, 전자제품등 여러 물건을 담을 수 있습니다.
-선박에 대한 이미지를 유지한 채, Web Service 운영환경을 ......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by Carrey on
-            2018-11-25
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#Docker" title="Docker">Docker</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2018/11/25/2018-11-25-spel-expression-2/">
-        <h2 class="post-title">
-            SpEL Expression(2)
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            리터럴 표현식 (Literal Expression)
-리터럴 표현식을 제공하는 타입은 문자열(String), 숫자(int, real, hex), boolean, null이다.
-
-문자열 (Strings)는 따옴표(’)로 구분된다 (쌍따옴표가 아님) - 문자열 표현 시, 'Hello World' 처럼 SpEL을 작성
-
-다음은 리터럴 표현식 (Literal ......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by Carrey on
-            2018-11-25
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#Spring" title="Spring">Spring</a>
-            
-              <a href="/tags/#SpEL" title="SpEL">SpEL</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2018/11/21/2018-11-21-spel-expression/">
-        <h2 class="post-title">
-            SpEL Expression(1)
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            들어가며
-Spring Cache Abstraction 기능을 사용하게 되면서, key modeling 시, 필요한 SpEL에 대해 알아보게 되었다.
-기본적인 설명과 예제는 Spring Docs를 기반으로 번역
-SpEL (Spring Expression Language)이란?
-Spring Expression Language (줄여서 SpEL)은 런타임에......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by Carrey on
-            2018-11-21
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#Spring" title="Spring">Spring</a>
-            
-              <a href="/tags/#SpEL" title="SpEL">SpEL</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2018/11/07/2018-11-04-ehcache-config-for-springboot/">
-        <h2 class="post-title">
-            EHCache 설정방법 (Spring Boot)
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            EHCache 설정하기
-설정 순서는 아래와 같다.
-
-Maven Dependency 설정
-Ehcache.xml 작성 (ehcache 설정파일)
-@EnableCaching 설정
-
-Maven Dependency 설정
-123456789&lt;dependency&gt;    &lt;groupId&gt;org.springframework.boot&lt;/grou......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by Carrey on
-            2018-11-07
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#Spring" title="Spring">Spring</a>
-            
-              <a href="/tags/#Spring Boot" title="Spring Boot">Spring Boot</a>
-            
-              <a href="/tags/#EHCache" title="EHCache">EHCache</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2018/11/07/2018-11-04-ehcache-config-for-springframework/">
-        <h2 class="post-title">
-            EHCache 설정방법 (Spring Framework)
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            EHCache 설정하기
-설정 순서는 아래와 같다.
-
-Maven Dependency 설정
-Ehcache.xml 작성 (ehcache 설정파일)
-CacheManager 설정 (xml)
-
-Maven Dependency 설정
-1234567891011121314151617181920&lt;!-- EHCache 모듈 (블로그 작성 시점에서 2.10.6이 최신이다......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by Carrey on
-            2018-11-07
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#Spring" title="Spring">Spring</a>
-            
-              <a href="/tags/#EHCache" title="EHCache">EHCache</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2018/11/07/2018-10-03-spring-ehcache/">
-        <h2 class="post-title">
-            Cache에 대하여.. (Spring+EHCache)
-        </h2>
-        <h3 class="post-subtitle">
-            
-        </h3>
-        <div class="post-content-preview">
-            들어가며…
-엔터프라이즈 급 Application에서는 DBMS의 부하를 줄이고, 성능을 높이기 위해 캐시(Cache)를 사용한다. 우리 회사에서도 EHCache, Redis를 사용하지만, EHCache쪽은 공부한 적이 없어서 이번 기회에 정리하면서 공부해 보게 되었다.
-대부분 docs.spring.io의 문서를 번역한 내용을 위주로 정리 하였다.
-Ca......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by Carrey on
-            2018-11-07
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#Spring" title="Spring">Spring</a>
-            
-        </div>
-    
-
-</div>
-<hr>
-
-<div class="post-preview">
-
-    <a href="/2018/10/21/2018-10-21-java-config-import/">
-        <h2 class="post-title">
-            @Import와 @ImportResource Annotation
-        </h2>
-        <h3 class="post-subtitle">
-            xml을 Java Config로 변경하기
-        </h3>
-        <div class="post-content-preview">
-            들어가며
-회사 프로젝트 설정은 대부분이 xml설정으로 되어있다.
-아무도 그 xml설정을 건드리지 않고 있는데, 내가 차츰차츰 Java-Config로 바꾸자고 주장하고 있었고
-최근에 일부 xml Config를 Java Config로 전환하는 작업을 진행 하였다.
-그 때 사용한 @Import, @ImportResource Annotation에 대한 기록을......
-        </div>
-    </a>
-    
-        <p class="post-meta" style="margin: 10px 0;">
-            Posted by Carrey on
-            2018-10-21
-        </p>
-        <div class="tags">
-            
-              <a href="/tags/#Spring" title="Spring">Spring</a>
-            
-              <a href="/tags/#Java-Config" title="Java-Config">Java-Config</a>
             
         </div>
     
@@ -597,7 +578,7 @@ Ca......
             
         
             
-            <a href="/tags/#Docker" title="Docker" rel="4">Docker</a>
+            <a href="/tags/#Docker" title="Docker" rel="11">Docker</a>
             
         
             
@@ -666,23 +647,23 @@ Ca......
     <ul>
       
         <li>
-          <a href="2018/12/01/2018-12-01-docker-4/">Docker기반 Redis 구축하기 - (4) Docker-Compose 설치 및 사용방법</a>
+          <a href="2018/12/07/2018-12-07-docker-11/">Docker기반 Redis 구축하기 - (11) Redis-Cli Docker로 사용하기</a>
         </li>
       
         <li>
-          <a href="2018/12/01/2018-12-01-docker-3/">Docker기반 Redis 구축하기 - (3)Dockerfile</a>
+          <a href="2018/12/03/2018-12-03-docker-10/">Docker기반 Redis 구축하기 - (10) Redis Cluster Mode 설정하기</a>
         </li>
       
         <li>
-          <a href="2018/11/28/2018-11-28-docker-2/">Docker기반 Redis 구축하기 - (2)Docker 설치 및 사용방법</a>
+          <a href="2018/12/03/2018-12-03-redis-stats/">Docker기반 Redis 구축하기 - (9) Redis-Stats을 이용한 모니터링</a>
         </li>
       
         <li>
-          <a href="2018/11/25/2018-11-25-docker-1/">Docker기반 Redis 구축하기 - (1)Docker란 무엇인가?</a>
+          <a href="2018/12/02/2018-12-02-docker-8/">Docker기반 Redis 구축하기 - (8) HAProxy를 이용한 분산처리 환경 구축하기</a>
         </li>
       
         <li>
-          <a href="2018/11/25/2018-11-25-spel-expression-2/">SpEL Expression(2)</a>
+          <a href="2018/12/02/2018-12-02-docker-7/">Docker기반 Redis 구축하기 - (7) Docker를 이용한 Redis Sentinel 설치하기</a>
         </li>
       
     </ul>
@@ -697,7 +678,7 @@ Ca......
         
     <h5>ARCHIVES</h5>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="archives/2018/12/">December 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2018/11/">November 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2018/10/">October 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2018/09/">September 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2018/08/">August 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2018/07/">July 2018</a><span class="archive-list-count">5</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="archives/2018/12/">December 2018</a><span class="archive-list-count">9</span></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2018/11/">November 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2018/10/">October 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2018/09/">September 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2018/08/">August 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="archives/2018/07/">July 2018</a><span class="archive-list-count">5</span></li></ul>
     </div>
 
         <hr>

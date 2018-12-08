@@ -7,16 +7,8 @@
     </url>
 
     <url>
-        <loc>http://yoursite-url/2018/12/01/2018-12-01-docker-4/</loc>
-        <lastmod>2018-12-01T08:21:12.235Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://yoursite-url/2018/12/01/2018-12-01-docker-3/</loc>
-        <lastmod>2018-12-01T07:43:13.616Z</lastmod>
+        <loc>http://yoursite-url/2018/11/25/2018-11-25-docker-1/</loc>
+        <lastmod>2018-12-08T08:36:34.232Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -24,7 +16,79 @@
 
     <url>
         <loc>http://yoursite-url/2018/11/28/2018-11-28-docker-2/</loc>
-        <lastmod>2018-11-28T15:47:30.299Z</lastmod>
+        <lastmod>2018-12-08T08:36:29.329Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://yoursite-url/2018/12/01/2018-12-01-docker-3/</loc>
+        <lastmod>2018-12-08T08:36:25.490Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://yoursite-url/2018/12/07/2018-12-07-docker-11/</loc>
+        <lastmod>2018-12-08T08:32:55.323Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://yoursite-url/2018/12/03/2018-12-03-redis-stats/</loc>
+        <lastmod>2018-12-08T08:32:55.318Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://yoursite-url/2018/12/03/2018-12-03-docker-10/</loc>
+        <lastmod>2018-12-08T08:32:55.298Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://yoursite-url/2018/12/02/2018-12-02-docker-8/</loc>
+        <lastmod>2018-12-08T08:32:55.287Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://yoursite-url/2018/12/02/2018-12-02-docker-7/</loc>
+        <lastmod>2018-12-08T08:32:55.280Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://yoursite-url/2018/12/01/2018-12-01-docker-6/</loc>
+        <lastmod>2018-12-08T08:32:55.273Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://yoursite-url/2018/12/01/2018-12-01-docker-5/</loc>
+        <lastmod>2018-12-08T08:32:55.265Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://yoursite-url/2018/12/01/2018-12-01-docker-4/</loc>
+        <lastmod>2018-12-08T08:32:55.264Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -33,14 +97,6 @@
     <url>
         <loc>http://yoursite-url/2018/11/25/2018-11-25-spel-expression-2/</loc>
         <lastmod>2018-11-27T07:23:32.394Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://yoursite-url/2018/11/25/2018-11-25-docker-1/</loc>
-        <lastmod>2018-11-27T07:23:32.383Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 

@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          Docker기반 Redis 구축하기 - (5) Docker Network구조 - Carrey`s 기술블로그
+        
+    </title>
+
+    <link rel="canonical" href="http://yoursite-url/2018/12/01/2018-12-01-docker-5/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="../../../../css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="../../../../css/beantech.min.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="../../../../css/highlight.css">
+
+    <link rel="stylesheet" href="../../../../css/widget.css">
+
+    <link rel="stylesheet" href="../../../../css/rocket.css">
+
+    <link rel="stylesheet" href="../../../../css/signature.css">
+
+    <link rel="stylesheet" href="../../../../css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('undefined')
+            /*post*/
+        
+    }
+    
+    #signature{
+        background-image: url('/img/signature/BeanTechSign-white.png');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#Docker" title="Docker">Docker</a>
+                            
+                        </div>
+                        <h1>Docker기반 Redis 구축하기 - (5) Docker Network구조</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by Carrey on
+                            2018-12-01
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Carrey`s 기술블로그</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1><span id="docker-network-모드">Docker Network 모드</span></h1>
+<p>Docker에서 제공하는 Network 모드는 총 4개 입니다.<br>
+(추가적으로 2개의 모드가 더 있습니다. Overlay, Macvlan 모드가 있지만 Docker Swarm과 관련된 내용이므로 이번 장에서는 기술 하지 않겠습니다.)</p>
+<ul>
+<li>Bridge 모드</li>
+<li>Container 모드 (이것도 Bridge 모드의 일종)</li>
+<li>Host 모드</li>
+<li>none 모드</li>
+</ul>
+<p>이번 장에서는 위 Network 모드에 대해 알아보도록 하겠습니다.</p>
+<h1><span id="bridge-모드">Bridge 모드</span></h1>
+<p>Docker에서 network 설정을 별도로 하지 않으면 Default로 작용하는 모드입니다.<br>
+Docker가 설치되면 docker0라는 네트워크 인터페이스가 생성됩니다. (Virtual Interface)</p>
+<p><img src="./docker-bridge-mode.png" alt="docker-bridge-mode"></p>
+<p>위는 docker0 인터페이스를 바탕으로 각 Container와 Bridge 형식으로 엮어진 모습입니다.</p>
+<p><img src="./docker-bridge-2.PNG" alt="docker-bridge-2"></p>
+<p>Host OS에서 network interface를 검색해 보면 docker0라는 virtual interface를 확인할 수 있습니다.</p>
+<blockquote>
+<p><strong>docker0 interface의 특징</strong></p>
+<ul>
+<li>IP는 자동으로 172.17.0.1로 설정</li>
+<li>IP는 DHCP로 할당받는 것이 아닌 Docker 내부로직에 의해 결정</li>
+<li>docker0는 virtual ethernet bridge</li>
+<li>L2 통신 기반</li>
+</ul>
+</blockquote>
+<p><code>&quot;docker bridge 모드는 같은 host 내에서만 사용 가능하다.&quot;</code> 라는 제약이 있다.<br>
+즉, 다른 host(다른서버)와의 docker와는 통신이 불가능합니다.<br>
+왜냐하면 다른 서버가 docker0 인터페이스의 외부에 있기 때문에 그렇습니다.</p>
+<h1><span id="docker0-interface와-container의-연결-방식">docker0 interface와 Container의 연결 방식</span></h1>
+<p><img src="./docker0-interface.PNG" alt="docker0-interface"></p>
+<p>위 이미지를 보면, 현재 Docker를 이용하여 redis와 nginx를 설치한 상태입니다.<br>
+두 번째 명령을 보면 brctl명령으로 docker0 interface에 연결된 interfaces가 2개 보입니다.</p>
+<ul>
+<li>veth062947b</li>
+<li>veth3b5bdll</li>
+</ul>
+<p>container 2개가 bridge 방식으로 연결 되어 있기 때문에 veth~하는 interface가 생성되어있습니다.<br>
+위에 그림에서 보듯이 veth와 각 container 내부의 eth0 interface와 연결되어 있습니다.</p>
+<p><img src="./ip.PNG" alt="ip"></p>
+<p>Redis Container에 대해 docker inspect 명령을 날려보았습니다.<br>
+네트워크 설정 부분이 아래에 나오는데 Network 부분을 보시면 Gateway는 172.17.0.1이라 되어 있습니다.<br>
+이 ip 주소는 docker0 interface의 ip주소입니다.<br>
+따라서 docker0의 bridge로 연결되어 172.17.0.2라는 내부 ip를 가진 Container로 생성된 것입니다.</p>
+<h1><span id="container-모드-이것도-bridge-모드의-일부">Container 모드 (이것도 Bridge 모드의 일부)</span></h1>
+<p>Container 모드는 다른 Container의 네트워크 리소스를 같이 쓰는? 개념입니다.</p>
+<p>먼저 httpd를 설치하고…<br>
+그다음에 redis를 설치하여 httpd의 container 정보를 가지고 net설정을 해주었습니다.</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker run -d httpd</span><br><span class="line">docker run -d --net=container:(httpd의 containerId) redis</span><br></pre></td></tr></table></figure>
+<p><img src="./httpd.PNG" alt="httpd"></p>
+<p>위 이미지(httpd에 대한 정보)를 보면 docker0 interface를 이용하고 bridge 모드로 설정되어 있습니다.</p>
+<p><img src="./redis1.PNG" alt="redis1"></p>
+<p>하지만, Redis의 Network 정보를 보면 텅텅 비어있습니다.<br>
+이는 docker0 interface를 통해 네트워크 설정이 bind 되지 않았다는 의미입니다.</p>
+<p>약간 위로 올려보면</p>
+<p><img src="./redis2.PNG" alt="redis2"></p>
+<p>NetworkMode에 httpd의 container 자원을 사용하여 접근하는 것을 알 수 있습니다.<br>
+다른 docker image 중 내부 명령어로 ip addr을 지원하는 image가 있다면</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> &lt;container ID&gt; ip addr show</span><br></pre></td></tr></table></figure>
+<p>위 명령을 통해 Mac Address가 Container자원을 할당한 Container의 Mac Address와 같음을 알 수 있습니다.</p>
+<h1><span id="host-모드">Host 모드</span></h1>
+<p>Host 모드는 docker0 interface를 사용하지 않고 Host OS의 네트워크 자원을 사용합니다.<br>
+bridge 형식으로 사용하지 않기 때문에 brctl show docker0 명령으로 검색해도 interfaces에 나타나지 않습니다.<br>
+<strong>Bridge를 쓰지 않기 때문에 Container에서 <code>Port를 노출하지 않는 경우 사용할 수가 없는 점</code>을 유의 해야 합니다.</strong><br>
+(Redis Cluster를 구성 할 때에도 Redis에서는 Cluster모드 구현 시, docker bridge mode를 지원하지 않기 때문에 host로 설정했었습니다.)</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --net=host -p <span class="string">"6515"</span> <span class="comment">#이렇게 옵션을 추가해주면 됩니다. (port는 문자열로!)</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#또는 docker-compose.yml 파일에서</span></span><br><span class="line"><span class="attr">redis:</span></span><br><span class="line"><span class="attr">  network_mode:</span> <span class="string">host</span> <span class="comment">#이 처럼 표기하시면 됩니다.</span></span><br></pre></td></tr></table></figure>
+<h1><span id="none-모드">none 모드</span></h1>
+<p>–net=none 옵션으로 Container 생성 시, 격리된 네트워크 영역을 갖기는 하지만 network 인터페이스가 없는 Container가 생성 됩니다.</p>
+<p>아래의 코드로 테스트를 해보았습니다.</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker run --net=none -d httpd</span><br><span class="line">docker <span class="built_in">exec</span> httpd ip addr show</span><br></pre></td></tr></table></figure>
+<p><img src="./none.PNG" alt="none"></p>
+<p>검색되는 내부 네트워크 인터페이스가 없습니다.</p>
+<blockquote>
+<p><strong>none으로 처리하는 이유</strong><br>
+network mode를 none으로 하는 경우는 보통 사용자 정의 interface를 사용할 때 입니다.<br>
+network 환경을 깔끔하게 만든 다음에 사용자 정의 interface를 적용하기 위함입니다.</p>
+</blockquote>
+<h1><span id="참고">참고</span></h1>
+<ul>
+<li><a href="http://bluese05.tistory.com/38" target="_blank" rel="noopener">http://bluese05.tistory.com/38</a></li>
+<li><a href="https://docs.docker.com/network/network-tutorial-standalone/#use-the-default-bridge-network" target="_blank" rel="noopener">https://docs.docker.com/network/network-tutorial-standalone/#use-the-default-bridge-network</a></li>
+<li><a href="https://docs.docker.com/network/network-tutorial-host/" target="_blank" rel="noopener">https://docs.docker.com/network/network-tutorial-host/</a></li>
+</ul>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/2018/12/01/2018-12-01-docker-6/" data-toggle="tooltip" data-placement="top" title="Docker기반 Redis 구축하기 - (6) Docker를 이용한 Redis Cluster 설치하기">&larr; Previous Post</a>
+                        </li>
+                    
+                    
+                        <li class="next">
+                            <a href="/2018/12/01/2018-12-01-docker-4/" data-toggle="tooltip" data-placement="top" title="Docker기반 Redis 구축하기 - (4) Docker-Compose 설치 및 사용방법">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                    <div class="comment">
+                        <div id="disqus_thread" class="disqus-thread"></div>
+                    </div>
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Docker Network 모드</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Bridge 모드</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">docker0 interface와 Container의 연결 방식</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">Container 모드 (이것도 Bridge 모드의 일부)</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">Host 모드</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">none 모드</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">참고</span></a></li></ol>
+        
+        </div>
+      </aside>
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#Docker" title="Docker">Docker</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- disqus embedded js code start (one page only need to embed once) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "your-disqus-ID";
+    var disqus_identifier = "http://yoursite-url/2018/12/01/2018-12-01-docker-5/";
+    var disqus_url = "http://yoursite-url/2018/12/01/2018-12-01-docker-5/";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus embedded js code start end -->
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/jaehun2841">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Carrey 2018 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    re-Ported by <a href="http://beantech.org">BeanTech</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=YenYuHsuan&repo=hexo-theme-beantech&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="../../../../js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="../../../../js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="../../../../js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://yoursite-url/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="http://yoursite-url/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

@@ -272,8 +272,8 @@ Host OS 포트를 사용할 수 있으므로 외부접속이 가능</p>
 <figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">tomcat:</span></span><br><span class="line"><span class="attr">      ports:</span></span><br><span class="line"><span class="bullet">       -</span> <span class="string">"80:8080"</span>  <span class="comment"># &lt;Host OS포트&gt; : &lt;컨테이너 내부포트&gt;</span></span><br><span class="line">     </span><br><span class="line"><span class="comment">#Short Syntax --&gt; 권장하는 방식</span></span><br><span class="line"><span class="attr">ubuntu:</span></span><br><span class="line"><span class="attr">      ports:</span></span><br><span class="line"><span class="bullet">       -</span> <span class="string">"3000"</span>        <span class="comment">#이 구문은 "3000:3000" 과 동일</span></span><br><span class="line"><span class="bullet">       -</span> <span class="string">"3000-3005"</span>   <span class="comment">#이 구문은 "3000-3005:3000-3005"와 동일</span></span><br><span class="line"><span class="bullet">       -</span> <span class="string">"8000:8000"</span></span><br><span class="line"><span class="bullet">       -</span> <span class="string">"9090-9091:8080-8081"</span></span><br><span class="line"><span class="bullet">       -</span> <span class="string">"49100:22"</span></span><br><span class="line"><span class="bullet">       -</span> <span class="string">"127.0.0.1:8001:8001"</span></span><br><span class="line"><span class="bullet">       -</span> <span class="string">"127.0.0.1:5000-5010:5000-5010"</span></span><br><span class="line"><span class="bullet">       -</span> <span class="string">"6060:6060/udp"</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">#Long Syntax --&gt; 권장하지 않는 방식</span></span><br><span class="line"><span class="attr">tomcat2:</span></span><br><span class="line"><span class="attr">      ports:</span></span><br><span class="line"><span class="bullet">       -</span> <span class="string">target</span> <span class="string">:</span> <span class="number">8080</span> <span class="comment">#Container 내부포트</span></span><br><span class="line"><span class="bullet">       -</span> <span class="string">published</span> <span class="string">:</span> <span class="number">80</span> <span class="comment"># 외부 OS 포트</span></span><br><span class="line"><span class="bullet">       -</span> <span class="string">protocol</span> <span class="string">:</span> <span class="string">tcp</span> <span class="comment"># tcp 또는 udp</span></span><br><span class="line"><span class="bullet">       -</span> <span class="string">mode</span> <span class="string">:</span> <span class="string">host</span> <span class="comment">#host: 각각의 Container 노드와 1:1로 매핑</span></span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>포트 매핑 시 주의 할 점<br>
-Host : Container 형식으로 포트를 매핑하면 YAML이 xx:yy 형식은 구문 분석시에 default를 60으로 주기 때문에<br>
-60번 이하 포트에 대해서 잘못된 결과가 초래될 수 있음. (8000 : 22 와 같이 숫자만 적는 경우 문제가 발생)<br>
+Host : Container 형식으로 포트를 매핑하면 YAML이 xx:yy 형식은 구문 분석시에 default를 60으로 주기 때문에 60번 이하 포트에 대해서 잘못된 결과가 초래될 수 있음.<br>
+(8000 : 22 와 같이 숫자만 적는 경우 문제가 발생)<br>
 따라서, <code>포트 매핑은 항상 문자열로 적어야 합니다.</code><br>
 ( &quot;8000 : 22&quot;와 같이 문자열로 선언해야 안전합니다. ) ==&gt; 60번 이하 포트를 쓰지말라는 소리가 아님.</p>
 </blockquote>
@@ -330,9 +330,13 @@ Host : Container 형식으로 포트를 매핑하면 YAML이 xx:yy 형식은 구
                 <!-- Pager -->
                 <ul class="pager">
                     
+                        <li class="previous">
+                            <a href="/2018/12/01/2018-12-01-docker-5/" data-toggle="tooltip" data-placement="top" title="Docker기반 Redis 구축하기 - (5) Docker Network구조">&larr; Previous Post</a>
+                        </li>
+                    
                     
                         <li class="next">
-                            <a href="/2018/12/01/2018-12-01-docker-3/" data-toggle="tooltip" data-placement="top" title="Docker기반 Redis 구축하기 - (3)Dockerfile">Next Post &rarr;</a>
+                            <a href="/2018/12/01/2018-12-01-docker-3/" data-toggle="tooltip" data-placement="top" title="Docker기반 Redis 구축하기 - (3) Dockerfile">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
