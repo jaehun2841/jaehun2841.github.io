@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="keyword"  content="">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <title>
+        
+          2018년 회고 - Carrey`s 기술블로그
+        
+    </title>
+
+    <link rel="canonical" href="http://yoursite-url/2018/12/16/2018-12-16-remind/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="../../../../css/bootstrap.min.css">
+
+    <!-- Custom CSS --> 
+    <link rel="stylesheet" href="../../../../css/beantech.min.css">
+    
+    <!-- Pygments Highlight CSS -->
+    <link rel="stylesheet" href="../../../../css/highlight.css">
+
+    <link rel="stylesheet" href="../../../../css/widget.css">
+
+    <link rel="stylesheet" href="../../../../css/rocket.css">
+
+    <link rel="stylesheet" href="../../../../css/signature.css">
+
+    <link rel="stylesheet" href="../../../../css/toc.css">
+
+    <!-- Custom Fonts -->
+    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- Hux change font-awesome CDN to qiniu -->
+    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- Hux Delete, sad but pending in China
+    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
+    css'>
+    -->
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+</head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            background-image: url('undefined')
+            /*post*/
+        
+    }
+    
+    #signature{
+        background-image: url('/img/signature/BeanTechSign-white.png');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#2018-remind" title="2018-remind">2018-remind</a>
+                            
+                        </div>
+                        <h1>2018년 회고</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by Carrey on
+                            2018-12-16
+                        </span>
+                    </div>
+                
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Carrey`s 기술블로그</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Modify by Yu-Hsuan Yen -->
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h1><span id="새-직장으로-이직">새 직장으로 이직</span></h1>
+<p>2017년 8월 중순 중소 SI업체를 용기있게(?) 뛰쳐나왔다.<br>
+그 곳에서는 오직 나 한명으로 여러 프로젝트를 돌리고 있었고, 같이 일할 선임개발자도 없었기 때문에<br>
+굉장히 나름대로 스트레스를 받고 있었다.<br>
+그리고 모든 프로젝트가 나에게 의존적이었기 때문에 관리해야 할 사이트도 많았고…<br>
+매일매일 프로젝트 했던 사이트들에 대한 유지보수 전화를 받아가며, 신규 프로젝트를 진행하고 있었다.<br>
+이렇게 개발자로서 소모되어 가고 있다는 생각이 들어 과감하게 퇴사를 하게되었다. 다음에는 어느정도 조직이 구성되어있고 내가 조직원으로서 일할 수 있는 직장을 찾아야겠다! 라는 생각을 하게되었다.<br>
+이직하고자 하는 회사의 조건은 이렇다.</p>
+<ol>
+<li>개발자 한명이 기획, 개발, 유지보수, 영업을 담당하는 작은회사는 가지 않겠다.</li>
+<li>더 이상 SI는 하지 않겠다. (지방 출장이 잦고, 프로젝트 단위로 사업이 돌아가는 곳은 가지 않겠다.)</li>
+<li>근무지 한 곳에서만 근무 할 수 있는 환경 (예전에는 지방을 여기저기 많이 다녔다.)</li>
+<li>시니어 개발자와 주니어 개발자 층이 어느정도 있고, 같이 의논하며 개발할 수 있는 환경</li>
+<li>Spring 4 / Java 1.8 이상을 사용하여 개발하는 조직</li>
+<li>내가 더 발전할 수 있는 조직</li>
+<li>연봉도 많이 올려주면 좋고~! ^^</li>
+</ol>
+<p>하지만 생각보다 이직은 쉽지 않았다. (특히나 선퇴사 후이직 이어서… 11월쯤에는 굉장히 쫄렸다.)<br>
+일단 서비스 회사로 이직을 목표로 잡았지만, 기존의 했던 업무가 제조업이나 MES관련 개발을 주로 했었기 때문에 서비스 회사에서는 대부분의 서류 낙방을 경험했다. (이력서를 처음 써봐서 정말 못써서 그럴 수도 있겠지만.)<br>
+서류 한 군데만 붙어라… 면접은 완전 잘 볼 자신있다!라는 생각으로 서류만 2개월 이상 쓰다보니 10월쯤에는 서류 합격하는 회사가 몇 군데 있었다. 서류합격 메일을 받았을 때 기분이란…크 면접일자가 정해지고, 인터넷에 돌아다니는 예상 면접질문을 바탕으로 하나하나 정리를 하였다. 대게 기술질문은 그 테두리 안에서 나온다는 것이 여러사람들의 의견이었다.<br>
+그리고 9월쯤엔 대기업 신입공채를 준비했어서, 오랜만에 컴퓨터 이론을 한번 정리 했었는데 이 부분이 정말 도움이 많이 되었다. 자주 안보는 만큼 지금도 기억에서 많이 사라졌는데, 가끔씩 리마인드를 해주는 것이 좋겠다.</p>
+<p>면접은 두 군데정도 봤는데 둘 다 자신감있게 봤었다.<br>
+아무래도 SI하면서 고객사 상대로 발표도 하고 회의도 자주 하다보니, 남들이랑 대화하고 그런거는 긴장되지 않았다.<br>
+그렇기 때문에 면접을 보면서 긴장을 덜하고 면접장에서 어필할 수 있었던 것 같다.<br>
+결국 최종적으로 한 곳의 회사만 합격을 하였는데, 그 곳이 NHN티켓링크이다.<br>
+최종합격 후 천만다행이라는 생각이 들었고, 2018년 1월 초에 입사를 하게 되었다.</p>
+<h1><span id="우리-팀의-개발문화">우리 팀의 개발문화</span></h1>
+<p>예전 SI할 때는 혼자서 사이트를 다 만들어야 했기 때문에, 프론트엔드도 하고 백엔드도하고, 서버설치 등을 혼자 다했다. 하지만 여기와서는 인프라 관련해서는 시스템팀이 별도로 있었고, DBA팀도 별도로 있었다. 내가 할 업무는 티켓링크 백엔드 개발과 약간의 간단한 프론트엔드 작업만 하면되었다.<br>
+기획팀도 별도로 나뉘어져 있다보니, 내가 직접 기획서를 쓰지 않아도 되고 개발에만 집중 할 수 있다는 환경이 참 좋았다.</p>
+<h2><span id="git-flow를-사용한-브랜치-전략">git flow를 사용한 브랜치 전략</span></h2>
+<p>SI할때는 SVN만 사용해봤는데 그냥 master에 커밋치던 나에게는 신세계였다. 뭔가 구글링하면서 지나쳤던 얘기들을 실천하고 있는 조직이라는 생각이 들었다.<br>
+git도 처음 사용해 봤는데, SVN보다 더 유연하고 좋다는 생각이 들었다. (특히 브랜치를 왔다갔다 하면서 작업할 수 있는 점이 좋았던 것 같다.)</p>
+<h2><span id="pull-request-코드리뷰">Pull Request + 코드리뷰</span></h2>
+<p>두 번째로는 Pull Request를 올려서 코드리뷰를 강제화 하도록 하는 문화이다.<br>
+첫 업무를 받아서 PR을 올렸을 때는 Conversation이 50개 이상이 달려서 코드리뷰를 엄청나게 받았다.<br>
+뭔가 탈탈 털렸다라는 느낌도 받았고, 앞으로 공부해야 할 게 많구나라는 생각이 들었다.<br>
+한 가지 아쉬운점은… <code>코드리뷰를 하는 사람만 한다.</code> 다른사람들도 적극적으로 해주면 좋을텐데…라는 생각이 들었다.<br>
+처음에는 나도 다른사람의 코드를 리뷰해줘야지! 라는 생각으로 코드리뷰에 참여하려고 했지만… 한마디도 달 수 없었다. 그때 딱 드는 생각이, <strong>“내가 아는게 없어서 코드리뷰를 해줄 수가 없구나… 코드리뷰에 한마디라도 할 수 있도록 공부하자”</strong> 라는 생각을 하게 되었다.<br>
+돌이켜보면 나는 여태까지 <code>&quot;공부하지 않는 개발자&quot;</code>였다.<br>
+팀원들을 보면 아침에 일찍와서 책을보는 분도 계셨고, 따로 스터디모임을 하시는 분도 계셨다.<br>
+입사초기에 나는 살 좀 빼야지… 라는 생각으로 아침운동을 다녀서 아침에 일찍 공부하기는 힘들었다. 그래서 주로 퇴근 후나 주말에 내가 하고자 하는 공부를 하였다. 그리고 꼭 공부한 내용은 블로그를 작성해서 남겨야겠다고 생각했다.<br>
+공부는 조금조금씩 계속 했지만, 본격적으로 블로그를 설치하고 시작한 것은 7월 정도인 것 같다.<br>
+현재 4년차에 Spring기반으로 개발을 계속 해왔다고는 하지만 Spring의 기본을 공부해본적이 없었다.<br>
+여태까지는 그냥 <code>이렇게 하면 이렇게 되네~</code> 방식의 개발을 해와서, 뭐가 안되면 원인 파악하기가 무척이나 어려웠다.<br>
+그래서 처음에는 <strong>Spring core</strong>에 대한 공부를 시작했다. 토비의 Spring 책도 사고, 회사 소스에 적용된 기술들을 하나하나 파보기 시작했다. 하나하나 익히고 나니 너무 유용한 기술들이 많이 있었고, 개발할 때 직접 써먹으면서 실전 응용력을 키울 수 있었던 것 같다.</p>
+<h2><span id="주간-기술공유">주간 기술공유</span></h2>
+<p>세 번째는 매주 목요일 기술공유 시간을 짧게 갖는다.<br>
+팀원 한 명씩 돌아가면서 신기술에 대한 공유나 코드리뷰등을 하는 시간이다. 이런 걸 해보지 않아서 처음에는 무슨 내용을 공유하지?라는 걱정이 앞섰는데, 다행히도 공유 순서가 가까워지면 항상 공유 할 내용이 있었다. 그리고 내 순서가 아니어도 최대한 공유를 하려고 노력했다. (순서가 아니어도 또 해도 된다. 하지만 내 순번에는 또 공유를 해야한다. ㅎㅎ) 최대한 공유를 많이 하려고 노력했고, 기술공유 준비를 하면서 내가 했던 일들이나 기술에 대해 다시 한번 정리하는 시간이 되어 개인적으로 기술에 대한 기억을 오랫동안 보존할 수 있는 방법이었다.<br>
+또 다른사람의 기술공유를 들었다가 내가 필요할 때 써먹거나, 미처 몰랐던 내용들도 있어서 개발팀 문화 중에 나름 유의미한 시간이라고 생각하고 있다.</p>
+<h1><span id="블로그-시작">블로그 시작</span></h1>
+<p>올해 목표 중 하나가 블로그에 공부한 내용에 대한 글을 꾸준히 작성하는 것이었다.<br>
+블로그는 7월쯤에 만들어서 꾸준히 작성하려고 노력하고 있다.</p>
+<p>현재까지 수를 보니…</p>
+<ul>
+<li>7월 - 5개</li>
+<li>8월 - 6개</li>
+<li>9월 - 3개</li>
+<li>10월 - 2개</li>
+<li>11월 - 7개</li>
+<li>12월 - 8개</li>
+</ul>
+<p>정도 해서 총 31개의 포스팅을 작성했다. 시리즈 물로 된 글도 많았고, 회사에서 사용한 기술들을 다시 좀 다듬어서 기록으로 남긴 것들도 있다. (회사 업무내용을 최대한 제외하려 한게 참 힘들었다ㅜㅜ)<br>
+처음에는 블로그도 안써봐서 글 쓰는데 시간도 오래걸리고 뭐 어떻게 써야하나…라는 생각으로 다른 블로그들을 참고하며 많이 썼던것 같다. 그리고 하나 쓰는데 시간도 꽤 오래 걸린것 같다.<br>
+한 30개의 글을 써보니 대충 블로그 쓰는 법도 감이 왔다.</p>
+<ul>
+<li>일단 내가 100% 이해하지 못한 상황에서 글을 쓸 수 없다.</li>
+<li>처음에는 블로그 포스팅 수를 늘리고 싶어서 무조건 post부터 생성하고 봤는데, 글의 진도가 나가지 않았다.</li>
+<li>블로그를 빠르고 쉽게 작성하기 위해서는 목차를 먼저 잡고 그에 대한 지식을 채운 다음에 각 섹션별로 담아내고자 하는 내용을 짧게 정리했다.</li>
+<li>예제가 필요한 경우 미리 예제에 대한 실습을 마쳐 놓아야 한다.
+<ul>
+<li>그때그때 예제코드 작성하면 시간이 오래걸리고, 내가 무슨 글을 쓰던 중이었는지 까먹게 된다.</li>
+</ul>
+</li>
+</ul>
+<p>블로그를 쓰다보니 지식에 대한 인덱스도 나름 생기고, 나중에 기억 안나도 예제코드를 찾아볼 수 있어서 좋았다.<br>
+앞으로도 계속 블로그를 작성할 예정인데, 제발 귀찮아지지만 않았으면 좋겠다…!</p>
+<h1><span id="회사-업무">회사 업무</span></h1>
+<h2><span id="1~2월에는-회사-적응도-하고-바로-또-업무를-할당-받았다">1~2월에는 회사 적응도 하고, 바로 또 업무를 할당 받았다.</span></h2>
+<p>나의 첫 업무는 티켓링크 카카오톡 알림톡 연동이었다. 기존에는 SMS/MMS만 사용했는데, 카카오톡 알림톡을 지원하도록 하는 업무였다. 지금 생각해보면 업무는 단순했다. 카카오톡 API를 연동 인터페이스만 구현해주면 되는 것이었는데, 외부 API 연동을 처음 해보는터라 시간도 오래걸리고, 회사 소스를 파악하면서 해야해서 1달이상의 시간이 걸렸던 것 같다.<br>
+기존 코드의 리팩토링도 해가면서 해서, 나름 재미있게 개발을 했던 첫 업무였다.</p>
+<h2><span id="3~4월에는-캡차-시스템-개발을-진행했다">3~4월에는 캡차 시스템 개발을 진행했다.</span></h2>
+<p>티켓시스템에는 사람들이 좌석을 빨리 차지하기 위해 매크로를 많이 쓴다.<br>
+최근에는 뉴스기사에도 아이돌 콘서트니, 인기 공연에 대해 매크로를 돌려서 빠르게 예매한 다음에 몇배의 가격으로 불려서 암표를 파는 사람이 많다는 기사가 나왔다. 최소한이라도 예방하기 위해 티켓링크에서는 캡차 도입을 고민하고 있었다. 구글의 리캡차나 국내의 캡차 솔루션을 도입하자라는 의견도 나왔고, 직접 구축하는 것이 좋다!라는 의견이 나오고 있을때쯤 집에서 한번 오픈소스를 이용해서 간단하게 캡차를 만들어보았다. 어렵지 않게 예시를 만들수 있었고, 다음날 바로 팀장님께 보여드렸다. 그렇게 캡차 개발은 내 업무가 되었다^^<br>
+나름 보안과 성능을 생각하며, 이미지 캐싱등의 작업을 하였다. 그리고 캡차를 사용하기 위해서는 Global캐시 Store가 하나는 필요했다. 이로인해 팀에서 NoSQL 도입을 생각하게 되었다.<br>
+캡차 개발 완료 후 nGrinder를 통해 성능테스트로 진행하였는데 15,000 TPS정도의 높은 성능이 나와서 나름 만족하고 있었다.(하지만 아직 회사에서 인기 공연이나 예매에 사용을 안해서… 아쉬웠다.)</p>
+<h2><span id="redis-도입">Redis 도입</span></h2>
+<p>캡차 사용을 위해 Redis를 도입하게 되었다. 원래 사용하는 NoSQL이 있지만, 추가적으로 NoSQL서버를 자체 구축할 예정이었다. (이유는 따로 적지 않겠다.) 여러가지 NoSQL이 물망에 올랐다. Redis, Arcus등 여러가지 Key-value store가 거론되었지만, 내 욕심 상 Redis를 해보고 싶었다. (아무래도 Key-value store 1순위인 Redis를 써보고 싶었다.)<br>
+Redis를 도입하면서 단순하게 서버에 Redis만 설치해서 쓰고 싶지는 않았다. 인프라 시스템은 항상 scale out을 고려해야 했기 때문에, 주변에서 Docker를 이용해서 설치 해보라는 얘기가 나왔다.<br>
+Docker는 난생 처음 들어보는 거였는데… Docker에 대한 삽질을 어마무시하게 하면서 거의 3주만에 Redis 설치와 Cluster 설치까지 완료했다. 이 기회를 가지면서 Redis에 대한 전반적인 이해가 생기게 되었고, 나름 삽질을 거치면서 Docker라는 시스템도 어느정도 이해하게 되었다. (다시는 까먹지 않게 팀내에서도 3일에 걸쳐 공유를 하고 11부작 정도로 블로그도 작성해 두었다^^)</p>
+<h2><span id="결제시스템-개편">결제시스템 개편</span></h2>
+<p>어쩌다보니 내가 티켓링크 결제 시스템 '부’가 되어서 티켓링크 결제시스템 개편 업무를 많이 했다.<br>
+Payco결제, IC카드결제, 네이버페이 연동등을 경험하며, 외부 빌링업체의 결제 프로세스를 경험 할 수 있던 기회였다.<br>
+네이버페이는 거의 처음부터 만들게 되었는데, Web에서의 결제, App에서의 결제를 모두 봐야 해서 꽤 고생했던 기억이 있다. 하지만 결제관련 Flow는 어느정도 알게 되었던 업무였다.</p>
+<h2><span id="msa시도-해보기">MSA시도 해보기</span></h2>
+<p>티켓링크 시스템은 Monolothic 시스템 구조를 가지고 있다. 그렇기 때문에 빌드시간도 만만치않게 걸리고 배포하려고 해도 사이드 이펙트가 발생할 확률이 높다. 그렇기 때문에 올해 말부터 하나씩 하나씩 쪼개는 작업을 진행하고 있다. MSA까지는 아니어도 점진적으로 모듈을 분리하여, 빌드 시간을 단축 시키고, 시스템 안정성을 높이기 위함에 있다.<br>
+이 부분에 대해서는 나도 의견을 많이 내고 시니어 개발자분들도 관심있게 보는 부분이어서, 내년에 더 활발하게 작업이 진행 될 것 같다.</p>
+<h1><span id="내년에는">내년에는…</span></h1>
+<p>내년 공부의 시작은 개발 필독 서적을 몇가지 읽어보려고 한다.</p>
+<ul>
+<li>clean code</li>
+<li>TDD 개발 방법론</li>
+<li>Effective Java 3rd Edition<br>
+(2rd Edition은 한번봤는데, Java8에 대한 내용이 추가되었다고 하니 한번더 봐야겠다.)</li>
+<li>Java ORM 표준 JPA프로그래밍</li>
+<li>현재 MyBatis기반으로 시스템이 구성되어있는데, 새로 만드는 시스템은 무조건 JPA를 도입하자고 얘기가 나오고 있다. 이전 회사에서 JPA사용경험이 있어서 나도 JPA도입을 대찬성하고 있는데, 더 지식을 쌓고 개발할 필요성을 느끼고 있다. 그래서 이 책을 아마 1순위로 공부하지 않을까… 싶다.</li>
+</ul>
+<p>회사 업무에서는 주니어 개발자이지만, 목소리를 내보려 노력하고 있다.<br>
+팀에서도 그런 분위기를 조성하려하고 있는 것 같고, 내 의견이 묵살되더라도 생각이라도 해보고, 다른사람의 의견과 비교할 수 있기 때문에 적극적으로 목소리를 내보고자 한다.</p>
+<h1><span id="마무리">마무리…</span></h1>
+<p>올해 회고를 쭉 작성해보니 생각보다 많은 일을 했다는 생각이 든다. 그리고 그 과정 속에서 한단계 더 성장한 개발자가 되었다고 나름 생각하고 만족하고 있다. 회고를 쓰면서 회사 얘기가 조금 나와서… 글을 좀 수정해야 할 경우가 생길 수도 있지만… 딱히 그럴만한 내용은 없다고 생각이 든다.<br>
+앞으로는 1년 단위로 회고를 작성하여 한번씩 되돌아보고 추억할 수 있는 시간이 되면 좋겠다.</p>
+
+                
+
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    
+                        <li class="next">
+                            <a href="/2018/12/07/2018-12-07-docker-11/" data-toggle="tooltip" data-placement="top" title="Docker기반 Redis 구축하기 - (11) Redis-Cli Docker로 사용하기">Next Post &rarr;</a>
+                        </li>
+                    
+                </ul>
+
+                <!-- duoshuo Share start -->
+                
+                <!-- 多说 Share end-->
+
+                <!-- 多说评论框 start -->
+                
+                <!-- 多说评论框 end -->
+
+                <!-- disqus comment start -->
+                
+                    <div class="comment">
+                        <div id="disqus_thread" class="disqus-thread"></div>
+                    </div>
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#2018-remind" title="2018-remind">2018-remind</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- disqus embedded js code start (one page only need to embed once) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "your-disqus-ID";
+    var disqus_identifier = "http://yoursite-url/2018/12/16/2018-12-16-remind/";
+    var disqus_url = "http://yoursite-url/2018/12/16/2018-12-16-remind/";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus embedded js code start end -->
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+                
+                
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/jaehun2841">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; Carrey 2018 
+                    <br>
+                    Theme by <a href="http://huangxuan.me">Hux</a> 
+                    <span style="display: inline-block; margin: 0 5px;">
+                        <i class="fa fa-heart"></i>
+                    </span> 
+                    re-Ported by <a href="http://beantech.org">BeanTech</a> | 
+                    <iframe
+                        style="margin-left: 2px; margin-bottom:-5px;"
+                        frameborder="0" scrolling="0" width="91px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=YenYuHsuan&repo=hexo-theme-beantech&type=star&count=true" >
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="../../../../js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="../../../../js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="../../../../js/hux-blog.min.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- 
+     Because of the native support for backtick-style fenced code blocks 
+     right within the Markdown is landed in Github Pages, 
+     From V1.6, There is no need for Highlight.js, 
+     so Huxblog drops it officially.
+
+     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
+     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
+-->
+<!--
+    <script>
+        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
+            hljs.initHighlightingOnLoad();
+        })
+    </script>
+    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
+-->
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://yoursite-url/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+<!-- Image to hack wechat -->
+<img src="http://yoursite-url/img/icon_wechat.png" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

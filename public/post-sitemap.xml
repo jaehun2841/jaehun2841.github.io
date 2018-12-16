@@ -7,6 +7,14 @@
     </url>
 
     <url>
+        <loc>http://yoursite-url/2018/12/16/2018-12-16-remind/</loc>
+        <lastmod>2018-12-16T09:10:15.675Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://yoursite-url/2018/11/25/2018-11-25-docker-1/</loc>
         <lastmod>2018-12-08T08:36:34.232Z</lastmod>
         <changefreq>weekly</changefreq>
