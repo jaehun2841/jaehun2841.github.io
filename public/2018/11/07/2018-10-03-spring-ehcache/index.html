@@ -7,10 +7,10 @@
     error: 'Copy error',
     noSupport: 'The browser does not support'
   }
-} </script></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">1.</span> <span class="toc-text">들어가며..</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">2.</span> <span class="toc-text">Cache란?</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">3.</span> <span class="toc-text">Long Tail 법칙</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">4.</span> <span class="toc-text">Local Cache vs Global Cache</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">5.</span> <span class="toc-text">Spring Cache Abstraction</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">6.</span> <span class="toc-text">Spring Cache Annotation</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">7.</span> <span class="toc-text">EHCache</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">8.</span> <span class="toc-text">EHCache 설정 방법</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">9.</span> <span class="toc-text">EHCache 예시 코드</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">10.</span> <span class="toc-text">참고</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://www.gravatar.com/avatar/3f8583b7b0f0c1ebd249dffad42707af?s=300"></div><div class="author-info__name text-center">Carrey</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="../../../../archives"><span class="pull-left">Articles</span><span class="pull-right">33</span></a><a class="author-info-articles__tags article-meta" href="../../../../tags"><span class="pull-left">Tags</span><span class="pull-right">12</span></a></div></div></div><div id="content-outer"><div class="no-bg" id="top-container" style="background-image: url(true)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="../../../../index.html">Carrey`s 기술블로그</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus"><a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span></div><div id="post-info"><div id="post-title">Cache에 대하여.. (Spring+EHCache)</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2018-11-07</time></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h1><span id="들어가며">들어가며..</span></h1>
+} </script></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#들어가며"><span class="toc-number">1.</span> <span class="toc-text">들어가며..</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#cache란"><span class="toc-number">2.</span> <span class="toc-text">Cache란?</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#long-tail-법칙"><span class="toc-number">3.</span> <span class="toc-text">Long Tail 법칙</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#local-cache-vs-global-cache"><span class="toc-number">4.</span> <span class="toc-text">Local Cache vs Global Cache</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#spring-cache-abstraction"><span class="toc-number">5.</span> <span class="toc-text">Spring Cache Abstraction</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#spring-cache-annotation"><span class="toc-number">6.</span> <span class="toc-text">Spring Cache Annotation</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ehcache"><span class="toc-number">7.</span> <span class="toc-text">EHCache</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ehcache-설정-방법"><span class="toc-number">8.</span> <span class="toc-text">EHCache 설정 방법</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ehcache-예시-코드"><span class="toc-number">9.</span> <span class="toc-text">EHCache 예시 코드</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#참고"><span class="toc-number">10.</span> <span class="toc-text">참고</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://www.gravatar.com/avatar/3f8583b7b0f0c1ebd249dffad42707af?s=300"></div><div class="author-info__name text-center">Carrey</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="../../../../archives"><span class="pull-left">Articles</span><span class="pull-right">33</span></a><a class="author-info-articles__tags article-meta" href="../../../../tags"><span class="pull-left">Tags</span><span class="pull-right">12</span></a></div></div></div><div id="content-outer"><div class="no-bg" id="top-container" style="background-image: url(true)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="../../../../index.html">Carrey`s 기술블로그</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus"><a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span></div><div id="post-info"><div id="post-title">Cache에 대하여.. (Spring+EHCache)</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2018-11-07</time></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h1 id="들어가며">들어가며..</h1>
 <p>엔터프라이즈 급 Application에서는 DBMS의 부하를 줄이고, 성능을 높이기 위해 캐시(Cache)를 사용한다. 우리 회사에서도 EHCache, Redis를 사용하지만, EHCache쪽은 공부한 적이 없어서 이번 기회에 정리하면서 공부해 보게 되었다.
 대부분 <code>docs.spring.io</code>의 문서를 번역한 내용을 위주로 정리 하였다.</p>
-<h1><span id="cache란">Cache란?</span></h1>
+<h1 id="cache란">Cache란?</h1>
 <p>Cache의 사전적인 의미를 알아보기 위해 위키백과를 검색해 보았다.</p>
 <blockquote>
 <p><strong>캐시</strong>(cache, <a href="https://ko.wikipedia.org/wiki/%EB%AC%B8%ED%99%94%EC%96%B4" target="_blank" rel="noopener">문화어</a>: 캐쉬, 고속완충기, 고속완충기억기)는 <a href="https://ko.wikipedia.org/wiki/%EC%BB%B4%ED%93%A8%ED%84%B0_%EA%B3%BC%ED%95%99" target="_blank" rel="noopener">컴퓨터 과학</a>에서 데이터나 값을 미리 복사해 놓는 임시 장소를 가리킨다. 캐시는 캐시의 접근 시간에 비해 원래 데이터를 접근하는 시간이 오래 걸리는 경우나 값을 다시 계산하는 시간을 절약하고 싶은 경우에 사용한다. 캐시에 데이터를 미리 복사해 놓으면 계산이나 접근 시간 없이 더 빠른 속도로 데이터에 접근할 수 있다.</p>
@@ -25,11 +25,11 @@
 <li><strong>Cache Miss</strong>:데이터 요소가 캐시에 요청되고 해당 키에 대해 요소가 존재하지 않으면 Cache Miss (또는 단순히 'Miss')라고 한다.</li>
 <li><strong>System-of-record</strong> : 데이터에 대한 신뢰할 수있는 정보원. 이것을 흔히 시스템 레코드(SOR)이라고 한다. 캐시는 시스템 레코드에서 검색되거나 시스템 레코드에 저장된 데이터의 로컬 사본으로 작동된다. Ehcache를 사용하기 위해 SOR은 데이터베이스로 간주된다.</li>
 </ul>
-<h1><span id="long-tail-법칙">Long Tail 법칙</span></h1>
+<h1 id="long-tail-법칙">Long Tail 법칙</h1>
 <p><img src="./17110B4350CC5EC51D.jpeg" alt="Long Tail"></p>
 <p>20%의 요구가 시스템 리소스의 대부분을 잡아먹는다는 법칙.
 자주 사용되는 <code>20%의 기능에 캐시를 이용</code>하면 리소스 사용량을 대폭 줄일 수 있어, <code>시스템의 성능을 대폭 향상</code> 시킬 수 있다.</p>
-<h1><span id="local-cache-vs-global-cache">Local Cache vs Global Cache</span></h1>
+<h1 id="local-cache-vs-global-cache">Local Cache vs Global Cache</h1>
 <ul>
 <li>
 <p>Local Cache</p>
@@ -55,7 +55,7 @@
 </ul>
 </li>
 </ul>
-<h1><span id="spring-cache-abstraction">Spring Cache Abstraction</span></h1>
+<h1 id="spring-cache-abstraction">Spring Cache Abstraction</h1>
 <p>Spring 3.1버전부터 Spring Application에 캐시를 쉽게 추가할 수 있도록 기능을 제공하게 되었다. 유사 트랜잭션을 지원하고, 사용하고 있는 코드(메소드)에 영향을 최소화 하면서 일관된 방법으로 캐시를 사용 할 수 있게 되었다.</p>
 <p>Spring에서 캐시 추상화는 메소드를 통해 기능을 지원하는데, 메소드가 실행되는 시점에 파라미터에 대한 캐시 존재 여부를 판단하여 없으면 캐시를 등록하게 되고, 캐시가 있으면 메소드를 실행 시키지 않고 캐시 데이터를 Return 해주게 된다.</p>
 <p>Spring 캐시 추상화를 지원하기 때문에 개발자는 별도의 캐시 로직을 작성하지 않아도 된다. 하지만 캐시를 저장하는 저장소는 직접 설정을 해주어야 한다. Spring에서는 <code>CacheManager</code>라는 Interface를 제공하여 캐시를 구현하도록 하고 있다.</p>
@@ -64,7 +64,7 @@
 <p>Spring Boot에서는 <code>spring-boot-starter-cache</code> Artifact를 추가 하여 CacheManager를 구성 할 수 있다.
 기본적으로 별도의 추가적인 서드파티 모듈이 없는 경우에는 Local Memory에 저장이 가능한 ConcurrentMap기반인 <code>ConcurrentMapCacheManager</code>가 Bean으로 자동 생성 된다.</p>
 <p>이외에도 EHCache, Redis등의 서드파티 모듈을 추가 하게 되면 <code>EHCacheCacheManager</code>, <code>RedisCacheManager</code>를 Bean으로 등록 하여 사용할 수 있다. 이렇게 되면 별도로 다른 설정 없이도  단순 Memory Cache가 아닌 Cache Server를 대상으로 캐시를 저장 할 수 있도록 지원하고 있다.</p>
-<h1><span id="spring-cache-annotation">Spring Cache Annotation</span></h1>
+<h1 id="spring-cache-annotation">Spring Cache Annotation</h1>
 <p>Spring에서는 Cache Annotation을 지원하여 좀 더 쉽게 메서드에 대한 캐시를 제어할 수 있다.</p>
 <ul>
 <li>@EnableCaching
@@ -313,17 +313,42 @@
 <li>이 설정은 CacheManager가 여러개인 경우에만 사용</li>
 <li>Member조회 클래스에서는 Redis기반 캐시를 사용하고
 Product 조회 클래스에서는 EHCache 기반 캐시를 사용할 때
-각 클래스 별로 CacheManager를 지정 가능
-| 속성          | 설명                                                         | Default |
-| ------------- | ------------------------------------------------------------ | ------- |
-| cacheNames    | 캐시 명                                                      | {}      |
-| keyGenerator  | 특정 로직에 의해 cache key를 만들고자 하는 경우 사용&lt;br /&gt;4.0이후 버전 부터 SimpleKeyGenerator를 사용&lt;br /&gt;Custom Key Generator를 사용하고 싶으면, KeyGenerator 인터페이스를 별도로 구현 | &quot;&quot;      |
-| cacheManager  | 사용할 CacheManager를 지정 (EHCacheManager, RedisCacheManager등) | &quot;&quot;      |
-| cacheResolver | Cache 키에 대한 결과값을 돌려주는 Resolver (Interceptor역할)&lt;br /&gt;CacheResolver를 구현하여 Custom하게 처리 할 수도 있다. | &quot;&quot;      |</li>
+각 클래스 별로 CacheManager를 지정 가능</li>
 </ul>
 </li>
 </ul>
-<h1><span id="ehcache">EHCache</span></h1>
+<table>
+<thead>
+<tr>
+<th>속성</th>
+<th>설명</th>
+<th>Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>cacheNames</td>
+<td>캐시 명</td>
+<td>{}</td>
+</tr>
+<tr>
+<td>keyGenerator</td>
+<td>특정 로직에 의해 cache key를 만들고자 하는 경우 사용&lt;br /&gt;4.0이후 버전 부터 SimpleKeyGenerator를 사용&lt;br /&gt;Custom Key Generator를 사용하고 싶으면, KeyGenerator 인터페이스를 별도로 구현</td>
+<td>&quot;&quot;</td>
+</tr>
+<tr>
+<td>cacheManager</td>
+<td>사용할 CacheManager를 지정 (EHCacheManager, RedisCacheManager등)</td>
+<td>&quot;&quot;</td>
+</tr>
+<tr>
+<td>cacheResolver</td>
+<td>Cache 키에 대한 결과값을 돌려주는 Resolver (Interceptor역할)&lt;br /&gt;CacheResolver를 구현하여 Custom하게 처리 할 수도 있다.</td>
+<td>&quot;&quot;</td>
+</tr>
+</tbody>
+</table>
+<h1 id="ehcache">EHCache</h1>
 <p><img src="./EHCACHE.png" alt="EHCACHE"></p>
 <ul>
 <li>EHCache는 오픈 소스 기반의 Local Cache이다.</li>
@@ -336,13 +361,13 @@ Product 조회 클래스에서는 EHCache 기반 캐시를 사용할 때
 <blockquote>
 <p><strong>JSR-107</strong> : (JCACHE – Java Temporary Caching API) 객체 생성, 공유 액세스, 스풀링, 무효화 및 JVM 전반에 걸친 일관성을 포함하여 Java 객체의 메모리 캐싱에서 사용할 API 에 대한 기준으로 볼 수 있다.    해당 Spec 으로 구현된 cache로는 EhCache가 유명하며, Hazelcast, Infinispan, Couchbase, Redis, Caffeine 등도 해당 기준을 따르는 것으로 알려져 있다.</p>
 </blockquote>
-<h1><span id="ehcache-설정-방법">EHCache 설정 방법</span></h1>
+<h1 id="ehcache-설정-방법">EHCache 설정 방법</h1>
 <p>내용이 길어 질 것 같아 별도의 포스트로 작성</p>
 <ul>
 <li><a href="http://jaehun2841.github.io/2018/11/07/2018-11-04-ehcache-config-for-springframework/" target="_blank" rel="noopener">EHCache 설정방법 (Spring Framework)</a></li>
 <li><a href="http:/jaehun2841.github.io/2018/11/07/2018-11-04-ehcache-config-for-springboot/" target="_blank" rel="noopener">EHCache 설정방법 (Spring Boot)</a></li>
 </ul>
-<h1><span id="ehcache-예시-코드">EHCache 예시 코드</span></h1>
+<h1 id="ehcache-예시-코드">EHCache 예시 코드</h1>
 <p>테스트 시나리오</p>
 <ol>
 <li>가상으로 DBMS에서 데이터를 조회 하는 Repository를 생성</li>
@@ -370,7 +395,7 @@ Product 조회 클래스에서는 EHCache 기반 캐시를 사용할 때
 <p>EHCache는 ehcache.xml 또는 Java 코드에서 addCache를 이용하여 반드시 Cache Key를 등록해 줘야 함
 이거를 안 등록하고 Cache Key를 막쓰다가.. 계속 Cache Key가 없다는 오류가 발생하여 잠깐 삽질..</p>
 </blockquote>
-<h1><span id="참고">참고</span></h1>
+<h1 id="참고">참고</h1>
 <ul>
 <li>http://www.ehcache.org/documentation/2.8/integrations/spring.html#introduction</li>
 <li>https://docs.spring.io/spring/docs/current/spring-framework-reference/integration.html#cache</li>

@@ -7,13 +7,13 @@
     error: 'Copy error',
     noSupport: 'The browser does not support'
   }
-} </script></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">1.</span> <span class="toc-text">들어가며</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">2.</span> <span class="toc-text">CentOS 7 환경에서 Docker 설치하기</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">3.</span> <span class="toc-text">Docker의 Permission</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">4.</span> <span class="toc-text">간단한 Docker Container(깡통)를 만들어 봅시다!</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">5.</span> <span class="toc-text">Docker 이미지 다운로드 (Docker hub -&gt; Docker Client)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">6.</span> <span class="toc-text">Docker 이미지 확인 / 삭제</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">6.1.</span> <span class="toc-text">Docker 이미지 확인</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">6.2.</span> <span class="toc-text">Docker 이미지 삭제</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">7.</span> <span class="toc-text">Docker Container 생성 / 삭제</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">7.1.</span> <span class="toc-text">Docker Container 생성</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">7.2.</span> <span class="toc-text">Docker Container 목록 조회</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">7.3.</span> <span class="toc-text">Docker Container 내부 접속</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">8.</span> <span class="toc-text">Docker Container 삭제</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">9.</span> <span class="toc-text">자주 사용한 명령어 모음</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">10.</span> <span class="toc-text">참고</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://www.gravatar.com/avatar/3f8583b7b0f0c1ebd249dffad42707af?s=300"></div><div class="author-info__name text-center">Carrey</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="../../../../archives"><span class="pull-left">Articles</span><span class="pull-right">33</span></a><a class="author-info-articles__tags article-meta" href="../../../../tags"><span class="pull-left">Tags</span><span class="pull-right">12</span></a></div></div></div><div id="content-outer"><div class="no-bg" id="top-container" style="background-image: url(true)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="../../../../index.html">Carrey`s 기술블로그</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus"><a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span></div><div id="post-info"><div id="post-title">Docker기반 Redis 구축하기 - (2) Docker 설치 및 사용방법</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2018-11-28</time></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h1><span id="들어가며">들어가며</span></h1>
+} </script></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#들어가며"><span class="toc-number">1.</span> <span class="toc-text">들어가며</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#centos-7-환경에서-docker-설치하기"><span class="toc-number">2.</span> <span class="toc-text">CentOS 7 환경에서 Docker 설치하기</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#docker의-permission"><span class="toc-number">3.</span> <span class="toc-text">Docker의 Permission</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#간단한-docker-container깡통를-만들어-봅시다"><span class="toc-number">4.</span> <span class="toc-text">간단한 Docker Container(깡통)를 만들어 봅시다!</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#docker-이미지-다운로드-docker-hub-gt-docker-client"><span class="toc-number">5.</span> <span class="toc-text">Docker 이미지 다운로드 (Docker hub -&gt; Docker Client)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#docker-이미지-확인-삭제"><span class="toc-number">6.</span> <span class="toc-text">Docker 이미지 확인 / 삭제</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#docker-이미지-확인"><span class="toc-number">6.1.</span> <span class="toc-text">Docker 이미지 확인</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#docker-이미지-삭제"><span class="toc-number">6.2.</span> <span class="toc-text">Docker 이미지 삭제</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#docker-container-생성-삭제"><span class="toc-number">7.</span> <span class="toc-text">Docker Container 생성 / 삭제</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#docker-container-생성"><span class="toc-number">7.1.</span> <span class="toc-text">Docker Container 생성</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#docker-container-목록-조회"><span class="toc-number">7.2.</span> <span class="toc-text">Docker Container 목록 조회</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#docker-container-내부-접속"><span class="toc-number">7.3.</span> <span class="toc-text">Docker Container 내부 접속</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#docker-container-삭제"><span class="toc-number">8.</span> <span class="toc-text">Docker Container 삭제</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#자주-사용한-명령어-모음"><span class="toc-number">9.</span> <span class="toc-text">자주 사용한 명령어 모음</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#참고"><span class="toc-number">10.</span> <span class="toc-text">참고</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://www.gravatar.com/avatar/3f8583b7b0f0c1ebd249dffad42707af?s=300"></div><div class="author-info__name text-center">Carrey</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="../../../../archives"><span class="pull-left">Articles</span><span class="pull-right">33</span></a><a class="author-info-articles__tags article-meta" href="../../../../tags"><span class="pull-left">Tags</span><span class="pull-right">12</span></a></div></div></div><div id="content-outer"><div class="no-bg" id="top-container" style="background-image: url(true)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="../../../../index.html">Carrey`s 기술블로그</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus"><a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span></div><div id="post-info"><div id="post-title">Docker기반 Redis 구축하기 - (2) Docker 설치 및 사용방법</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2018-11-28</time></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h1 id="들어가며">들어가며</h1>
 <p>지난 장에서는 Docker에 대한 개념, Image와 컨테이너, VM과의 차이점등을 그림으로 설명하였습니다.
 이번 장부터는 Docker를 linux서버에 설치하는 과정을 설명하고자 합니다.
 (Linux서버 설치는 hyper-v를 이용하여 vm으로 설치 하였습니다. &lt;차후에 hyper-v 설정기를 올릴 예정입니다.&gt;)
 Windows, Mac에도 설치 할 수 있지만, Linux에 설치하는게 거의 표준이다 싶히 사용되고 있으며, Windows, Mac에 설치를 하더라도 어차피 가상화 환경에서 Docker가 설치 되기 때문에... linux를 설치하여 Docker를 설치하였습니다.
 (지울 때 편하게 지우고 싶어서 그런건 안비밀)</p>
-<h1><span id="centos-7-환경에서-docker-설치하기">CentOS 7 환경에서 Docker 설치하기</span></h1>
+<h1 id="centos-7-환경에서-docker-설치하기">CentOS 7 환경에서 Docker 설치하기</h1>
 <p>Docker를 설치하는 방법은 다양한 방법이 있겠지만.. 가장 간단한 방법으로 설치해 보도록 하겠습니다.</p>
 <p>설치 환경은 아래와 같습니다.</p>
 <ul>
@@ -27,7 +27,7 @@ Windows, Mac에도 설치 할 수 있지만, Linux에 설치하는게 거의 표
 따라서 한번에 패키지로 설치해 주는 url로 설치하도록 합니다.</p>
 </blockquote>
 <p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo curl -fsSL https://get.docker.com/ | sudo sh</span><br><span class="line">sudo sh sudo service docker start <span class="comment">#Docker Daemon Start</span></span><br></pre></td></tr></table></figure></p>
-<h1><span id="docker의-permission">Docker의 Permission</span></h1>
+<h1 id="docker의-permission">Docker의 Permission</h1>
 <p>Docker를 설치하고 확인하기 위해 Docker 명령을 입력하였습니다.</p>
 <p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker version</span><br></pre></td></tr></table></figure></p>
 <p><img src="./docker-permission.png" alt="docker permission"></p>
@@ -39,7 +39,7 @@ docker는 명령을 실행 할 때 기본적으로 root계정을 필요로 합�
 <p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker version</span><br></pre></td></tr></table></figure></p>
 <p><img src="./sudo-docker.png" alt="sudo docker"></p>
 <p>이제 sudo 명령 없이도 docker 명령어 실행이 잘 됩니다!</p>
-<h1><span id="간단한-docker-container깡통를-만들어-봅시다">간단한 Docker Container(깡통)를 만들어 봅시다!</span></h1>
+<h1 id="간단한-docker-container깡통를-만들어-봅시다">간단한 Docker Container(깡통)를 만들어 봅시다!</h1>
 <p>Docker Hub(<a href="https://hub.docker.com/" target="_blank" rel="noopener">https://hub.docker.com</a>) 사이트에 들어가면 우리가 필요로하는 많은 프로그램들이 이미지로 올라가 있습니다.
 이번 예제에서는 Redis를 가지고 Docker Container를 만들어보도록 하겠습니다.</p>
 <p><img src="./docker-hub.png" alt="docker-hub"></p>
@@ -49,11 +49,11 @@ bitnami/redis라고 되어있는 것은 docker hub의 사용자들이 올린 이
 <p><img src="./redis-versions.png" alt="redis-versions"></p>
 <p>official 이미지의 상세 버전을 보니 4.x~5.0.1까지 있습니다.
 이번 예제에서는 그나마 stable한 버전인 인 5.0-alpine 버전을 사용해 보도록 하겠습니다.</p>
-<h1><span id="docker-이미지-다운로드-docker-hub-gt-docker-client">Docker 이미지 다운로드 (Docker hub -&gt; Docker Client)</span></h1>
+<h1 id="docker-이미지-다운로드-docker-hub-gt-docker-client">Docker 이미지 다운로드 (Docker hub -&gt; Docker Client)</h1>
 <p>pull 명령을 통해 docker hub에 있는 이미지를 다운로드 합니다.</p>
 <p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker pull redis:&lt;tag&gt; <span class="comment"># ex) redis:5.0-alpine, redis:4-alpine, redis:latest(가장 마지막 배포 버전입니다.)</span></span><br><span class="line">docker pull redis <span class="comment">#tag version을 적지 않은 경우 자동으로 lastest 버전을 다운로드 합니다.</span></span><br></pre></td></tr></table></figure></p>
-<h1><span id="docker-이미지-확인-삭제">Docker 이미지 확인 / 삭제</span></h1>
-<h2><span id="docker-이미지-확인">Docker 이미지 확인</span></h2>
+<h1 id="docker-이미지-확인-삭제">Docker 이미지 확인 / 삭제</h1>
+<h2 id="docker-이미지-확인">Docker 이미지 확인</h2>
 <p>images 명령을 이용하여 docker image리스트를 확인합니다.</p>
 <p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker images</span><br></pre></td></tr></table></figure></p>
 <ul>
@@ -71,7 +71,7 @@ bitnami/redis라고 되어있는 것은 docker hub의 사용자들이 올린 이
 <img src="./image-layer.png" alt="image layer">
 따라서 하나의 이미지라도 여러 이미지가 투영되어 보이는 결과물이라 볼 수 있습니다.</p>
 </blockquote>
-<h2><span id="docker-이미지-삭제">Docker 이미지 삭제</span></h2>
+<h2 id="docker-이미지-삭제">Docker 이미지 삭제</h2>
 <p>rmi 명령을 이용하여 docker의 image를 삭제 할 수 있습니다.</p>
 <p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ex) docker rmi redis:5.0-alpine, docker rmi &lt;imageID&gt;</span></span><br><span class="line">docker rmi &#123;이미지명/이미지ID&#125;</span><br></pre></td></tr></table></figure></p>
 <ul>
@@ -81,8 +81,8 @@ bitnami/redis라고 되어있는 것은 docker hub의 사용자들이 올린 이
 </ul>
 </li>
 </ul>
-<h1><span id="docker-container-생성-삭제">Docker Container 생성 / 삭제</span></h1>
-<h2><span id="docker-container-생성">Docker Container 생성</span></h2>
+<h1 id="docker-container-생성-삭제">Docker Container 생성 / 삭제</h1>
+<h2 id="docker-container-생성">Docker Container 생성</h2>
 <p>run 명령으로 Container를 생성합니다.</p>
 <p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ex) docker run -it -d redis:5.0-alpine,</span></span><br><span class="line"><span class="comment">#     docker run -it -d 4760dc956b2d</span></span><br><span class="line">docker run &#123;options&#125; &lt;image명/image ID&gt;</span><br></pre></td></tr></table></figure></p>
 <ul>
@@ -99,7 +99,7 @@ bitnami/redis라고 되어있는 것은 docker hub의 사용자들이 올린 이
 </ul>
 </li>
 </ul>
-<h2><span id="docker-container-목록-조회">Docker Container 목록 조회</span></h2>
+<h2 id="docker-container-목록-조회">Docker Container 목록 조회</h2>
 <p>ps 명령으로 Container 목록을 조회합니다.</p>
 <p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker ps &#123;options&#125;</span><br></pre></td></tr></table></figure></p>
 <ul>
@@ -108,7 +108,7 @@ bitnami/redis라고 되어있는 것은 docker hub의 사용자들이 올린 이
 <li>-q : Container ID만 조회</li>
 <li>-f --filter : Container 조회 시, Filter를 이용하여 조회</li>
 </ul>
-<h2><span id="docker-container-내부-접속">Docker Container 내부 접속</span></h2>
+<h2 id="docker-container-내부-접속">Docker Container 내부 접속</h2>
 <p>attach 명령을 이용하여 접속
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker attach [container명/container ID]</span><br></pre></td></tr></table></figure></p>
 <blockquote>
@@ -125,7 +125,7 @@ bitnami/redis라고 되어있는 것은 docker hub의 사용자들이 올린 이
 </ul>
 </li>
 </ul>
-<h1><span id="docker-container-삭제">Docker Container 삭제</span></h1>
+<h1 id="docker-container-삭제">Docker Container 삭제</h1>
 <p>rm 명령으로 Container를 삭제 합니다.</p>
 <p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># ex) docker rm -f redis:5.0-alpine</span></span><br><span class="line">docker rm &#123;options&#125; [container명/container ID]</span><br></pre></td></tr></table></figure></p>
 <ul>
@@ -137,9 +137,9 @@ bitnami/redis라고 되어있는 것은 docker hub의 사용자들이 올린 이
 </ul>
 </li>
 </ul>
-<h1><span id="자주-사용한-명령어-모음">자주 사용한 명령어 모음</span></h1>
+<h1 id="자주-사용한-명령어-모음">자주 사용한 명령어 모음</h1>
 <p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#Container 전체 삭제 (-a -q 옵션으로 전체 Container의 ID만 뽑아온다.)</span></span><br><span class="line">docker rm -f $(docker ps -a -q)</span><br><span class="line"></span><br><span class="line"><span class="comment">#Image 전체 삭제 (-q 옵션으로 images에 대한 Image ID만 뽑아온다.)</span></span><br><span class="line">docker rmi $(docker images -q)</span><br><span class="line"></span><br><span class="line"><span class="comment">#특정 Container 삭제 (grep 명령으로 Container ID만 뽑아온다.)</span></span><br><span class="line">docker rm -f $(docker ps -a | grep <span class="string">"redis:5.0-alpine"</span>| awk <span class="string">'&#123;print $1&#125;'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#특정 이미지 삭제 (grep + awk 명령어로 image ID만 뽑아온다.)</span></span><br><span class="line">docker rmi $(docker images | grep <span class="string">"^redis"</span>| awk <span class="string">'&#123;print $3&#125;'</span>)  </span><br><span class="line"></span><br><span class="line"><span class="comment">#Docker 삭제</span></span><br><span class="line"><span class="built_in">cd</span> ~</span><br><span class="line">yum remove -y docker*</span><br></pre></td></tr></table></figure></p>
-<h1><span id="참고">참고</span></h1>
+<h1 id="참고">참고</h1>
 <ul>
 <li>http://www.sauru.so/blog/docker-installation-and-test-drive/</li>
 <li>https://hub.docker.com/_/redis/</li>

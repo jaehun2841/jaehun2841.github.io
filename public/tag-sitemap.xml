@@ -58,13 +58,6 @@
     </url>
 
     <url>
-        <loc>http://yoursite-url/tags/Spring/</loc>
-        <lastmod>2018-11-27T07:23:32.394Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>http://yoursite-url/tags/SpEL/</loc>
         <lastmod>2018-11-27T07:23:32.394Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -80,7 +73,14 @@
 
     <url>
         <loc>http://yoursite-url/tags/2018-remind/</loc>
-        <lastmod>2018-12-16T09:16:52.323Z</lastmod>
+        <lastmod>2018-12-22T10:50:27.360Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>http://yoursite-url/tags/Spring/</loc>
+        <lastmod>2018-12-22T10:50:45.355Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

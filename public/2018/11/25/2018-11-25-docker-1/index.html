@@ -7,7 +7,7 @@
     error: 'Copy error',
     noSupport: 'The browser does not support'
   }
-} </script></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">1.</span> <span class="toc-text">Docker란 무엇인가?</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">2.</span> <span class="toc-text">Docker Image</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">3.</span> <span class="toc-text">Docker Container</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">4.</span> <span class="toc-text">Docker vs Virtual Machine</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">5.</span> <span class="toc-text">Docker for XX</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">6.</span> <span class="toc-text">참고</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://www.gravatar.com/avatar/3f8583b7b0f0c1ebd249dffad42707af?s=300"></div><div class="author-info__name text-center">Carrey</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="../../../../archives"><span class="pull-left">Articles</span><span class="pull-right">33</span></a><a class="author-info-articles__tags article-meta" href="../../../../tags"><span class="pull-left">Tags</span><span class="pull-right">12</span></a></div></div></div><div id="content-outer"><div class="no-bg" id="top-container" style="background-image: url(true)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="../../../../index.html">Carrey`s 기술블로그</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus"><a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span></div><div id="post-info"><div id="post-title">Docker기반 Redis 구축하기 - (1) Docker란 무엇인가?</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2018-11-25</time></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h1><span id="docker란-무엇인가">Docker란 무엇인가?</span></h1>
+} </script></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#docker란-무엇인가"><span class="toc-number">1.</span> <span class="toc-text">Docker란 무엇인가?</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#docker-image"><span class="toc-number">2.</span> <span class="toc-text">Docker Image</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#docker-container"><span class="toc-number">3.</span> <span class="toc-text">Docker Container</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#docker-vs-virtual-machine"><span class="toc-number">4.</span> <span class="toc-text">Docker vs Virtual Machine</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#docker-for-xx"><span class="toc-number">5.</span> <span class="toc-text">Docker for XX</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#참고"><span class="toc-number">6.</span> <span class="toc-text">참고</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://www.gravatar.com/avatar/3f8583b7b0f0c1ebd249dffad42707af?s=300"></div><div class="author-info__name text-center">Carrey</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="../../../../archives"><span class="pull-left">Articles</span><span class="pull-right">33</span></a><a class="author-info-articles__tags article-meta" href="../../../../tags"><span class="pull-left">Tags</span><span class="pull-right">12</span></a></div></div></div><div id="content-outer"><div class="no-bg" id="top-container" style="background-image: url(true)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="../../../../index.html">Carrey`s 기술블로그</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus"><a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span></div><div id="post-info"><div id="post-title">Docker기반 Redis 구축하기 - (1) Docker란 무엇인가?</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2018-11-25</time></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h1 id="docker란-무엇인가">Docker란 무엇인가?</h1>
 <p><img src="./docker-logo.png" alt="docker-logo"></p>
 <p>Docker란 <strong>Linux 컨테이너(Container) 기반의 오픈소스 가상화 플랫폼</strong> 입니다.</p>
 <p>위의 Docker 이미지처럼 선박에 화물을 수송하는 이미지를 떠올리면 이해하기가 쉬운데, 실제 선박에는 자동차, 오토바이, 전자제품등 여러 물건을 담을 수 있습니다.</p>
@@ -17,7 +17,7 @@ Web Service 운영환경을 구성하기 위해서는 Web Application이 구동 
 그 다음 우리가 배포할 서버를 항구(Port)라고 생각하고,
 각 서버에 Web Service 운영환경을 싣고 있는 선박을 정착 시켜 서버에서 접근가능한 서비스로 이용할 수 있습니다. 따라서 어떤 서버에서도 Docker만 설치되어 있다면, 다양한 <code>프로그램과 실행환경을 추상화 하여 동일한 인터페이스를 제공</code>하고 서버관리를 쉽고 단순하게 만들어 줄 수 있습니다.</p>
 <p>Docker에서는 <code>Image</code>와 <code>Container</code>라는 개념을 사용하는데, 이 두 가지 개념에 대해 알아보도록 하겠습니다.</p>
-<h1><span id="docker-image">Docker Image</span></h1>
+<h1 id="docker-image">Docker Image</h1>
 <p><img src="./docker-image.png" alt="docker-image"></p>
 <p>Docker Image는 우리가 사용할 프로그램을 추상화 한 개념입니다.</p>
 <p>Image에는 Container 실행에 필요한 파일(redis.conf, redis.log...., docker-entrypoing.sh등)등을 포함하고,
@@ -29,7 +29,7 @@ Web Service 운영환경을 구성하기 위해서는 Web Application이 구동 
 여기서 <code>iso파일</code>을 <code>Image</code>라고 생각하고, <code>VM위에 설치되는 리눅스</code>를 <code>Container</code>라고 이해 할 수 있겠습니다.</p>
 <p>Docker를 이용한 운영 배포 시, 이미지를 <code>Docker Hub</code>라는 곳에 올려 각 서버에서 받아 사용할 수 있습니다.
 (Docker Hub는 github나 maven repository 같은 클라우드 저장소 같은 개념으로 이해 하시면 됩니다.)</p>
-<h1><span id="docker-container">Docker Container</span></h1>
+<h1 id="docker-container">Docker Container</h1>
 <p>Container란, <strong>프로그램의 실행에 필요한 실행환경을 독립적으로 운용할 수 있도록, 다른 실행환경과의 간섭을 막고 독립성을 확보해 주는 운영체제 수준의 격리 기술</strong>을 의미합니다.</p>
 <p>이러한 격리된 환경이 필요한 경우를 생각해 볼 수 있는데, 극단적인 예시로 Java 1.6 환경에서만 실행되는 프로그램과 Java 1.8이상 환경에서만 실행 되는 프로그램을 하나의 서버에 설치한다고 가정하겠습니다.</p>
 <p>프로그램이 실행 되기 위해서는 운영체제에 설치 된 라이브러리의 대해 의존성을 가질 수 밖에 없는데, 하나의 OS에서 Java Version에 대한 격리 환경을 가지게 하는 것은 상당히 번거로운 일입니다.
@@ -42,7 +42,7 @@ Container는 Image를 기반으로 생성된 격리 된 실행환경이라 했�
 이처럼 Java의 Class와 Instance의 관계로 이해한다면, Docker에서의 Image와 Container 관계에 대해 어렵지 않게 이해 할 수 있을 것 같습니다.</p>
 <p><img src="./docking-image.png" alt="docking-image"></p>
 <p>도킹에 성공한 Container는 Host OS에 설치 된 프로그램 처럼 사용할 수 있다.</p>
-<h1><span id="docker-vs-virtual-machine">Docker vs Virtual Machine</span></h1>
+<h1 id="docker-vs-virtual-machine">Docker vs Virtual Machine</h1>
 <p>위에서 설명하길 &quot;Docker란 <strong>Linux 컨테이너(Container) 기반의 오픈소스 가상화 플랫폼</strong>입니다.&quot; 라고 이야기 하였습니다.
 가상화라고 하면 대표적인 예가 Virtual Machine 즉 VM을 떠올릴 수 있는데요.</p>
 <p>VM과 Docker는 몇가지 차이점이 있습니다.
@@ -58,13 +58,13 @@ VM에서 사용되는 OS나 Kernel이 없기 때문에 부팅을 할 필요도 �
 단점인 부분은 <strong>Host OS에 종속적인 부분이 있습니다.</strong>
 VM방식의 경우 각각의 OS에 대한 독립성을 가지고 있어, Host OS에 대해 독립적입니다. (예를들어 Host OS가 리눅스이고, Guest OS가 Windows인 경우, MSSQL을 Guest OS에서 사용할 수 있다)
 하지만 Container방식은 Host OS의 자원을 기반으로 생성 되기 때문에 <code>Host OS에서 작동할 수 없는 프로그램은 Container 내부에서 작동 할 수 없습니다.</code></p>
-<h1><span id="docker-for-xx">Docker for XX</span></h1>
+<h1 id="docker-for-xx">Docker for XX</h1>
 <p>Docker는 리눅스 컨테이너 기반으로 동작하지만 최근 Windows와 Mac에 대해서도 Docker를 지원하고 있습니다.
 하지만 Linux기반 Docker와 조금 차이점이 있습니다.
 아무래도 Linux 기반 컨테이너이기 때문에 Windows에서는 Hyper-V에 리눅스를 설치하여 연동되게 되어있습니다.
 이 경우 Host OS가 Windows가 되는 것이 아니라, Hyper-V의 리눅스가 Host OS가 되는 것이기 때문에 Hyper-V에 할당된 메모리와 디스크 용량을 기반으로 자원을 활용하게 됩니다.
 Linux가 아닌 다른 운영체제에서 Docker 설치 시 유의해야 할 부분입니다.</p>
-<h1><span id="참고">참고</span></h1>
+<h1 id="참고">참고</h1>
 <ul>
 <li>
 <p><a href="http://www.sauru.so/blog/getting-started-with-docker/" target="_blank" rel="noopener">http://www.sauru.so/blog/getting-started-with-docker/</a></p>
