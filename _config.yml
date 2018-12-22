@@ -24,7 +24,7 @@ archive_dir: archives
 category_dir: categories
 code_dir: downloads/code
 i18n_dir: :lang
-skip_render:
+skip_render: googleb6989b051cadc23a.html
 
 # Writing
 new_post_name: :title.md # File name of new posts
@@ -84,7 +84,7 @@ deploy:
 # Crawler
 sitemap:
   path: sitemap.xml
-  
+
 # rss feed auto generator
 feed:
   # feed type (atom / rss2)
