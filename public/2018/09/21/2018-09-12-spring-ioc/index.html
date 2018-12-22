@@ -1,587 +1,107 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<!-- Head tag -->
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="keyword"  content="">
-    <link rel="shortcut icon" href="/img/ironman-draw.png">
-    <!-- Place this tag in your head or just before your close body tag. -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
-    <title>
-        
-          Spring IoC &amp; DI(1) - IoC 등장배경(과정) - Carrey`s 기술블로그
-        
-    </title>
-
-    <link rel="canonical" href="http://yoursite-url/2018/09/21/2018-09-12-spring-ioc/">
-
-    <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="../../../../css/bootstrap.min.css">
-
-    <!-- Custom CSS --> 
-    <link rel="stylesheet" href="../../../../css/beantech.min.css">
-    
-    <!-- Pygments Highlight CSS -->
-    <link rel="stylesheet" href="../../../../css/highlight.css">
-
-    <link rel="stylesheet" href="../../../../css/widget.css">
-
-    <link rel="stylesheet" href="../../../../css/rocket.css">
-
-    <link rel="stylesheet" href="../../../../css/signature.css">
-
-    <link rel="stylesheet" href="../../../../css/toc.css">
-
-    <!-- Custom Fonts -->
-    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
-    <!-- Hux change font-awesome CDN to qiniu -->
-    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-
-    <!-- Hux Delete, sad but pending in China
-    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
-    css'>
-    -->
-
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-    <!-- ga & ba script hoook -->
-    <script></script>
-</head>
-
-
-<!-- hack iOS CSS :active style -->
-<body ontouchstart="">
-	<!-- Modified by Yu-Hsuan Yen -->
-<!-- Post Header -->
-<style type="text/css">
-    header.intro-header{
-        
-            background-image: url('null')
-            /*post*/
-        
-    }
-    
-    #signature{
-        background-image: url('/img/signature/BeanTechSign-white.png');
-    }
-    
-</style>
-
-<header class="intro-header" >
-    <!-- Signature -->
-    <div id="signature">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                
-                    <div class="post-heading">
-                        <div class="tags">
-                            
-                              <a class="tag" href="/tags/#Spring" title="Spring">Spring</a>
-                            
-                        </div>
-                        <h1>Spring IoC &amp; DI(1) - IoC 등장배경(과정)</h1>
-                        <h2 class="subheading">IoC/DI의 발전과정</h2>
-                        <span class="meta">
-                            Posted by Carrey on
-                            2018-09-21
-                        </span>
-                    </div>
-                
-
-
-                </div>
-            </div>
-        </div>
-    </div>
-</header>
-
-	
-    <!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
-    <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header page-scroll">
-            <button type="button" class="navbar-toggle">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/">Carrey`s 기술블로그</a>
-        </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <!-- Known Issue, found by Hux:
-            <nav>'s height woule be hold on by its content.
-            so, when navbar scale out, the <nav> will cover tags.
-            also mask any touch event of tags, unfortunately.
-        -->
-        <div id="huxblog_navbar">
-            <div class="navbar-collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="/">Home</a>
-                    </li>
-
-                    
-
-                        
-                    
-
-                        
-                        <li>
-                            <a href="/about/">About</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
-                            <a href="/archive/">Archives</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
-                            <a href="/tags/">Tags</a>
-                        </li>
-                        
-                    
-                    
-                </ul>
-            </div>
-        </div>
-        <!-- /.navbar-collapse -->
-    </div>
-    <!-- /.container -->
-</nav>
-<script>
-    // Drop Bootstarp low-performance Navbar
-    // Use customize navbar with high-quality material design animation
-    // in high-perf jank-free CSS3 implementation
-    var $body   = document.body;
-    var $toggle = document.querySelector('.navbar-toggle');
-    var $navbar = document.querySelector('#huxblog_navbar');
-    var $collapse = document.querySelector('.navbar-collapse');
-
-    $toggle.addEventListener('click', handleMagic)
-    function handleMagic(e){
-        if ($navbar.className.indexOf('in') > 0) {
-        // CLOSE
-            $navbar.className = " ";
-            // wait until animation end.
-            setTimeout(function(){
-                // prevent frequently toggle
-                if($navbar.className.indexOf('in') < 0) {
-                    $collapse.style.height = "0px"
-                }
-            },400)
-        }else{
-        // OPEN
-            $collapse.style.height = "auto"
-            $navbar.className += " in";
-        }
-    }
-</script>
-
-
-    <!-- Main Content -->
-    <!-- Modify by Yu-Hsuan Yen -->
-
-<!-- Post Content -->
-<article>
-    <div class="container">
-        <div class="row">
-
-            <!-- Post Container -->
-            <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                post-container">
-
-                <h1><span id="ioc-등장배경">IoC 등장배경</span></h1>
-<p>IoC의 등장배경을 알기 위해서는 EJB나 Spring과 같은 프레임워크를 사용하기 이전 시대의 개발 방식에 대해 얘기를 해야한다.<br>
-온고지신(?)이라 하였던가… IoC를 이해하기 위해 옛날이야기를 해보도록 하겠다.</p>
-<p>태초에 Java로 만든 프로그램은 main()이라는 메소드에서 시작이 되었다.<br>
-main() 메소드 내에서 필요한 클래스를 개발자가 직접 코드내에서 생성하여 사용하였다.<br>
-어떠한 프로그램을 만들던지 간에 프로그램에는 <code>모델(Model)</code>이라는 개념이 생겨나게 된다.<br>
+<!DOCTYPE html><html lang="lang"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="Spring IoC &amp; DI(1) - IoC 등장배경(과정)"><meta name="keywords" content="Spring"><meta name="author" content="Carrey,undefined"><meta name="copyright" content="Carrey"><title>Spring IoC &amp; DI(1) - IoC 등장배경(과정) | Carrey`s 기술블로그</title><link rel="shortcut icon" href="../../../../my-favicon.ico"><link rel="stylesheet" href="../../../../css/index.css?version=1.5.6"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css?version=1.5.6"><link rel="dns-prefetch" href="https://cdn.staticfile.org"><link rel="dns-prefetch" href="https://cdn.bootcss.com"><link rel="dns-prefetch" href="https://creativecommons.org"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  }
+} </script></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ioc-등장배경"><span class="toc-number">1.</span> <span class="toc-text">IoC 등장배경</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#클래스-gt-클래스-호출-관계"><span class="toc-number">1.1.</span> <span class="toc-text">클래스 -&gt; 클래스 호출 관계</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#클래스-gt-인터페이스interface-gt-클래스-구조"><span class="toc-number">1.2.</span> <span class="toc-text">클래스 -&gt; 인터페이스(interface) -&gt; 클래스 구조</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#클래스-gt-팩토리factory-패턴"><span class="toc-number">1.3.</span> <span class="toc-text">클래스 -&gt; 팩토리(factory) 패턴</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ioc-패턴"><span class="toc-number">1.4.</span> <span class="toc-text">IoC 패턴</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#참조"><span class="toc-number">2.</span> <span class="toc-text">참조</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://www.gravatar.com/avatar/3f8583b7b0f0c1ebd249dffad42707af?s=300"></div><div class="author-info__name text-center">Carrey</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="../../../../archives"><span class="pull-left">Articles</span><span class="pull-right">33</span></a><a class="author-info-articles__tags article-meta" href="../../../../tags"><span class="pull-left">Tags</span><span class="pull-right">12</span></a></div></div></div><div id="content-outer"><div class="no-bg" id="top-container" style="background-image: url(true)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="../../../../index.html">Carrey`s 기술블로그</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus"><a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span></div><div id="post-info"><div id="post-title">Spring IoC &amp; DI(1) - IoC 등장배경(과정)</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2018-09-21</time></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h1 id="ioc-등장배경">IoC 등장배경</h1>
+<p>IoC의 등장배경을 알기 위해서는 EJB나 Spring과 같은 프레임워크를 사용하기 이전 시대의 개발 방식에 대해 얘기를 해야한다.
+온고지신(?)이라 하였던가.. IoC를 이해하기 위해 옛날이야기를 해보도록 하겠다.</p>
+<p>태초에 Java로 만든 프로그램은 main()이라는 메소드에서 시작이 되었다.
+main() 메소드 내에서 필요한 클래스를 개발자가 직접 코드내에서 생성하여 사용하였다.
+어떠한 프로그램을 만들던지 간에 프로그램에는 <code>모델(Model)</code>이라는 개념이 생겨나게 된다.
 이렇게 만들어진 클래스 간에서는 <code>관계(Relation)</code>과 <code>의존성(Dependency)</code>가 생기게 된다.</p>
-<p><code>의존성이란?</code> A클래스에서 B클래스의 기능을 사용할 때 클래스A는 클래스B에 의존적이다 라고 하며<br>
-A --&gt; B 라고 표현한다 (UML에서는 클래스 간의 Dependency를 점선으로 표현한다.)<br>
+<p><code>의존성이란?</code> A클래스에서 B클래스의 기능을 사용할 때 클래스A는 클래스B에 의존적이다 라고 하며
+A --&gt; B 라고 표현한다 (UML에서는 클래스 간의 Dependency를 점선으로 표현한다.)
 즉, B클래스의 기능이 변하게 되면 A클래스에도 영향이 생긴다는 말로 직역할 수 있다.</p>
-<p>이해를 돕기위해 급식을 받는 학생에 대한 예제를 들어보겠다.<br>
+<p>이해를 돕기위해 급식을 받는 학생에 대한 예제를 들어보겠다.
 (이 학교는 아침/점심/저녁을 다 주는 좋은 학교이다)</p>
-<h2><span id="클래스-gt-클래스-호출-관계">클래스 -&gt; 클래스 호출 관계</span></h2>
+<h2 id="클래스-gt-클래스-호출-관계">클래스 -&gt; 클래스 호출 관계</h2>
 <p><img src="./image-20180921143924788.png" alt="image-20180921143924788"></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">        Restaurant restaurant = <span class="keyword">new</span> Restaurant();</span><br><span class="line">        <span class="comment">//식사 시작</span></span><br><span class="line">        restaurant.eatBreakfast();</span><br><span class="line">        restaurant.eatLunch();</span><br><span class="line">        restaurant.eatDinner();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Restaurant</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">eatBreakfast</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Breakfast breakfast = <span class="keyword">new</span> Breakfast();</span><br><span class="line">        System.out.println(breakfast.getInfo() + <span class="string">"을 먹었습니다."</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">eatLunch</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Lunch lunch = <span class="keyword">new</span> Lunch();</span><br><span class="line">        System.out.println(lunch.getInfo() + <span class="string">"을 먹었습니다."</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">eatDinner</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Dinner dinner = <span class="keyword">new</span> Dinner();</span><br><span class="line">        System.out.println(dinner.getInfo() + <span class="string">"을 먹었습니다."</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>Student 클래스는 밥을 먹기위해 Restaurant클래스를 new로 생성하였다.<br>
-Restaurant클래스 내에서는 아침/점심/저녁을 먹을 수 있도록 각각 Breakfast, Lunch, Dinner클래스를 new로 생성하였다.<br>
-위의 의존성에 대해 위 예제를 풀어보면 Student는 Restaurant에 대해 의존적이다. (Student —&gt; Restaurant)<br>
-Student클래스에서 Restaurant클래스를 생성하여 밥을 먹기 때문이다. 만약에 Restaurant 클래스에서 밥을 못먹게 하면<br>
-Student클래스는 정상적으로 밥을 먹는 기능을 수행할 수 없다.<br>
-Restaurant클래스는 Breakfast/Lunch/Dinner에 대해 의존적이다.<br>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">        Restaurant restaurant = <span class="keyword">new</span> Restaurant();</span><br><span class="line">        <span class="comment">//식사 시작</span></span><br><span class="line">        restaurant.eatBreakfast();</span><br><span class="line">        restaurant.eatLunch();</span><br><span class="line">        restaurant.eatDinner();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Restaurant</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">eatBreakfast</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Breakfast breakfast = <span class="keyword">new</span> Breakfast();</span><br><span class="line">        System.out.println(breakfast.getInfo() + <span class="string">"을 먹었습니다."</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">eatLunch</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Lunch lunch = <span class="keyword">new</span> Lunch();</span><br><span class="line">        System.out.println(lunch.getInfo() + <span class="string">"을 먹었습니다."</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">eatDinner</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Dinner dinner = <span class="keyword">new</span> Dinner();</span><br><span class="line">        System.out.println(dinner.getInfo() + <span class="string">"을 먹었습니다."</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Student 클래스는 밥을 먹기위해 Restaurant클래스를 new로 생성하였다.
+Restaurant클래스 내에서는 아침/점심/저녁을 먹을 수 있도록 각각 Breakfast, Lunch, Dinner클래스를 new로 생성하였다.
+위의 의존성에 대해 위 예제를 풀어보면 Student는 Restaurant에 대해 의존적이다. (Student ---&gt; Restaurant)
+Student클래스에서 Restaurant클래스를 생성하여 밥을 먹기 때문이다. 만약에 Restaurant 클래스에서 밥을 못먹게 하면
+Student클래스는 정상적으로 밥을 먹는 기능을 수행할 수 없다.
+Restaurant클래스는 Breakfast/Lunch/Dinner에 대해 의존적이다.
 각각의 메소드에서 Breakfast/Lunch/Dinner클래스를 생성하여 밥을 먹는 행위를 하도록 하고있다.</p>
-<p>가만히 보게 되면 의존성에 대한 공통점을 발견할 수 있다.<br>
+<p>가만히 보게 되면 의존성에 대한 공통점을 발견할 수 있다.
 그것은 바로 <code>new</code>이다. <code>클래스 내에서의 new는 곧 의존성을 의미</code>하게 된다. new로 생성한 클래스가 문제가 생기면 사용을 하는 클래스의 기능에도 문제가 생기기 떄문이다.</p>
 <p>따라서 <strong>프로그래밍의 의존성은 new이다</strong> 로 간단하게 정의를 내릴 수 있겠다.</p>
-<h2><span id="클래스-gt-인터페이스interface-gt-클래스-구조">클래스 -&gt; 인터페이스(interface) -&gt; 클래스 구조</span></h2>
-<p>클래스 내에서 클래스를 생성하여 호출 하는 경우에는 변경에 많은 비용이 발생하게 된다.<br>
-만약에 학교에서 야식까지 먹어가며 밤을 새는 경우에는 야식이라는 의존성을 또 추가하게 된다.<br>
+<h2 id="클래스-gt-인터페이스interface-gt-클래스-구조">클래스 -&gt; 인터페이스(interface) -&gt; 클래스 구조</h2>
+<p>클래스 내에서 클래스를 생성하여 호출 하는 경우에는 변경에 많은 비용이 발생하게 된다.
+만약에 학교에서 야식까지 먹어가며 밤을 새는 경우에는 야식이라는 의존성을 또 추가하게 된다.
 뿐만 아니라 Breakfast/Lunch/Dinner 클래스에 변경이 생기는 경우에도 Restaurant 클래스는 영향을 받게 된다.</p>
-<p>이와 같은 문제를 쪼금 더 편하게 해결 할 수 있게 Java에서는 interface라는게 있다.<br>
+<p>이와 같은 문제를 쪼금 더 편하게 해결 할 수 있게 Java에서는 interface라는게 있다.
 (개인적으로 Service나 Repository 같은 클래스들을 생성 할 때 웬만하면 interface를 선언하는 편이다.)</p>
 <p>차후에 Mock객체 생성하기도 좋고, 요구사항이 변경 되었을 때 유연하게 대응 할 수 있어 개인적으로는 Interface를 자주 사용하는 편이다.</p>
-<p>Breakfast/Lunch/Dinner클래스를 자세히 보면… getInfo() 메소드가 공통적으로 쓰이고 있다.<br>
-(getInfo메소드는 식단에 대한 정보이다.)<br>
-따라서 하나의 interface로 Breakfast/Lunch/Dinner클래스를 추상화 할 수 있다.<br>
-그렇게 되면 eat이라는 메소드 하나만으로도 아침~저녁을 먹을 수 있는 기능을 구현할 수 있다.<br>
-위에서 말로 한 얘기를 코드로 풀어보면…</p>
+<p>Breakfast/Lunch/Dinner클래스를 자세히 보면… getInfo() 메소드가 공통적으로 쓰이고 있다.
+(getInfo메소드는 식단에 대한 정보이다.)
+따라서 하나의 interface로 Breakfast/Lunch/Dinner클래스를 추상화 할 수 있다.
+그렇게 되면 eat이라는 메소드 하나만으로도 아침~저녁을 먹을 수 있는 기능을 구현할 수 있다.
+위에서 말로 한 얘기를 코드로 풀어보면..</p>
 <p><img src="./image-20180921145310488.png" alt="image-20180921145310488"></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">        Restaurant restaurant = <span class="keyword">new</span> Restaurant();</span><br><span class="line">        <span class="comment">//식사 시작</span></span><br><span class="line">        restaurant.eat(<span class="keyword">new</span> Breakfast());</span><br><span class="line">        restaurant.eat(<span class="keyword">new</span> Lunch());</span><br><span class="line">        restaurant.eat(<span class="keyword">new</span> Dinner());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> interface <span class="title">Eatable</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="function">String <span class="title">getInfo</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Restaurant</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">eat</span><span class="params">(Eatable eatable)</span> </span>&#123;</span><br><span class="line">        System.out.println(eatable.getInfo() + <span class="string">"을 먹었습니다."</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>위의 클래스 -&gt; 클래스 간의 Dependency 구조보다는 interface를 사용하므로써 많이 결합도가 완화된 모습이다.<br>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">        Restaurant restaurant = <span class="keyword">new</span> Restaurant();</span><br><span class="line">        <span class="comment">//식사 시작</span></span><br><span class="line">        restaurant.eat(<span class="keyword">new</span> Breakfast());</span><br><span class="line">        restaurant.eat(<span class="keyword">new</span> Lunch());</span><br><span class="line">        restaurant.eat(<span class="keyword">new</span> Dinner());</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> interface <span class="title">Eatable</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="function">String <span class="title">getInfo</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Restaurant</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">eat</span><span class="params">(Eatable eatable)</span> </span>&#123;</span><br><span class="line">        System.out.println(eatable.getInfo() + <span class="string">"을 먹었습니다."</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>위의 클래스 -&gt; 클래스 간의 Dependency 구조보다는 interface를 사용하므로써 많이 결합도가 완화된 모습이다.
 이전에는 Restaurant 클래스가 Break/Lunch/Dinner에 대해 모두 Dependency를 가지고 가는 구조여서 결합도가 강한 형태였는데, interface를 사용하여 결합도를 많이 약화 시켰다.</p>
-<p>자세히 보면 <code>Student클래스에서 Break/Lunch/Dinner를 생성하여 Restaurant에 주입</code>해 주었다.<br>
-이러한 모습이 향후 DI의 개념과 비슷한 개념으로 발전하게 된다.<br>
-Restaurant입장에서는 개발자가 생성한 객체가 아닌 <code>외부로 부터 주입받은 형태</code>로 Break/Lunch/Dinner에 대해 사용을 하기 때문이다.<br>
+<p>자세히 보면 <code>Student클래스에서 Break/Lunch/Dinner를 생성하여 Restaurant에 주입</code>해 주었다.
+이러한 모습이 향후 DI의 개념과 비슷한 개념으로 발전하게 된다.
+Restaurant입장에서는 개발자가 생성한 객체가 아닌 <code>외부로 부터 주입받은 형태</code>로 Break/Lunch/Dinner에 대해 사용을 하기 때문이다.
 이 부분을 잘 이해하면 차후 IoC와 DI를 이해하는데 크게 도움이 된다.</p>
-<h2><span id="클래스-gt-팩토리factory-패턴">클래스 -&gt; 팩토리(factory) 패턴</span></h2>
-<p>디자인 패턴 중에는 팩토리(Factory) 패턴이라는 구현 방식이 있다.<br>
-팩토리 패턴에 대해 간단하게 설명하자면, 객체의 상태(State) 또는 구분자(Type)을 통해 필요한 객체를 Return 해주는 패턴이다. 위에서 설명한 클래스 -&gt; 인터페이스 방식을 차용하여 한 단계 더 Wrapping한 개념이라고 생각하면 편하다.<br>
-팩토리 패턴을 이용하면 아예 <code>개발자에게 객체 생성에 대한 권한을 주지 않겠다!</code>를 구현 할 수 있게 된다.<br>
+<h2 id="클래스-gt-팩토리factory-패턴">클래스 -&gt; 팩토리(factory) 패턴</h2>
+<p>디자인 패턴 중에는 팩토리(Factory) 패턴이라는 구현 방식이 있다.
+팩토리 패턴에 대해 간단하게 설명하자면, 객체의 상태(State) 또는 구분자(Type)을 통해 필요한 객체를 Return 해주는 패턴이다. 위에서 설명한 클래스 -&gt; 인터페이스 방식을 차용하여 한 단계 더 Wrapping한 개념이라고 생각하면 편하다.
+팩토리 패턴을 이용하면 아예 <code>개발자에게 객체 생성에 대한 권한을 주지 않겠다!</code>를 구현 할 수 있게 된다.
 <strong>개발자가 객체 생성을 직접 하지 않고도 시스템에 요청하여 원하는 객체를 얻어낼 수 있다.</strong> &lt;-- 이 내용은 DL(Dependency Lookup)과 비슷한 개념으로 통할 수 있을 것 같다.</p>
 <p>팩토리 패턴으로 만든 코드를 만들게 된다면, 아래와 같이 만들 수 있을 것이다.</p>
 <p><img src="./image-20180921153027741.png" alt="image-20180921153027741"></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">        Restaurant restaurant = <span class="keyword">new</span> Restaurant();</span><br><span class="line">        <span class="comment">//식사 시작</span></span><br><span class="line">        restaurant.eat(EatFactory.get(Meal.BREAKFAST));</span><br><span class="line">        restaurant.eat(EatFactory.get(Meal.LUNCH));</span><br><span class="line">        restaurant.eat(EatFactory.get(Meal.DINNER));</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> Meal &#123;</span><br><span class="line">   BREAKFAST, LUNCH, DINNER;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> class <span class="title">EatFactory</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Eatable <span class="title">get</span><span class="params">(Meal meal)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">switch</span>(meal) &#123;</span><br><span class="line">            <span class="keyword">case</span> BREAKFAST : <span class="keyword">return</span> <span class="keyword">new</span> Breakfast();</span><br><span class="line">            <span class="keyword">case</span> LUNCH : <span class="keyword">return</span> <span class="keyword">new</span> Lunch();</span><br><span class="line">            <span class="keyword">case</span> DINNER : <span class="keyword">return</span> <span class="keyword">new</span> Dinner();</span><br><span class="line">            <span class="keyword">default</span>: <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Not using Meal Type"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> interface <span class="title">Eatable</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="function">String <span class="title">getInfo</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Restaurant</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">eat</span><span class="params">(Eatable eatable)</span> </span>&#123;</span><br><span class="line">        System.out.println(eatable.getInfo() + <span class="string">"을 먹었습니다."</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>이제 개발자가 개발하는 코드에서 Breakfast/Lunch/Dinner에 대한 Dependency는 완전히 제거 되었다.<br>
-야식이라는 식사 메뉴가 추가되어도 Meal enum에 야식 항목을 추가하고, EatFactory에 야식에 대한 case만 추가 해 주면<br>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">        Restaurant restaurant = <span class="keyword">new</span> Restaurant();</span><br><span class="line">        <span class="comment">//식사 시작</span></span><br><span class="line">        restaurant.eat(EatFactory.get(Meal.BREAKFAST));</span><br><span class="line">        restaurant.eat(EatFactory.get(Meal.LUNCH));</span><br><span class="line">        restaurant.eat(EatFactory.get(Meal.DINNER));</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> Meal &#123;</span><br><span class="line">   BREAKFAST, LUNCH, DINNER;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> class <span class="title">EatFactory</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Eatable <span class="title">get</span><span class="params">(Meal meal)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">switch</span>(meal) &#123;</span><br><span class="line">            <span class="keyword">case</span> BREAKFAST : <span class="keyword">return</span> <span class="keyword">new</span> Breakfast();</span><br><span class="line">            <span class="keyword">case</span> LUNCH : <span class="keyword">return</span> <span class="keyword">new</span> Lunch();</span><br><span class="line">            <span class="keyword">case</span> DINNER : <span class="keyword">return</span> <span class="keyword">new</span> Dinner();</span><br><span class="line">            <span class="keyword">default</span>: <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Not using Meal Type"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> interface <span class="title">Eatable</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="function">String <span class="title">getInfo</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Restaurant</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">eat</span><span class="params">(Eatable eatable)</span> </span>&#123;</span><br><span class="line">        System.out.println(eatable.getInfo() + <span class="string">"을 먹었습니다."</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>이제 개발자가 개발하는 코드에서 Breakfast/Lunch/Dinner에 대한 Dependency는 완전히 제거 되었다.
+야식이라는 식사 메뉴가 추가되어도 Meal enum에 야식 항목을 추가하고, EatFactory에 야식에 대한 case만 추가 해 주면
 Student 클래스는 유연하게 추가된 기능에 대해 대처가 가능하다.</p>
-<h2><span id="ioc-패턴">IoC 패턴</span></h2>
-<p>IoC패턴을 알기 전에 IoC에 대해 간단히 설명하자면…<br>
-기능을 담당하는 POJO class를 프로그램 시작 시, IoC 컨테이너에 Bean이라는 이름으로 객체를 생성해 둔다.<br>
+<h2 id="ioc-패턴">IoC 패턴</h2>
+<p>IoC패턴을 알기 전에 IoC에 대해 간단히 설명하자면..
+기능을 담당하는 POJO class를 프로그램 시작 시, IoC 컨테이너에 Bean이라는 이름으로 객체를 생성해 둔다.
 이렇게 싱글톤으로 생성된 객체들을 필요한 시점에 IoC 컨테이너에서 의존성을 가지는 객체에 직접 주입을 해주는 패턴을 IoC패턴이라 한다.</p>
-<p>쉽게 말하면 객체의 멤버에 대한 상태가 없고(stateless) 기능의 역할을 담은 클래스들을 1개씩 IoC컨테이너라는 상자에 담아두고, 의존성 객체가 필요한 경우 IoC컨테이너에서 필요한 객체를 주입해준다. 라고 생각하면 편할 것 같다.<br>
+<p>쉽게 말하면 객체의 멤버에 대한 상태가 없고(stateless) 기능의 역할을 담은 클래스들을 1개씩 IoC컨테이너라는 상자에 담아두고, 의존성 객체가 필요한 경우 IoC컨테이너에서 필요한 객체를 주입해준다. 라고 생각하면 편할 것 같다.
 객체에 대해 new 생성자를 통해 객체를 생성할 필요가 없으니, 메모리적인 낭비가 없다는 장점이 있을 뿐 더러 개발자에게 객체 관리에 대한 미시적인 역할을 맡기지 않아도 되는 장점이 있다. 자세한 내용은 다음 장에 기술하도록 하겠다.</p>
-<p>위의 내용을 Spring을 사용한 개발이라고 한다면… 아래와 같이 코드를 짤 수 있겠다.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span>(scanBasePackages = <span class="string">"com.example.ioc"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> Restaurant restaurant;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> EatFactory eatFactory;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        </span><br><span class="line">		SpringApplication.run(SpringStudyApplication.class, args);</span><br><span class="line">        <span class="comment">//식사 시작</span></span><br><span class="line">        restaurant.eat(eatFactory.get(Meal.BREAKFAST));</span><br><span class="line">        restaurant.eat(eatFactory.get(Meal.LUNCH));</span><br><span class="line">        restaurant.eat(eatFactory.get(Meal.DINNER));</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> Meal &#123;</span><br><span class="line">   BREAKFAST, LUNCH, DINNER;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> class <span class="title">EatFactory</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">    <span class="meta">@Autowired</span> <span class="meta">@Qualifier</span>(<span class="string">"breakfast"</span>)</span><br><span class="line">    <span class="keyword">private</span> Eatable breakfast;</span><br><span class="line">    <span class="meta">@Autowired</span> <span class="meta">@Qualifier</span>(<span class="string">"lunch"</span>)</span><br><span class="line">    <span class="keyword">private</span> Eatable lunch;</span><br><span class="line">    <span class="meta">@Autowired</span> <span class="meta">@Qualifier</span>(<span class="string">"dinner"</span>)</span><br><span class="line">    <span class="keyword">private</span> Eatable dinner;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> Eatable <span class="title">get</span><span class="params">(Meal meal)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">switch</span>(meal) &#123;</span><br><span class="line">            <span class="keyword">case</span> BREAKFAST : breakfast;</span><br><span class="line">            <span class="keyword">case</span> LUNCH : lunch;</span><br><span class="line">            <span class="keyword">case</span> DINNER : dinner;</span><br><span class="line">            <span class="keyword">default</span>: <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Not using Meal Type"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> interface <span class="title">Eatable</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="function">String <span class="title">getInfo</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Restaurant</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">eat</span><span class="params">(Eatable eatable)</span> </span>&#123;</span><br><span class="line">        System.out.println(eatable.getInfo() + <span class="string">"을 먹었습니다."</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>Spring에서는 component-scan이라는 기능을 통해 @Component 어노테이션이 붙은 클래스는 IoC 컨테이너에 Bean으로써 자동 등록 해준다. 이러한 Bean은 @Autowired / @Inject 와 같은 어노테이션을 통해 클래스에 주입을 해줄 수 있다.<br>
+<p>위의 내용을 Spring을 사용한 개발이라고 한다면... 아래와 같이 코드를 짤 수 있겠다.</p>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span>(scanBasePackages = <span class="string">"com.example.ioc"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> Restaurant restaurant;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> EatFactory eatFactory;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        </span><br><span class="line">		SpringApplication.run(SpringStudyApplication.class, args);</span><br><span class="line">        <span class="comment">//식사 시작</span></span><br><span class="line">        restaurant.eat(eatFactory.get(Meal.BREAKFAST));</span><br><span class="line">        restaurant.eat(eatFactory.get(Meal.LUNCH));</span><br><span class="line">        restaurant.eat(eatFactory.get(Meal.DINNER));</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> Meal &#123;</span><br><span class="line">   BREAKFAST, LUNCH, DINNER;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> class <span class="title">EatFactory</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">    <span class="meta">@Autowired</span> <span class="meta">@Qualifier</span>(<span class="string">"breakfast"</span>)</span><br><span class="line">    <span class="keyword">private</span> Eatable breakfast;</span><br><span class="line">    <span class="meta">@Autowired</span> <span class="meta">@Qualifier</span>(<span class="string">"lunch"</span>)</span><br><span class="line">    <span class="keyword">private</span> Eatable lunch;</span><br><span class="line">    <span class="meta">@Autowired</span> <span class="meta">@Qualifier</span>(<span class="string">"dinner"</span>)</span><br><span class="line">    <span class="keyword">private</span> Eatable dinner;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> Eatable <span class="title">get</span><span class="params">(Meal meal)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">switch</span>(meal) &#123;</span><br><span class="line">            <span class="keyword">case</span> BREAKFAST : breakfast;</span><br><span class="line">            <span class="keyword">case</span> LUNCH : lunch;</span><br><span class="line">            <span class="keyword">case</span> DINNER : dinner;</span><br><span class="line">            <span class="keyword">default</span>: <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Not using Meal Type"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> interface <span class="title">Eatable</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="function">String <span class="title">getInfo</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Restaurant</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">eat</span><span class="params">(Eatable eatable)</span> </span>&#123;</span><br><span class="line">        System.out.println(eatable.getInfo() + <span class="string">"을 먹었습니다."</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Spring에서는 component-scan이라는 기능을 통해 @Component 어노테이션이 붙은 클래스는 IoC 컨테이너에 Bean으로써 자동 등록 해준다. 이러한 Bean은 @Autowired / @Inject 와 같은 어노테이션을 통해 클래스에 주입을 해줄 수 있다.
 이렇게 되면 개발자가 new를 통해 의존성을 강제화 하지 않고 프레임워크가 이 역할을 대신 수행해 준다.</p>
-<p>개발자가 객체 생성과 의존성 주입에 대한 역할을 대신 해준다<br>
+<p>개발자가 객체 생성과 의존성 주입에 대한 역할을 대신 해준다
 Inversion of Control (객체 관리과 의존성 관리를 시스템에서 해준다 : 제어의 역전) 이라고 불리게 되었다.</p>
-<h1><span id="참조">참조</span></h1>
-<p><a href="http://www.javajigi.net/pages/viewpage.action?pageId=3664&amp;focusedCommentId=3751#Spring%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC%EC%86%8C%EA%B0%9C%EC%99%80IoC%EB%B0%8FSpringIoC%EC%9D%98%EA%B0%9C%EB%85%90-2.1IoC%EB%9E%80%EB%AC%B4%EC%97%87%EC%9D%B8%EA%B0%80%3F" target="_blank" rel="noopener">http://www.javajigi.net/pages/viewpage.action?pageId=3664&amp;focusedCommentId=3751#Spring프레임워크소개와IoC및SpringIoC의개념-2.1IoC란무엇인가%3F</a><br>
-<a href="http://wiki.javajigi.net/pages/viewpage.action?pageId=281" target="_blank" rel="noopener">http://wiki.javajigi.net/pages/viewpage.action?pageId=281</a><br>
-<a href="https://jongmin92.github.io/2018/02/11/Spring/spring-ioc-di/" target="_blank" rel="noopener">https://jongmin92.github.io/2018/02/11/Spring/spring-ioc-di/</a><br>
-<a href="https://okky.kr/article/415474" target="_blank" rel="noopener">https://okky.kr/article/415474</a><br>
-<a href="http://www.javajigi.net/pages/viewpage.action?pageId=68" target="_blank" rel="noopener">http://www.javajigi.net/pages/viewpage.action?pageId=68</a><br>
-<a href="http://www.javajigi.net/download/attachments/5614/V3_InversionOfControl.pdf?version=1" target="_blank" rel="noopener">http://www.javajigi.net/download/attachments/5614/V3_InversionOfControl.pdf?version=1</a><br>
-<a href="http://isstory83.tistory.com/91" target="_blank" rel="noopener">http://isstory83.tistory.com/91</a><br>
+<h1 id="참조">참조</h1>
+<p>http://www.javajigi.net/pages/viewpage.action?pageId=3664&amp;focusedCommentId=3751#Spring%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC%EC%86%8C%EA%B0%9C%EC%99%80IoC%EB%B0%8FSpringIoC%EC%9D%98%EA%B0%9C%EB%85%90-2.1IoC%EB%9E%80%EB%AC%B4%EC%97%87%EC%9D%B8%EA%B0%80%3F
+http://wiki.javajigi.net/pages/viewpage.action?pageId=281
+https://jongmin92.github.io/2018/02/11/Spring/spring-ioc-di/
+https://okky.kr/article/415474
+http://www.javajigi.net/pages/viewpage.action?pageId=68
+http://www.javajigi.net/download/attachments/5614/V3_InversionOfControl.pdf?version=1
+http://isstory83.tistory.com/91
 토비의 스프링 VOL.2 Spring IoC</p>
-
-                
-
-                <hr>
-                <!-- Pager -->
-                <ul class="pager">
-                    
-                        <li class="previous">
-                            <a href="/2018/09/22/2018-09-21-spring-ioc-2/" data-toggle="tooltip" data-placement="top" title="Spring IoC & DI(2)">&larr; Previous Post</a>
-                        </li>
-                    
-                    
-                        <li class="next">
-                            <a href="/2018/09/01/2018-09-01-servlet/" data-toggle="tooltip" data-placement="top" title="Servlet이란?">Next Post &rarr;</a>
-                        </li>
-                    
-                </ul>
-
-                <!-- duoshuo Share start -->
-                
-                <!-- 多说 Share end-->
-
-                <!-- 多说评论框 start -->
-                
-                <!-- 多说评论框 end -->
-
-                <!-- disqus comment start -->
-                
-                    <div class="comment">
-                        <div id="disqus_thread" class="disqus-thread"></div>
-                    </div>
-                
-                <!-- disqus comment end -->
-            </div>
-            
-            <!-- Tabe of Content -->
-            <!-- Table of Contents -->
-
-    
-      <aside id="sidebar">
-        <div id="toc" class="toc-article">
-        <strong class="toc-title">Contents</strong>
-        
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">IoC 등장배경</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">클래스 -&gt; 클래스 호출 관계</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">클래스 -&gt; 인터페이스(interface) -&gt; 클래스 구조</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">클래스 -&gt; 팩토리(factory) 패턴</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">IoC 패턴</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">참조</span></a></li></ol>
-        
-        </div>
-      </aside>
-    
-
-                
-            <!-- Sidebar Container -->
-            <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                sidebar-container">
-
-                <!-- Featured Tags -->
-                
-                <section>
-                    <!-- no hr -->
-                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
-                    <div class="tags">
-                       
-                          <a class="tag" href="/tags/#Spring" title="Spring">Spring</a>
-                        
-                    </div>
-                </section>
-                
-
-                <!-- Friends Blog -->
-                
-            </div>
-        </div>
-    </div>
-</article>
-
-
-
-
-<!-- disqus embedded js code start (one page only need to embed once) -->
-<script type="text/javascript">
-    /* * * CONFIGURATION VARIABLES * * */
-    var disqus_shortname = "your-disqus-ID";
-    var disqus_identifier = "http://yoursite-url/2018/09/21/2018-09-12-spring-ioc/";
-    var disqus_url = "http://yoursite-url/2018/09/21/2018-09-12-spring-ioc/";
-
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-</script>
-<!-- disqus embedded js code start end -->
-
-
-
-
-<!-- async load function -->
-<script>
-    function async(u, c) {
-      var d = document, t = 'script',
-          o = d.createElement(t),
-          s = d.getElementsByTagName(t)[0];
-      o.src = u;
-      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
-      s.parentNode.insertBefore(o, s);
-    }
-</script>
-<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
-<script>
-    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
-        anchors.options = {
-          visible: 'hover',
-          placement: 'left',
-          icon: 'ℬ'
-        };
-        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
-    })
-</script>
-<style>
-    /* place left on bigger screen */
-    @media all and (min-width: 800px) {
-        .anchorjs-link{
-            position: absolute;
-            left: -0.75em;
-            font-size: 1.1em;
-            margin-top : -0.1em;
-        }
-    }
-</style>
-
-
-
-    <!-- Footer -->
-    <!-- Footer -->
-<footer>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <ul class="list-inline text-center">
-                
-                
-                
-
-                
-
-                
-
-                
-                    <li>
-                        <a target="_blank"  href="https://github.com/jaehun2841">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                    </li>
-                
-
-                
-
-                </ul>
-                <p class="copyright text-muted">
-                    Copyright &copy; Carrey 2018 
-                    <br>
-                    Theme by <a href="http://huangxuan.me">Hux</a> 
-                    <span style="display: inline-block; margin: 0 5px;">
-                        <i class="fa fa-heart"></i>
-                    </span> 
-                    re-Ported by <a href="http://beantech.org">BeanTech</a> | 
-                    <iframe
-                        style="margin-left: 2px; margin-bottom:-5px;"
-                        frameborder="0" scrolling="0" width="91px" height="20px"
-                        src="https://ghbtns.com/github-btn.html?user=YenYuHsuan&repo=hexo-theme-beantech&type=star&count=true" >
-                    </iframe>
-                </p>
-            </div>
-        </div>
-    </div>
-</footer>
-
-<!-- jQuery -->
-<script src="../../../../js/jquery.min.js"></script>
-
-<!-- Bootstrap Core JavaScript -->
-<script src="../../../../js/bootstrap.min.js"></script>
-
-<!-- Custom Theme JavaScript -->
-<script src="../../../../js/hux-blog.min.js"></script>
-
-
-<!-- async load function -->
-<script>
-    function async(u, c) {
-      var d = document, t = 'script',
-          o = d.createElement(t),
-          s = d.getElementsByTagName(t)[0];
-      o.src = u;
-      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
-      s.parentNode.insertBefore(o, s);
-    }
-</script>
-
-<!-- 
-     Because of the native support for backtick-style fenced code blocks 
-     right within the Markdown is landed in Github Pages, 
-     From V1.6, There is no need for Highlight.js, 
-     so Huxblog drops it officially.
-
-     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
-     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
--->
-<!--
-    <script>
-        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
-            hljs.initHighlightingOnLoad();
-        })
-    </script>
-    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
--->
-
-
-<!-- jquery.tagcloud.js -->
-<script>
-    // only load tagcloud.js in tag.html
-    if($('#tag_cloud').length !== 0){
-        async("http://yoursite-url/js/jquery.tagcloud.js",function(){
-            $.fn.tagcloud.defaults = {
-                //size: {start: 1, end: 1, unit: 'em'},
-                color: {start: '#bbbbee', end: '#0085a1'},
-            };
-            $('#tag_cloud a').tagcloud();
-        })
-    }
-</script>
-
-<!--fastClick.js -->
-<script>
-    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
-        var $nav = document.querySelector("nav");
-        if($nav) FastClick.attach($nav);
-    })
-</script>
-
-
-<!-- Google Analytics -->
-
-
-<script>
-    // dynamic User by Hux
-    var _gaId = 'UA-XXXXXXXX-X';
-    var _gaDomain = 'yoursite';
-
-    // Originial
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-    ga('create', _gaId, _gaDomain);
-    ga('send', 'pageview');
-</script>
-
-
-
-
-<!-- Baidu Tongji -->
-
-
-
-
-
-
-	<a id="rocket" href="#top" class=""></a>
-	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
-    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
-<!-- Image to hack wechat -->
-<img src="http://yoursite-url/img/icon_wechat.png" width="0" height="0" />
-<!-- Migrate from head to bottom, no longer block render and still work -->
-
-</body>
-
-</html>
+</div></article><div class="post-meta__tag-list"><a class="post-meta__tags" href="../../../../tags/Spring/">Spring</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="../../22/2018-09-21-spring-ioc-2/"><i class="fa fa-chevron-left">  </i><span>Spring IoC &amp; DI(2)</span></a></div><div class="next-post pull-right"><a href="../../01/2018-09-01-servlet/"><span>Servlet이란?</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="disqus_thread"></div><script>var unused = null;
+var disqus_config = function () {
+  this.page.url = 'http://yoursite-url/2018/09/21/2018-09-12-spring-ioc/';
+  this.page.identifier = '2018/09/21/2018-09-12-spring-ioc/';
+  this.page.title = 'Spring IoC & DI(1) - IoC 등장배경(과정)';
+}
+var d = document, s = d.createElement('script');
+s.src = "https://" + 'Carrey' +".disqus.com/embed.js";
+s.setAttribute('data-timestamp', '' + +new Date());
+(d.head || d.body).appendChild(s);</script></div></div><footer><div class="layout" id="footer"><div class="copyright">&copy;2018 By Carrey</div><div class="framework-info"><span>Driven - </span><a href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file-o"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="../../../../js/third-party/anime.min.js"></script><script src="../../../../js/third-party/jquery.min.js"></script><script src="../../../../js/third-party/jquery.fancybox.min.js"></script><script src="../../../../js/third-party/velocity.min.js"></script><script src="../../../../js/third-party/velocity.ui.min.js"></script><script src="../../../../js/utils.js?version=1.5.6"></script><script src="../../../../js/fancybox.js?version=1.5.6"></script><script src="../../../../js/sidebar.js?version=1.5.6"></script><script src="../../../../js/copy.js?version=1.5.6"></script><script src="../../../../js/fireworks.js?version=1.5.6"></script><script src="../../../../js/transition.js?version=1.5.6"></script><script src="../../../../js/scroll.js?version=1.5.6"></script><script src="../../../../js/head.js?version=1.5.6"></script></body></html>

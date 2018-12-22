@@ -1,226 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<!-- Head tag -->
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="keyword"  content="">
-    <link rel="shortcut icon" href="/img/ironman-draw.png">
-    <!-- Place this tag in your head or just before your close body tag. -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
-    <title>
-        
-          Java Exception - Carrey`s 기술블로그
-        
-    </title>
-
-    <link rel="canonical" href="http://yoursite-url/2018/08/30/2018-08-29-java-exception/">
-
-    <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="../../../../css/bootstrap.min.css">
-
-    <!-- Custom CSS --> 
-    <link rel="stylesheet" href="../../../../css/beantech.min.css">
-    
-    <!-- Pygments Highlight CSS -->
-    <link rel="stylesheet" href="../../../../css/highlight.css">
-
-    <link rel="stylesheet" href="../../../../css/widget.css">
-
-    <link rel="stylesheet" href="../../../../css/rocket.css">
-
-    <link rel="stylesheet" href="../../../../css/signature.css">
-
-    <link rel="stylesheet" href="../../../../css/toc.css">
-
-    <!-- Custom Fonts -->
-    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
-    <!-- Hux change font-awesome CDN to qiniu -->
-    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-
-    <!-- Hux Delete, sad but pending in China
-    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
-    css'>
-    -->
-
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-    <!-- ga & ba script hoook -->
-    <script></script>
-</head>
-
-
-<!-- hack iOS CSS :active style -->
-<body ontouchstart="">
-	<!-- Modified by Yu-Hsuan Yen -->
-<!-- Post Header -->
-<style type="text/css">
-    header.intro-header{
-        
-            background-image: url('null')
-            /*post*/
-        
-    }
-    
-    #signature{
-        background-image: url('/img/signature/BeanTechSign-white.png');
-    }
-    
-</style>
-
-<header class="intro-header" >
-    <!-- Signature -->
-    <div id="signature">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                
-                    <div class="post-heading">
-                        <div class="tags">
-                            
-                              <a class="tag" href="/tags/#Java" title="Java">Java</a>
-                            
-                        </div>
-                        <h1>Java Exception</h1>
-                        <h2 class="subheading">Java의 기본 예외처리</h2>
-                        <span class="meta">
-                            Posted by Carrey on
-                            2018-08-30
-                        </span>
-                    </div>
-                
-
-
-                </div>
-            </div>
-        </div>
-    </div>
-</header>
-
-	
-    <!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
-    <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header page-scroll">
-            <button type="button" class="navbar-toggle">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/">Carrey`s 기술블로그</a>
-        </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <!-- Known Issue, found by Hux:
-            <nav>'s height woule be hold on by its content.
-            so, when navbar scale out, the <nav> will cover tags.
-            also mask any touch event of tags, unfortunately.
-        -->
-        <div id="huxblog_navbar">
-            <div class="navbar-collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="/">Home</a>
-                    </li>
-
-                    
-
-                        
-                    
-
-                        
-                        <li>
-                            <a href="/about/">About</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
-                            <a href="/archive/">Archives</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
-                            <a href="/tags/">Tags</a>
-                        </li>
-                        
-                    
-                    
-                </ul>
-            </div>
-        </div>
-        <!-- /.navbar-collapse -->
-    </div>
-    <!-- /.container -->
-</nav>
-<script>
-    // Drop Bootstarp low-performance Navbar
-    // Use customize navbar with high-quality material design animation
-    // in high-perf jank-free CSS3 implementation
-    var $body   = document.body;
-    var $toggle = document.querySelector('.navbar-toggle');
-    var $navbar = document.querySelector('#huxblog_navbar');
-    var $collapse = document.querySelector('.navbar-collapse');
-
-    $toggle.addEventListener('click', handleMagic)
-    function handleMagic(e){
-        if ($navbar.className.indexOf('in') > 0) {
-        // CLOSE
-            $navbar.className = " ";
-            // wait until animation end.
-            setTimeout(function(){
-                // prevent frequently toggle
-                if($navbar.className.indexOf('in') < 0) {
-                    $collapse.style.height = "0px"
-                }
-            },400)
-        }else{
-        // OPEN
-            $collapse.style.height = "auto"
-            $navbar.className += " in";
-        }
-    }
-</script>
-
-
-    <!-- Main Content -->
-    <!-- Modify by Yu-Hsuan Yen -->
-
-<!-- Post Content -->
-<article>
-    <div class="container">
-        <div class="row">
-
-            <!-- Post Container -->
-            <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                post-container">
-
-                <h1><span id="들어가며">들어가며</span></h1>
-<p>Java/Spring 기반의 코드를 작성하다보면, 예외 처리는 필수적이고 늘상 마주하게 되는 문제이다.<br>
-예외처리가 견고한 프로그램은 유지보수하기 좋을 뿐만 추가적인 요구사항이 발생하였을 때, 처리하기 쉬워지고 편해진다. 최근 업무 중에 Spring Interceptor 단계에서 예외처리를 구현해야 했다. 그때 사용한 @ControllerAdvice, @ExceptionHandler 등의 어노테이션를 사용하여 쉽게 예외처리를 구현 할 수 있었고, 그에 관련된 추가적인 내용을 기록해보고자 2장의 포스팅을 작성하게 되었다.<br>
+<!DOCTYPE html><html lang="lang"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="Java Exception"><meta name="keywords" content="Java"><meta name="author" content="Carrey,undefined"><meta name="copyright" content="Carrey"><title>Java Exception | Carrey`s 기술블로그</title><link rel="shortcut icon" href="../../../../my-favicon.ico"><link rel="stylesheet" href="../../../../css/index.css?version=1.5.6"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css?version=1.5.6"><link rel="dns-prefetch" href="https://cdn.staticfile.org"><link rel="dns-prefetch" href="https://cdn.bootcss.com"><link rel="dns-prefetch" href="https://creativecommons.org"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  }
+} </script></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#들어가며"><span class="toc-number">1.</span> <span class="toc-text">들어가며</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#에러error와-예외exception"><span class="toc-number">2.</span> <span class="toc-text">에러(Error)와 예외(Exception)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#추가적으로"><span class="toc-number">2.1.</span> <span class="toc-text">추가적으로..</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#java에서의-기본적인-예외처리"><span class="toc-number">3.</span> <span class="toc-text">Java에서의 기본적인 예외처리</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#try-catch-finally"><span class="toc-number">3.1.</span> <span class="toc-text">try-catch-finally</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#try-catch-resources"><span class="toc-number">3.2.</span> <span class="toc-text">try-catch-resources</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#multi-catch"><span class="toc-number">3.3.</span> <span class="toc-text">Multi catch</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#exception-handling"><span class="toc-number">4.</span> <span class="toc-text">Exception Handling</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#anti-pattern"><span class="toc-number">5.</span> <span class="toc-text">Anti Pattern</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#exception을-무시-하지-말-것"><span class="toc-number">5.1.</span> <span class="toc-text">Exception을 무시 하지 말 것</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#exceptionprintstacktrace는-쓰는게-아니다"><span class="toc-number">5.2.</span> <span class="toc-text">exception.printStackTrace()는 쓰는게 아니다.</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#반복문-내에서는-checked-exception에-대한-처리는-지양하자"><span class="toc-number">5.3.</span> <span class="toc-text">반복문 내에서는 Checked Exception에 대한 처리는 지양하자</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#참조"><span class="toc-number">6.</span> <span class="toc-text">참조</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://www.gravatar.com/avatar/3f8583b7b0f0c1ebd249dffad42707af?s=300"></div><div class="author-info__name text-center">Carrey</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="../../../../archives"><span class="pull-left">Articles</span><span class="pull-right">33</span></a><a class="author-info-articles__tags article-meta" href="../../../../tags"><span class="pull-left">Tags</span><span class="pull-right">12</span></a></div></div></div><div id="content-outer"><div class="no-bg" id="top-container" style="background-image: url(true)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="../../../../index.html">Carrey`s 기술블로그</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus"><a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span></div><div id="post-info"><div id="post-title">Java Exception</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2018-08-30</time></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h1 id="들어가며">들어가며</h1>
+<p>Java/Spring 기반의 코드를 작성하다보면, 예외 처리는 필수적이고 늘상 마주하게 되는 문제이다.
+예외처리가 견고한 프로그램은 유지보수하기 좋을 뿐만 추가적인 요구사항이 발생하였을 때, 처리하기 쉬워지고 편해진다. 최근 업무 중에 Spring Interceptor 단계에서 예외처리를 구현해야 했다. 그때 사용한 @ControllerAdvice, @ExceptionHandler 등의 어노테이션를 사용하여 쉽게 예외처리를 구현 할 수 있었고, 그에 관련된 추가적인 내용을 기록해보고자 2장의 포스팅을 작성하게 되었다.
 이번 장에서는 Java의 기본 예외처리에 대한 내용을 리마인드 해보는 포스팅을 작성하도록 하겠다.</p>
-<h1><span id="에러error와-예외exception">에러(Error)와 예외(Exception)</span></h1>
+<h1 id="에러error와-예외exception">에러(Error)와 예외(Exception)</h1>
 <p><img src="./Exception-Class.png" alt="Exception-Class"></p>
-<p>Java에서는 3가지 종류의 Throwable을 제공한다. 크게는 Error와 Exception으로 구분한다.<br>
+<p>Java에서는 3가지 종류의 Throwable을 제공한다. 크게는 Error와 Exception으로 구분한다.
 Exception은 또 2가지 종류로 구분 할 수 있다.</p>
 <ul>
 <li>Error
@@ -228,7 +21,7 @@ Exception은 또 2가지 종류로 구분 할 수 있다.</p>
 <li>주로 프로그램이 사용 불가능한 상태가 되었을 때 발생한다.</li>
 <li>주로 <code>복구 불가능한 상황</code>에 대해 사용한다.</li>
 <li>주로 JVM 자원 부족이나, 불변식을 사용하는 경우에 발생한다.</li>
-<li>관례적으로 Error에 대해서는 Custom Class를 만들지 않는다.<br>
+<li>관례적으로 Error에 대해서는 Custom Class를 만들지 않는다.
 (어플리케이션 레벨에서 발생하므로 이미 지정된 Error만으로도 충분 - 개발자가 관여x)</li>
 </ul>
 </li>
@@ -251,334 +44,61 @@ Exception은 또 2가지 종류로 구분 할 수 있다.</p>
 </ul>
 </li>
 </ul>
-<h2><span id="추가적으로">추가적으로…</span></h2>
-<p>개발자 정의 Exception을 생성하다 보면은 주로 RuntimeException으로 많이 생성하게 된다.<br>
-아무래도 발생 즉시 시스템 실행 스택을 중단 할 수 있으며, 명시적인 throw처리를 안해줘도 되기 때문에 편리함 때문에 사용하는 것 같다. 최근 면접관으로 들어가서 예외처리에 대한 질문을 하면 Checked Exception은 절대로 쓰면 안된다! 라고 대답을 하는 지원자들이 있었다. Checked Exception을 절대 쓰지 말자? 이는 Exception의 성질을 모르는 사람이 하는 소리라고 생각한다.<br>
-Checked Exception으로 처리하는 이유는 API를 사용하여 개발하는 개발자가 반드시 이 단계에서 예외에 대한 처리를 하여 대행 할 수 있는 로직을 추가 하던, 아예 throw를 시켜 중지 하던 개발자에게 어느정도 선택의 기회를 주는 것이라고 생각한다.<br>
-지원자가 했던 “Checked Exception 절대 쓰지 말자!” &quot;Checked Exception이 발생하더라도 Unchecked Exception으로 Wrapping 하자!&quot;라는 의견도 어느정도는 맞는 소리이다.<br>
-새로운 Checked Exception이 발생하는 코드가 메소드 내의 메소드의 내의 메소드의 내의…로 간다고 하면 밑에서 부터 계속 throw…throw… 해야 하는 상황이 발생 할 수 있다. 이러한 Exception에 대해서 전역적인 처리를 하는 경우에는 위의 말이 당연히 맞는 소리이다.<br>
+<h2 id="추가적으로">추가적으로..</h2>
+<p>개발자 정의 Exception을 생성하다 보면은 주로 RuntimeException으로 많이 생성하게 된다.
+아무래도 발생 즉시 시스템 실행 스택을 중단 할 수 있으며, 명시적인 throw처리를 안해줘도 되기 때문에 편리함 때문에 사용하는 것 같다. 최근 면접관으로 들어가서 예외처리에 대한 질문을 하면 Checked Exception은 절대로 쓰면 안된다! 라고 대답을 하는 지원자들이 있었다. Checked Exception을 절대 쓰지 말자? 이는 Exception의 성질을 모르는 사람이 하는 소리라고 생각한다.
+Checked Exception으로 처리하는 이유는 API를 사용하여 개발하는 개발자가 반드시 이 단계에서 예외에 대한 처리를 하여 대행 할 수 있는 로직을 추가 하던, 아예 throw를 시켜 중지 하던 개발자에게 어느정도 선택의 기회를 주는 것이라고 생각한다.
+지원자가 했던 &quot;Checked Exception 절대 쓰지 말자!&quot; &quot;Checked Exception이 발생하더라도 Unchecked Exception으로 Wrapping 하자!&quot;라는 의견도 어느정도는 맞는 소리이다.
+새로운 Checked Exception이 발생하는 코드가 메소드 내의 메소드의 내의 메소드의 내의....로 간다고 하면 밑에서 부터 계속 throw..throw.. 해야 하는 상황이 발생 할 수 있다. 이러한 Exception에 대해서 전역적인 처리를 하는 경우에는 위의 말이 당연히 맞는 소리이다.
 다시 한번 Exception의 성질을 생각해 보고, 왜 Java가 굳이 Checked Exception, Unchecked Exception을 구분했는지를 생각을 해봐야 할 것이다.</p>
-<h1><span id="java에서의-기본적인-예외처리">Java에서의 기본적인 예외처리</span></h1>
-<h2><span id="try-catch-finally">try-catch-finally</span></h2>
-<p>try-catch-finally 구문은 웬만한 프로그래밍 언어에서 지원하는 구문이다.<br>
+<h1 id="java에서의-기본적인-예외처리">Java에서의 기본적인 예외처리</h1>
+<h2 id="try-catch-finally">try-catch-finally</h2>
+<p>try-catch-finally 구문은 웬만한 프로그래밍 언어에서 지원하는 구문이다.
 프로그래밍 기본을 공부한 사람이라면 모두가 알고 있는 구문이다.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="comment">//핵심 로직 수행</span></span><br><span class="line">&#125; <span class="keyword">catch</span>(Exception e) &#123;</span><br><span class="line">    <span class="comment">//예외 발생 시, 예외에 대한 처리</span></span><br><span class="line">&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">   <span class="comment">//try block, catch block 실행 후 반드시 실행하는 로직</span></span><br><span class="line">   <span class="comment">//주로 자원에 대한 해제 로직이 추가된다. </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2><span id="try-catch-resources">try-catch-resources</span></h2>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="comment">//핵심 로직 수행</span></span><br><span class="line">&#125; <span class="keyword">catch</span>(Exception e) &#123;</span><br><span class="line">    <span class="comment">//예외 발생 시, 예외에 대한 처리</span></span><br><span class="line">&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">   <span class="comment">//try block, catch block 실행 후 반드시 실행하는 로직</span></span><br><span class="line">   <span class="comment">//주로 자원에 대한 해제 로직이 추가된다. </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="try-catch-resources">try-catch-resources</h2>
 <p>Java 1.7에 추가된 문법이다. Closeable Interface를 구현하는 객체에 대한 Resource해제를 자동으로 할 수 있도록 해 준다.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> (InputStream is = <span class="keyword">new</span> FileInputStream(file)) &#123; </span><br><span class="line">     <span class="comment">//try block이 종료 되면 InputStream에 대한 close() 메소드를 실행</span></span><br><span class="line">     <span class="comment">//핵심 로직 수행</span></span><br><span class="line">&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">    <span class="comment">//예외 발생 시, 예외에 대한 처리</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2><span id="multi-catch">Multi catch</span></h2>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> (InputStream is = <span class="keyword">new</span> FileInputStream(file)) &#123; </span><br><span class="line">     <span class="comment">//try block이 종료 되면 InputStream에 대한 close() 메소드를 실행</span></span><br><span class="line">     <span class="comment">//핵심 로직 수행</span></span><br><span class="line">&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">    <span class="comment">//예외 발생 시, 예외에 대한 처리</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="multi-catch">Multi catch</h2>
 <p>Java 1.7에 추가된 문법이다. 기존에는 catch 구문을 여러개 둘 수 있었다. Java 1.7부터는 하나의 catch문에서 여러개의 Exception에 대한 처리를 공통적으로 할 수 있다.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> (InputStream is = <span class="keyword">new</span> FileInputStream(file)) &#123; </span><br><span class="line">     <span class="comment">//try block이 종료 되면 InputStream에 대한 close() 메소드를 실행</span></span><br><span class="line">     <span class="comment">//핵심 로직 수행</span></span><br><span class="line">&#125; <span class="keyword">catch</span> (NullPointerException | ArrayIndexBoundException e) &#123;</span><br><span class="line">    <span class="comment">//예외 발생 시, 예외에 대한 처리</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1><span id="exception-handling">Exception Handling</span></h1>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> (InputStream is = <span class="keyword">new</span> FileInputStream(file)) &#123; </span><br><span class="line">     <span class="comment">//try block이 종료 되면 InputStream에 대한 close() 메소드를 실행</span></span><br><span class="line">     <span class="comment">//핵심 로직 수행</span></span><br><span class="line">&#125; <span class="keyword">catch</span> (NullPointerException | ArrayIndexBoundException e) &#123;</span><br><span class="line">    <span class="comment">//예외 발생 시, 예외에 대한 처리</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="exception-handling">Exception Handling</h1>
 <p>Checked Exception가 발생되는 메소드를 사용되는 경우 IDE에서는 개발자에게 2가지 중 하나의 행위를 하라고 한다.</p>
 <ul>
 <li>Method signiture에 throws 구문을 통해 예외처리를 상위 메소드로 전파하여 예외처리를 미루기</li>
 <li>try-catch구문을 통한 예외처리를 하도록 유도</li>
 </ul>
-<p>보통의 경우에는 try-catch 구문을 통해서 해결 가능한 에러에 대한 처리로직을 개발자가 구현 해주면 된다.<br>
+<p>보통의 경우에는 try-catch 구문을 통해서 해결 가능한 에러에 대한 처리로직을 개발자가 구현 해주면 된다.
 하지만 Service Layer에서 예외처리를 하는 경우에는 2가지를 모두 다 사용하는게 좋다고 본다.</p>
-<h1><span id="anti-pattern">Anti Pattern</span></h1>
+<h1 id="anti-pattern">Anti Pattern</h1>
 <ol>
 <li>Exception을 무시 하지 말 것</li>
 <li>exception.printStackTrace()는 쓰는게 아니다.</li>
 <li>반복문 내에서는 Checked Exception에 대한 처리는 지양하자</li>
 </ol>
-<h2><span id="exception을-무시-하지-말-것">Exception을 무시 하지 말 것</span></h2>
-<p>간혹 코드를 보다 보면…</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="comment">//열심히 작성</span></span><br><span class="line">    veryHardDo();</span><br><span class="line">&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">    <span class="comment">//아무것도 안해요~</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>이런 코드를 보는 경우가 있다. 일단 veryHardDo() 메소드에서 Exception을 던져 주니 컴파일 에러가 안나려면 뭔가 처리는 해야 겠고… 막상 catch구문에 작성할 코드는 없어보이고… 할 때 저런 코드들이 나오게 된다.<br>
-이는 매~~우 좋지 않은 코드이다. 실제 RuntimeException이 발생 했을 때도 에러 파악도 안되고, 시스템은 작동 안하고… 왜 에러나는지 모르는 코드가 되어버린다.<br>
-되도록이면 catch구문을 작성하였으면 반드시 예외처리에 대한 로직을 구현 해주자… (로그라도 남겨줘 ㅜㅜ)</p>
-<h2><span id="exceptionprintstacktrace는-쓰는게-아니다">exception.printStackTrace()는 쓰는게 아니다.</span></h2>
-<p>exception.printStackTrace()는 에러가 발생한 원인에 대한 Stack Trace를 추적하여 개발자에게 디버깅을 할 수 있는 힌트를 제공해 준다 (개발 할 때는 이거만한 게 없긴하다.)<br>
+<h2 id="exception을-무시-하지-말-것">Exception을 무시 하지 말 것</h2>
+<p>간혹 코드를 보다 보면..</p>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="comment">//열심히 작성</span></span><br><span class="line">    veryHardDo();</span><br><span class="line">&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">    <span class="comment">//아무것도 안해요~</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>이런 코드를 보는 경우가 있다. 일단 veryHardDo() 메소드에서 Exception을 던져 주니 컴파일 에러가 안나려면 뭔가 처리는 해야 겠고.. 막상 catch구문에 작성할 코드는 없어보이고... 할 때 저런 코드들이 나오게 된다.
+이는 매~~우 좋지 않은 코드이다. 실제 RuntimeException이 발생 했을 때도 에러 파악도 안되고, 시스템은 작동 안하고.. 왜 에러나는지 모르는 코드가 되어버린다.
+되도록이면 catch구문을 작성하였으면 반드시 예외처리에 대한 로직을 구현 해주자.. (로그라도 남겨줘 ㅜㅜ)</p>
+<h2 id="exceptionprintstacktrace는-쓰는게-아니다">exception.printStackTrace()는 쓰는게 아니다.</h2>
+<p>exception.printStackTrace()는 에러가 발생한 원인에 대한 Stack Trace를 추적하여 개발자에게 디버깅을 할 수 있는 힌트를 제공해 준다 (개발 할 때는 이거만한 게 없긴하다.)
 하지만 성능을 생각하는 개발자라면 이 메소드는 사용을 지양해야 한다. 실제로 java reflection을 사용하여 trace를 추적하는 것이기 때문에 꽤 오버헤드가 발생한다. 성능이 중시되는 어플리케이션이라면 stackTrace에 대한 추적 보다는 간단한 로그정도로 에러의 원인을 파악하는 것이 좋다.</p>
-<h2><span id="반복문-내에서는-checked-exception에-대한-처리는-지양하자">반복문 내에서는 Checked Exception에 대한 처리는 지양하자</span></h2>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (String item : items) &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        insert(item);</span><br><span class="line">    &#125;<span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>반복문 내에서 Checked Exception에 대한 예외처리 구문이 들어가게 되면 성능은 2배 3배 떨어지게 된다.<br>
+<h2 id="반복문-내에서는-checked-exception에-대한-처리는-지양하자">반복문 내에서는 Checked Exception에 대한 처리는 지양하자</h2>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (String item : items) &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        insert(item);</span><br><span class="line">    &#125;<span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>반복문 내에서 Checked Exception에 대한 예외처리 구문이 들어가게 되면 성능은 2배 3배 떨어지게 된다.
 이러한 경우에는 insert에서 예외 발생 시, RuntimeException으로 한번 Wrapping하여 Exception이 발생 되도록 하고 반복문 내에서는 최대한 예외처리에 대한 코드를 제거하는 것이 성능 상 유리하다.</p>
-<h1><span id="참조">참조</span></h1>
-<p>Effective Java 2nd Edition (Joshua Bloch)<br>
+<h1 id="참조">참조</h1>
+<p>Effective Java 2nd Edition (Joshua Bloch)
 가장 빨리 만나는 자바8 (카이 호스트만)</p>
-
-                
-
-                <hr>
-                <!-- Pager -->
-                <ul class="pager">
-                    
-                        <li class="previous">
-                            <a href="/2018/08/30/2018-08-25-spring-mvc-handle-exception/" data-toggle="tooltip" data-placement="top" title="Spring Handle Exception">&larr; Previous Post</a>
-                        </li>
-                    
-                    
-                        <li class="next">
-                            <a href="/2018/08/25/2018-08-18-spring-filter-interceptor/" data-toggle="tooltip" data-placement="top" title="Spring Filter와 Interceptor">Next Post &rarr;</a>
-                        </li>
-                    
-                </ul>
-
-                <!-- duoshuo Share start -->
-                
-                <!-- 多说 Share end-->
-
-                <!-- 多说评论框 start -->
-                
-                <!-- 多说评论框 end -->
-
-                <!-- disqus comment start -->
-                
-                    <div class="comment">
-                        <div id="disqus_thread" class="disqus-thread"></div>
-                    </div>
-                
-                <!-- disqus comment end -->
-            </div>
-            
-            <!-- Tabe of Content -->
-            <!-- Table of Contents -->
-
-    
-      <aside id="sidebar">
-        <div id="toc" class="toc-article">
-        <strong class="toc-title">Contents</strong>
-        
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">들어가며</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">에러(Error)와 예외(Exception)</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">추가적으로…</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">Java에서의 기본적인 예외처리</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">try-catch-finally</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">try-catch-resources</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.3.</span> <span class="toc-nav-text">Multi catch</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">Exception Handling</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">Anti Pattern</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">5.1.</span> <span class="toc-nav-text">Exception을 무시 하지 말 것</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">5.2.</span> <span class="toc-nav-text">exception.printStackTrace()는 쓰는게 아니다.</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">5.3.</span> <span class="toc-nav-text">반복문 내에서는 Checked Exception에 대한 처리는 지양하자</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">참조</span></a></li></ol>
-        
-        </div>
-      </aside>
-    
-
-                
-            <!-- Sidebar Container -->
-            <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                sidebar-container">
-
-                <!-- Featured Tags -->
-                
-                <section>
-                    <!-- no hr -->
-                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
-                    <div class="tags">
-                       
-                          <a class="tag" href="/tags/#Java" title="Java">Java</a>
-                        
-                    </div>
-                </section>
-                
-
-                <!-- Friends Blog -->
-                
-            </div>
-        </div>
-    </div>
-</article>
-
-
-
-
-<!-- disqus embedded js code start (one page only need to embed once) -->
-<script type="text/javascript">
-    /* * * CONFIGURATION VARIABLES * * */
-    var disqus_shortname = "your-disqus-ID";
-    var disqus_identifier = "http://yoursite-url/2018/08/30/2018-08-29-java-exception/";
-    var disqus_url = "http://yoursite-url/2018/08/30/2018-08-29-java-exception/";
-
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-</script>
-<!-- disqus embedded js code start end -->
-
-
-
-
-<!-- async load function -->
-<script>
-    function async(u, c) {
-      var d = document, t = 'script',
-          o = d.createElement(t),
-          s = d.getElementsByTagName(t)[0];
-      o.src = u;
-      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
-      s.parentNode.insertBefore(o, s);
-    }
-</script>
-<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
-<script>
-    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
-        anchors.options = {
-          visible: 'hover',
-          placement: 'left',
-          icon: 'ℬ'
-        };
-        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
-    })
-</script>
-<style>
-    /* place left on bigger screen */
-    @media all and (min-width: 800px) {
-        .anchorjs-link{
-            position: absolute;
-            left: -0.75em;
-            font-size: 1.1em;
-            margin-top : -0.1em;
-        }
-    }
-</style>
-
-
-
-    <!-- Footer -->
-    <!-- Footer -->
-<footer>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <ul class="list-inline text-center">
-                
-                
-                
-
-                
-
-                
-
-                
-                    <li>
-                        <a target="_blank"  href="https://github.com/jaehun2841">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                    </li>
-                
-
-                
-
-                </ul>
-                <p class="copyright text-muted">
-                    Copyright &copy; Carrey 2018 
-                    <br>
-                    Theme by <a href="http://huangxuan.me">Hux</a> 
-                    <span style="display: inline-block; margin: 0 5px;">
-                        <i class="fa fa-heart"></i>
-                    </span> 
-                    re-Ported by <a href="http://beantech.org">BeanTech</a> | 
-                    <iframe
-                        style="margin-left: 2px; margin-bottom:-5px;"
-                        frameborder="0" scrolling="0" width="91px" height="20px"
-                        src="https://ghbtns.com/github-btn.html?user=YenYuHsuan&repo=hexo-theme-beantech&type=star&count=true" >
-                    </iframe>
-                </p>
-            </div>
-        </div>
-    </div>
-</footer>
-
-<!-- jQuery -->
-<script src="../../../../js/jquery.min.js"></script>
-
-<!-- Bootstrap Core JavaScript -->
-<script src="../../../../js/bootstrap.min.js"></script>
-
-<!-- Custom Theme JavaScript -->
-<script src="../../../../js/hux-blog.min.js"></script>
-
-
-<!-- async load function -->
-<script>
-    function async(u, c) {
-      var d = document, t = 'script',
-          o = d.createElement(t),
-          s = d.getElementsByTagName(t)[0];
-      o.src = u;
-      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
-      s.parentNode.insertBefore(o, s);
-    }
-</script>
-
-<!-- 
-     Because of the native support for backtick-style fenced code blocks 
-     right within the Markdown is landed in Github Pages, 
-     From V1.6, There is no need for Highlight.js, 
-     so Huxblog drops it officially.
-
-     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
-     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
--->
-<!--
-    <script>
-        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
-            hljs.initHighlightingOnLoad();
-        })
-    </script>
-    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
--->
-
-
-<!-- jquery.tagcloud.js -->
-<script>
-    // only load tagcloud.js in tag.html
-    if($('#tag_cloud').length !== 0){
-        async("http://yoursite-url/js/jquery.tagcloud.js",function(){
-            $.fn.tagcloud.defaults = {
-                //size: {start: 1, end: 1, unit: 'em'},
-                color: {start: '#bbbbee', end: '#0085a1'},
-            };
-            $('#tag_cloud a').tagcloud();
-        })
-    }
-</script>
-
-<!--fastClick.js -->
-<script>
-    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
-        var $nav = document.querySelector("nav");
-        if($nav) FastClick.attach($nav);
-    })
-</script>
-
-
-<!-- Google Analytics -->
-
-
-<script>
-    // dynamic User by Hux
-    var _gaId = 'UA-XXXXXXXX-X';
-    var _gaDomain = 'yoursite';
-
-    // Originial
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-    ga('create', _gaId, _gaDomain);
-    ga('send', 'pageview');
-</script>
-
-
-
-
-<!-- Baidu Tongji -->
-
-
-
-
-
-
-	<a id="rocket" href="#top" class=""></a>
-	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
-    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
-<!-- Image to hack wechat -->
-<img src="http://yoursite-url/img/icon_wechat.png" width="0" height="0" />
-<!-- Migrate from head to bottom, no longer block render and still work -->
-
-</body>
-
-</html>
+</div></article><div class="post-meta__tag-list"><a class="post-meta__tags" href="../../../../tags/Java/">Java</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="../2018-08-25-spring-mvc-handle-exception/"><i class="fa fa-chevron-left">  </i><span>Spring Handle Exception</span></a></div><div class="next-post pull-right"><a href="../../25/2018-08-18-spring-filter-interceptor/"><span>Spring Filter와 Interceptor</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="disqus_thread"></div><script>var unused = null;
+var disqus_config = function () {
+  this.page.url = 'http://yoursite-url/2018/08/30/2018-08-29-java-exception/';
+  this.page.identifier = '2018/08/30/2018-08-29-java-exception/';
+  this.page.title = 'Java Exception';
+}
+var d = document, s = d.createElement('script');
+s.src = "https://" + 'Carrey' +".disqus.com/embed.js";
+s.setAttribute('data-timestamp', '' + +new Date());
+(d.head || d.body).appendChild(s);</script></div></div><footer><div class="layout" id="footer"><div class="copyright">&copy;2018 By Carrey</div><div class="framework-info"><span>Driven - </span><a href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file-o"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="../../../../js/third-party/anime.min.js"></script><script src="../../../../js/third-party/jquery.min.js"></script><script src="../../../../js/third-party/jquery.fancybox.min.js"></script><script src="../../../../js/third-party/velocity.min.js"></script><script src="../../../../js/third-party/velocity.ui.min.js"></script><script src="../../../../js/utils.js?version=1.5.6"></script><script src="../../../../js/fancybox.js?version=1.5.6"></script><script src="../../../../js/sidebar.js?version=1.5.6"></script><script src="../../../../js/copy.js?version=1.5.6"></script><script src="../../../../js/fireworks.js?version=1.5.6"></script><script src="../../../../js/transition.js?version=1.5.6"></script><script src="../../../../js/scroll.js?version=1.5.6"></script><script src="../../../../js/head.js?version=1.5.6"></script></body></html>
