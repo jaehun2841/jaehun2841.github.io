@@ -2,84 +2,84 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
     <url>
-        <loc>http://yoursite-url/tags/core/</loc>
+        <loc>https://jaehun2841.github.io/tags/core/</loc>
         <lastmod>2018-11-27T07:23:32.363Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>http://yoursite-url/tags/Spring-Core/</loc>
+        <loc>https://jaehun2841.github.io/tags/Spring-Core/</loc>
         <lastmod>2018-11-27T07:23:32.365Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>http://yoursite-url/tags/Java/</loc>
+        <loc>https://jaehun2841.github.io/tags/Java/</loc>
         <lastmod>2018-11-27T07:23:32.369Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>http://yoursite-url/tags/Java-Config/</loc>
+        <loc>https://jaehun2841.github.io/tags/Java-Config/</loc>
         <lastmod>2018-11-27T07:23:32.380Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>http://yoursite-url/tags/WAS/</loc>
+        <loc>https://jaehun2841.github.io/tags/WAS/</loc>
         <lastmod>2018-11-27T07:23:32.380Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>http://yoursite-url/tags/Spring-Boot/</loc>
+        <loc>https://jaehun2841.github.io/tags/Spring-Boot/</loc>
         <lastmod>2018-11-27T07:23:32.381Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>http://yoursite-url/tags/EHCache/</loc>
+        <loc>https://jaehun2841.github.io/tags/EHCache/</loc>
         <lastmod>2018-11-27T07:23:32.382Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>http://yoursite-url/tags/SpEL/</loc>
+        <loc>https://jaehun2841.github.io/tags/SpEL/</loc>
         <lastmod>2018-11-27T07:23:32.394Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>http://yoursite-url/tags/Docker/</loc>
+        <loc>https://jaehun2841.github.io/tags/Docker/</loc>
         <lastmod>2018-12-08T08:36:34.232Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>http://yoursite-url/tags/2018-remind/</loc>
+        <loc>https://jaehun2841.github.io/tags/2018-remind/</loc>
         <lastmod>2018-12-22T10:50:27.360Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>http://yoursite-url/tags/J2EE/</loc>
+        <loc>https://jaehun2841.github.io/tags/J2EE/</loc>
         <lastmod>2018-12-22T10:58:30.510Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>http://yoursite-url/tags/Spring/</loc>
+        <loc>https://jaehun2841.github.io/tags/Spring/</loc>
         <lastmod>2018-12-22T10:58:35.335Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
