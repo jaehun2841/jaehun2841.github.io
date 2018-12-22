@@ -7,6 +7,14 @@
     </url>
 
     <url>
+        <loc>http://yoursite-url/2018/09/01/2018-09-01-servlet/</loc>
+        <lastmod>2018-12-22T10:57:28.706Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://yoursite-url/2018/11/07/2018-10-03-spring-ehcache/</loc>
         <lastmod>2018-12-22T10:50:45.355Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -169,14 +177,6 @@
     <url>
         <loc>http://yoursite-url/2018/09/21/2018-09-12-spring-ioc/</loc>
         <lastmod>2018-11-27T07:23:32.371Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://yoursite-url/2018/09/01/2018-09-01-servlet/</loc>
-        <lastmod>2018-11-27T07:23:32.370Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
