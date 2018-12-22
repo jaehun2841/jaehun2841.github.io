@@ -1,252 +1,45 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<!-- Head tag -->
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="keyword"  content="">
-    <link rel="shortcut icon" href="/img/ironman-draw.png">
-    <!-- Place this tag in your head or just before your close body tag. -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
-    <title>
-        
-          Spring IoC &amp; DI(2) - Carrey`s 기술블로그
-        
-    </title>
-
-    <link rel="canonical" href="http://yoursite-url/2018/09/22/2018-09-21-spring-ioc-2/">
-
-    <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="../../../../css/bootstrap.min.css">
-
-    <!-- Custom CSS --> 
-    <link rel="stylesheet" href="../../../../css/beantech.min.css">
-    
-    <!-- Pygments Highlight CSS -->
-    <link rel="stylesheet" href="../../../../css/highlight.css">
-
-    <link rel="stylesheet" href="../../../../css/widget.css">
-
-    <link rel="stylesheet" href="../../../../css/rocket.css">
-
-    <link rel="stylesheet" href="../../../../css/signature.css">
-
-    <link rel="stylesheet" href="../../../../css/toc.css">
-
-    <!-- Custom Fonts -->
-    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
-    <!-- Hux change font-awesome CDN to qiniu -->
-    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-
-    <!-- Hux Delete, sad but pending in China
-    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
-    css'>
-    -->
-
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-    <!-- ga & ba script hoook -->
-    <script></script>
-</head>
-
-
-<!-- hack iOS CSS :active style -->
-<body ontouchstart="">
-	<!-- Modified by Yu-Hsuan Yen -->
-<!-- Post Header -->
-<style type="text/css">
-    header.intro-header{
-        
-            background-image: url('null')
-            /*post*/
-        
-    }
-    
-    #signature{
-        background-image: url('/img/signature/BeanTechSign-white.png');
-    }
-    
-</style>
-
-<header class="intro-header" >
-    <!-- Signature -->
-    <div id="signature">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                
-                    <div class="post-heading">
-                        <div class="tags">
-                            
-                              <a class="tag" href="/tags/#Spring" title="Spring">Spring</a>
-                            
-                        </div>
-                        <h1>Spring IoC &amp; DI(2)</h1>
-                        <h2 class="subheading">Spring IoC와 DI</h2>
-                        <span class="meta">
-                            Posted by Carrey on
-                            2018-09-22
-                        </span>
-                    </div>
-                
-
-
-                </div>
-            </div>
-        </div>
-    </div>
-</header>
-
-	
-    <!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
-    <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header page-scroll">
-            <button type="button" class="navbar-toggle">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/">Carrey`s 기술블로그</a>
-        </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <!-- Known Issue, found by Hux:
-            <nav>'s height woule be hold on by its content.
-            so, when navbar scale out, the <nav> will cover tags.
-            also mask any touch event of tags, unfortunately.
-        -->
-        <div id="huxblog_navbar">
-            <div class="navbar-collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="/">Home</a>
-                    </li>
-
-                    
-
-                        
-                    
-
-                        
-                        <li>
-                            <a href="/about/">About</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
-                            <a href="/archive/">Archives</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
-                            <a href="/tags/">Tags</a>
-                        </li>
-                        
-                    
-                    
-                </ul>
-            </div>
-        </div>
-        <!-- /.navbar-collapse -->
-    </div>
-    <!-- /.container -->
-</nav>
-<script>
-    // Drop Bootstarp low-performance Navbar
-    // Use customize navbar with high-quality material design animation
-    // in high-perf jank-free CSS3 implementation
-    var $body   = document.body;
-    var $toggle = document.querySelector('.navbar-toggle');
-    var $navbar = document.querySelector('#huxblog_navbar');
-    var $collapse = document.querySelector('.navbar-collapse');
-
-    $toggle.addEventListener('click', handleMagic)
-    function handleMagic(e){
-        if ($navbar.className.indexOf('in') > 0) {
-        // CLOSE
-            $navbar.className = " ";
-            // wait until animation end.
-            setTimeout(function(){
-                // prevent frequently toggle
-                if($navbar.className.indexOf('in') < 0) {
-                    $collapse.style.height = "0px"
-                }
-            },400)
-        }else{
-        // OPEN
-            $collapse.style.height = "auto"
-            $navbar.className += " in";
-        }
-    }
-</script>
-
-
-    <!-- Main Content -->
-    <!-- Modify by Yu-Hsuan Yen -->
-
-<!-- Post Content -->
-<article>
-    <div class="container">
-        <div class="row">
-
-            <!-- Post Container -->
-            <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                post-container">
-
-                <h1><span id="ioc란">IoC란?</span></h1>
-<p>Inversion of Control (제어의 역전) 이라는 의미로 사용되고 있다.<br>
-보통의 프로그램에서는 개발자가 필요한 객체를 직접 new를 통해 생성하여 사용한다.<br>
-하지만 Spring과 같은 프레임워크에서는 흐름의 주체가 Container가 되어 Container에서 객체의 생성과 소멸을 관리하며<br>
+<!DOCTYPE html><html lang="lang"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="Spring IoC &amp; DI(2)"><meta name="keywords" content="Spring"><meta name="author" content="Carrey,undefined"><meta name="copyright" content="Carrey"><title>Spring IoC &amp; DI(2) | Carrey`s 기술블로그</title><link rel="shortcut icon" href="../../../../my-favicon.ico"><link rel="stylesheet" href="../../../../css/index.css?version=1.5.6"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css?version=1.5.6"><link rel="dns-prefetch" href="https://cdn.staticfile.org"><link rel="dns-prefetch" href="https://cdn.bootcss.com"><link rel="dns-prefetch" href="https://creativecommons.org"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  }
+} </script></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">1.</span> <span class="toc-text">IoC란?</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">2.</span> <span class="toc-text">Container가 도데체 뭐람?</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">3.</span> <span class="toc-text">DI란?</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">4.</span> <span class="toc-text">의존성 주입 Annotation</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">5.</span> <span class="toc-text">DI 구현방식</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">5.1.</span> <span class="toc-text">Constructor Injection</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">5.2.</span> <span class="toc-text">Extension Constructor Injection</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">5.3.</span> <span class="toc-text">Setter Injection</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">5.4.</span> <span class="toc-text">Field Injection</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">6.</span> <span class="toc-text">용어 설명</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">7.</span> <span class="toc-text">Bean 등록 방법</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">7.1.</span> <span class="toc-text">Component-Scan</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">7.2.</span> <span class="toc-text">Servlet-Context.xml</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">7.3.</span> <span class="toc-text">@Configuration</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">8.</span> <span class="toc-text">Bean 생명주기</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">8.1.</span> <span class="toc-text">InitializingBean, DisposableBean 인터페이스 구현</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">8.2.</span> <span class="toc-text">Bean정의 시 , 메소드 지정</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#undefined"><span class="toc-number">8.3.</span> <span class="toc-text">@PostConstruct, @PreDestroy Annotation 사용</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">9.</span> <span class="toc-text">Bean Scope</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">10.</span> <span class="toc-text">참조</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://www.gravatar.com/avatar/3f8583b7b0f0c1ebd249dffad42707af?s=300"></div><div class="author-info__name text-center">Carrey</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="../../../../archives"><span class="pull-left">Articles</span><span class="pull-right">33</span></a><a class="author-info-articles__tags article-meta" href="../../../../tags"><span class="pull-left">Tags</span><span class="pull-right">12</span></a></div></div></div><div id="content-outer"><div class="no-bg" id="top-container" style="background-image: url(true)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="../../../../index.html">Carrey`s 기술블로그</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus"><a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span></div><div id="post-info"><div id="post-title">Spring IoC &amp; DI(2)</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2018-09-22</time></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h1><span id="ioc란">IoC란?</span></h1>
+<p>Inversion of Control (제어의 역전) 이라는 의미로 사용되고 있다.
+보통의 프로그램에서는 개발자가 필요한 객체를 직접 new를 통해 생성하여 사용한다.
+하지만 Spring과 같은 프레임워크에서는 흐름의 주체가 Container가 되어 Container에서 객체의 생성과 소멸을 관리하며
 개발자가 개발한 애플리케이션 코드를 호출하여 프로그램의 흐름을 관장한다.</p>
-<p>따라서 프로그램의 흐름을 개발자가 관장하는 것이 아닌 프레임워크에게 그 권한이 넘어갔다(역전되었다.) 하여<br>
+<p>따라서 프로그램의 흐름을 개발자가 관장하는 것이 아닌 프레임워크에게 그 권한이 넘어갔다(역전되었다.) 하여
 제어의 역전 (Inversion of Control)이라 불린다.</p>
 <h1><span id="container가-도데체-뭐람">Container가 도데체 뭐람?</span></h1>
 <p><img src="./containers.jpg" alt="containers"></p>
-<p>개발 공부를 하다보면 은근 컨테이너(Container)라는 용어를 많이 듣게 된다.<br>
-Spring 컨테이너, 서블릿 컨테이너, EJB컨테이너등등… Container라는 용어를 듣게 되는데 컨테이너는 도데체 무엇일까?<br>
-위의 이미지와 연상해보면 무엇인가를 담아놓은 박스를 연상할 수 있다.<br>
-이러한 컨테이너 말고도, 컨테이너 처럼 생긴 공장도 있다. 이게 개발자가 상상해야 하는 컨테이너와 부합하는 이미지 같다.<br>
-컨테이너 내부에 물건을 적재하고 물건에 대한 관리도 하는… 컨테이너를 생각하는 것이 도움이 될 것 같다.<br>
+<p>개발 공부를 하다보면 은근 컨테이너(Container)라는 용어를 많이 듣게 된다.
+Spring 컨테이너, 서블릿 컨테이너, EJB컨테이너등등.. Container라는 용어를 듣게 되는데 컨테이너는 도데체 무엇일까?
+위의 이미지와 연상해보면 무엇인가를 담아놓은 박스를 연상할 수 있다.
+이러한 컨테이너 말고도, 컨테이너 처럼 생긴 공장도 있다. 이게 개발자가 상상해야 하는 컨테이너와 부합하는 이미지 같다.
+컨테이너 내부에 물건을 적재하고 물건에 대한 관리도 하는.. 컨테이너를 생각하는 것이 도움이 될 것 같다.
 실제 프레임워크에서의 컨테이너도 같은 역할을 한다.</p>
 <p><strong>이는 객체에 대한 생성부터 소멸까지 생명주기를 관리하며, 시스템이 로드 될 때, 필요한 객체를 생성하여 컨테이너에 담아두고 필요 할 때 사용한다. 뿐만아니라 객체에 대한 추가적인 기능을 제공하는 주체</strong>라고 할 수 있다.</p>
 <p>위에서 예시로 든 컨테이너를 바탕으로 생각을 해보면</p>
-<p>서블릿 (Servlet) 컨테이너는 WAS(Web Application Server) 내 에서 서블릿 객체의 생성, 소멸 대한 처리를 담당하며,<br>
+<p>서블릿 (Servlet) 컨테이너는 WAS(Web Application Server) 내 에서 서블릿 객체의 생성, 소멸 대한 처리를 담당하며,
 외부에서 요청이 들어오면 서블릿 객체를 사용한다. 이 뿐만 아니라 Spring Security 같은 Servlet filter를 이용하여 추가적인 기능을 제공한다.</p>
 <p>Spring Container는 POJO 클래스를 Bean으로 생성하고 소멸까지 생명주기를 관리한다. 또한 Bean이 호출 될 때 의존성을 갖는 클래스에 대해 컨테이너에서 필요한 객체를 찾아 주입해 준다. 이 뿐만 아니라 객체에 대한 Transaction, Security, Pooling에 대한 기능을 추가적으로 제공하고 있다.</p>
 <h1><span id="di란">DI란?</span></h1>
-<p>DI란 Dependency Injection의 의미로 IoC를 구현한 대표적인 예야<br>
-Pojo 객체내의 종속적인 객체를 IoC Container에서 직접 객체를 Injection해주는 걸 의미해<br>
-스프링 개발에서는 99프로 DI방식을 통해 개발자가 직접 필요한 객체를 선언하지 않고<br>
-IoC Container에서 넣어줘서 사용해 —&gt; 이거는 Bean 초기화시에 이루어져<br>
-DL (Dependency Lookup) 이라는 기능도 있는데 이거는 거의 사용하지는 않아<br>
+<p>DI란 Dependency Injection의 의미로 IoC를 구현한 대표적인 예야
+Pojo 객체내의 종속적인 객체를 IoC Container에서 직접 객체를 Injection해주는 걸 의미해
+스프링 개발에서는 99프로 DI방식을 통해 개발자가 직접 필요한 객체를 선언하지 않고
+IoC Container에서 넣어줘서 사용해 —&gt; 이거는 Bean 초기화시에 이루어져
+DL (Dependency Lookup) 이라는 기능도 있는데 이거는 거의 사용하지는 않아
 이 기능은 IoC Container에서 Bean의 메타정보를 이용해서 개발자가 Bean을 직접 찾는 행위야</p>
-<p>DI란 Dependency Injection의 의미로 의존성 주입이라는 뜻을 가지고 있다.<br>
-DI는 IoC라는 개념을 실제로 구현한 대표적인 예이며, 대부분 IoC와 혼용하여 사용한다.<br>
+<p>DI란 Dependency Injection의 의미로 의존성 주입이라는 뜻을 가지고 있다.
+DI는 IoC라는 개념을 실제로 구현한 대표적인 예이며, 대부분 IoC와 혼용하여 사용한다.
 개념 자체는 <code>IoC의 형태 중 하나</code>라고 볼 수 있다.</p>
-<p>DI는 Spring 프레임워크에서 객체의 의존성 관계를 생성하는 역할을 한다.<br>
+<p>DI는 Spring 프레임워크에서 객체의 의존성 관계를 생성하는 역할을 한다.
 클래스 내에서 개발자가 new를 통해 객체 생성을 직접 하지 않아도 DI를 통해 객체를 주입하여 컴포넌트화 하여 객체 내에서 사용 할 수 있다는 장점이 있다.</p>
-<p>Spring에서는 @Autowired 어노테이션을 통해 간단하게 의존성 주입 설정을 할 수 있으며<br>
+<p>Spring에서는 @Autowired 어노테이션을 통해 간단하게 의존성 주입 설정을 할 수 있으며
 객체 내에 의존성 객체를 주입하는 방식은 4가지 정도 있다.</p>
 <ol>
 <li>Constructor Injection</li>
@@ -261,7 +54,7 @@ DI는 IoC라는 개념을 실제로 구현한 대표적인 예이며, 대부분 
 <ul>
 <li>Spring에서 지원하는 Annotation</li>
 <li><code>Type</code>에 맞춰서 주입이 된다.</li>
-<li>Interface에 상응하는 Bean이 2개 이상 인 경우에는 <code>@Qualifier(&quot;beanName&quot;)을 혼용</code>하여<br>
+<li>Interface에 상응하는 Bean이 2개 이상 인 경우에는 <code>@Qualifier(&quot;beanName&quot;)을 혼용</code>하여
 필요한 Bean객체를 주입한다.</li>
 </ul>
 </li>
@@ -278,28 +71,28 @@ DI는 IoC라는 개념을 실제로 구현한 대표적인 예이며, 대부분 
 </ul>
 </li>
 </ul>
-<p>Spring Framework 기반에서 Java Framework로의 Conversion 계획이 있다면, @Inject/@Resource를 사용하면 문제는 없을 것이나… 대부분은 @Autowired를 사용한다.</p>
+<p>Spring Framework 기반에서 Java Framework로의 Conversion 계획이 있다면, @Inject/@Resource를 사용하면 문제는 없을 것이나.. 대부분은 @Autowired를 사용한다.</p>
 <h1><span id="di-구현방식">DI 구현방식</span></h1>
 <h2><span id="constructor-injection">Constructor Injection</span></h2>
-<p>생성자에 @Autowired 어노테이션을 이용하여 UserRepository 객체를 삽입하는 방법이다.<br>
-이 방법은 xml 설정 시에 유용한 방법이다.<br>
+<p>생성자에 @Autowired 어노테이션을 이용하여 UserRepository 객체를 삽입하는 방법이다.
+이 방법은 xml 설정 시에 유용한 방법이다.
 객체 생성 시, 주입을 하기 때문에 객체가 생성된 이후에는 주입된 객체를 변경 할 수 없다.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> Class UserService &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> UserRepository userRepository;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">UserService</span><span class="params">(UserRepository userRepository)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.userRepository = userRepository;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"userRepository"</span> <span class="attr">class</span>=<span class="string">"com.example.user.UserRepository"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"userService"</span>, <span class="attr">class</span>=<span class="string">"com.example.user.UserService"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">construct-args</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">ref</span> <span class="attr">bean</span>=<span class="string">"userRepository"</span>&gt;</span><span class="tag">&lt;/<span class="name">ref</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">construct-args</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> Class UserService &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> UserRepository userRepository;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">UserService</span><span class="params">(UserRepository userRepository)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.userRepository = userRepository;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"userRepository"</span> <span class="attr">class</span>=<span class="string">"com.example.user.UserRepository"</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"userService"</span>, <span class="attr">class</span>=<span class="string">"com.example.user.UserService"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">construct-args</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">ref</span> <span class="attr">bean</span>=<span class="string">"userRepository"</span>&gt;</span><span class="tag">&lt;/<span class="name">ref</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">construct-args</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
 <h2><span id="extension-constructor-injection">Extension Constructor Injection</span></h2>
 <p>Spring 4에 추가된 DI방법이다.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> Class UserService &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> UserRepository userRepository;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">UserService</span><span class="params">(UserRepository userRepository)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.userRepository = userRepository;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>UserService에 @Autowired를 선언 하지 않아도 의존성 주입을 할 수 있게 되었다.<br>
-어찌보면 당연한 내용 같은데…  Lombok을 이용해서 의존성 주입이 가능해 졌다는 점이다.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@AllArgsConstructor</span></span><br><span class="line"><span class="keyword">public</span> Class UserService &#123;</span><br><span class="line">    <span class="keyword">private</span> UserRepository userRepository;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> Class UserService &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> UserRepository userRepository;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">UserService</span><span class="params">(UserRepository userRepository)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.userRepository = userRepository;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>UserService에 @Autowired를 선언 하지 않아도 의존성 주입을 할 수 있게 되었다.
+어찌보면 당연한 내용 같은데...  Lombok을 이용해서 의존성 주입이 가능해 졌다는 점이다.</p>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@AllArgsConstructor</span></span><br><span class="line"><span class="keyword">public</span> Class UserService &#123;</span><br><span class="line">    <span class="keyword">private</span> UserRepository userRepository;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <h2><span id="setter-injection">Setter Injection</span></h2>
-<p>Setter를 통해 DI하는 방법이다.<br>
+<p>Setter를 통해 DI하는 방법이다.
 이 방법은 외부에서 setter를 통해 의존성 객체를 변경 할 수 있는 소지가 있어 상당히 주의해야 한다.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> Class UserService &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> UserRepository userRepository;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">setUserRepository</span><span class="params">(UserRepository userRepository)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.userRepository = userRepository;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> Class UserService &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> UserRepository userRepository;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">setUserRepository</span><span class="params">(UserRepository userRepository)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.userRepository = userRepository;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <h2><span id="field-injection">Field Injection</span></h2>
-<p>Spring을 사용하는 개발자들이 가장많이 사용하는 DI방법이다.<br>
+<p>Spring을 사용하는 개발자들이 가장많이 사용하는 DI방법이다.
 아무래도 코드량이 적으니 다들 많이 사용하는 방법인 듯 싶다.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> Class UserService &#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> UserRepository userRepository;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> Class UserService &#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> UserRepository userRepository;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <h1><span id="용어-설명">용어 설명</span></h1>
 <ul>
 <li>Bean
@@ -346,10 +139,10 @@ DI는 IoC라는 개념을 실제로 구현한 대표적인 예이며, 대부분 
 </ul>
 <h1><span id="bean-등록-방법">Bean 등록 방법</span></h1>
 <h2><span id="component-scan">Component-Scan</span></h2>
-<p>Spring에서 가장 편하게 Bean을 등록할 수 있는 방법이다.<br>
-Spring에서 component-scan에 package나 class를 설정하면 해당 class들에 대해 @Component 어노테이션이 달려 있는 경우 자동으로 Spring Bean으로 등록 해주는 기능이다.<br>
-분명 편리한 기능이긴 하지만 여러 프로젝트에서 공통적으로 패키지를 사용하는 경우에는 안쓰는 Bean들도 생길 수 있기 때문에<br>
-불필요한 메모리 할당이 이루어질 수 있다.<br>
+<p>Spring에서 가장 편하게 Bean을 등록할 수 있는 방법이다.
+Spring에서 component-scan에 package나 class를 설정하면 해당 class들에 대해 @Component 어노테이션이 달려 있는 경우 자동으로 Spring Bean으로 등록 해주는 기능이다.
+분명 편리한 기능이긴 하지만 여러 프로젝트에서 공통적으로 패키지를 사용하는 경우에는 안쓰는 Bean들도 생길 수 있기 때문에
+불필요한 메모리 할당이 이루어질 수 있다.
 그렇기는 해도 최근 Spring을 사용하여 개발하는 경우에는 <code>가장 많이 하는 설정</code>이 아닐까 싶다.</p>
 <ul>
 <li>@Component 종류
@@ -362,20 +155,20 @@ Spring에서 component-scan에 package나 class를 설정하면 해당 class들�
 </li>
 </ul>
 <h2><span id="servlet-contextxml">Servlet-Context.xml</span></h2>
-<p>기존 Bean 생성을 xml로 등록하는 방식이다.<br>
-이 방식을 Bean등록을 한군데에서 모아 볼 수 있다는 장점이 있지만…<br>
-보통의 Enterprise급 프로젝트에서는 설정하는 Bean이 너무 많아 오히려 복잡하다.<br>
+<p>기존 Bean 생성을 xml로 등록하는 방식이다.
+이 방식을 Bean등록을 한군데에서 모아 볼 수 있다는 장점이 있지만...
+보통의 Enterprise급 프로젝트에서는 설정하는 Bean이 너무 많아 오히려 복잡하다.
 위에서 언급한 <code>Component-scan</code>을 주로 사용하는 것이 좋다.</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">name</span>=<span class="string">"beanNameViewResolver"</span> <span class="attr">class</span>=<span class="string">"org.springframework.web.servlet.view.BeanNameViewResolver"</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"order"</span> <span class="attr">value</span>=<span class="string">"1"</span>/&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">bean</span> <span class="attr">name</span>=<span class="string">"internalResourceViewResolver"</span> <span class="attr">class</span>=<span class="string">"org.springframework.web.servlet.view.InternalResourceViewResolver"</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"prefix"</span> <span class="attr">value</span>=<span class="string">"/WEB-INF/views/"</span>/&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"suffix"</span> <span class="attr">value</span>=<span class="string">".jsp"</span>/&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"order"</span> <span class="attr">value</span>=<span class="string">"2"</span>/&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">name</span>=<span class="string">"beanNameViewResolver"</span> <span class="attr">class</span>=<span class="string">"org.springframework.web.servlet.view.BeanNameViewResolver"</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"order"</span> <span class="attr">value</span>=<span class="string">"1"</span>/&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">bean</span> <span class="attr">name</span>=<span class="string">"internalResourceViewResolver"</span> <span class="attr">class</span>=<span class="string">"org.springframework.web.servlet.view.InternalResourceViewResolver"</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"prefix"</span> <span class="attr">value</span>=<span class="string">"/WEB-INF/views/"</span>/&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"suffix"</span> <span class="attr">value</span>=<span class="string">".jsp"</span>/&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"order"</span> <span class="attr">value</span>=<span class="string">"2"</span>/&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
 <h2><span id="configuration">@Configuration</span></h2>
-<p>xml파일에서 Bean등록을 하던 역할을 Java Config로 할 수 있도록 해준다.<br>
-뿐만아니라 @Configuration 어노테이션을 붙인 클래스는 Spring Container에 대한 설정까지 추가 할 수 있다.<br>
+<p>xml파일에서 Bean등록을 하던 역할을 Java Config로 할 수 있도록 해준다.
+뿐만아니라 @Configuration 어노테이션을 붙인 클래스는 Spring Container에 대한 설정까지 추가 할 수 있다.
 Bean을 추가하고자 하는 경우에는 추가하고자 하는 Bean을 return 하는 메서드를 만들어 <code>@Bean</code> 어노테이션을 붙여주면 된다.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserConfig</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> UserService <span class="title">userService</span><span class="params">()</span> </span>&#123; <span class="comment">//메소드 명이 기본적으로 Bean Name으로 추가된다.</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> UserService();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>Java Config를 이용할 수 있다는 장점과 Test Case 작성 시 Mock객체를 Bean으로 생성해야 하는 경우<br>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserConfig</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> UserService <span class="title">userService</span><span class="params">()</span> </span>&#123; <span class="comment">//메소드 명이 기본적으로 Bean Name으로 추가된다.</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> UserService();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Java Config를 이용할 수 있다는 장점과 Test Case 작성 시 Mock객체를 Bean으로 생성해야 하는 경우
 아주 유용한 방법이라 할 수 있겠다.</p>
 <h1><span id="bean-생명주기">Bean 생명주기</span></h1>
-<p>Spring Container에서는 Bean의 생성~소멸까지 Bean을 관리한다.<br>
+<p>Spring Container에서는 Bean의 생성~소멸까지 Bean을 관리한다.
 Bean의 생성 시점과 소멸 시점에 대한 처리를 할 수 있는 기능을 제공하고 있다.</p>
 <p>Bean 생명주기 처리를 하는 방법은 3가지 방식이 있다.</p>
 <ol>
@@ -384,323 +177,50 @@ Bean의 생성 시점과 소멸 시점에 대한 처리를 할 수 있는 기능
 <li>@PostConstruct, @PreDestroy Annotation 사용</li>
 </ol>
 <h2><span id="initializingbean-disposablebean-인터페이스-구현">InitializingBean, DisposableBean 인터페이스 구현</span></h2>
-<p>InitializingBean, DisposableBean 인터페이스를 구현 하여, Bean의 생성과 소멸 시<br>
+<p>InitializingBean, DisposableBean 인터페이스를 구현 하여, Bean의 생성과 소멸 시
 기능을 확장 할 수 있다.</p>
-<p>InitializingBean, DisposableBean 클래스는 Spring에서 제공하는 인터페이스 이기 때문에<br>
+<p>InitializingBean, DisposableBean 클래스는 Spring에서 제공하는 인터페이스 이기 때문에
 Spring에 종속적이게 된다.</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestBeanClass</span> <span class="keyword">implements</span> <span class="title">InitializingBean</span>, <span class="title">DisposableBean</span></span>&#123;</span><br><span class="line">	</span><br><span class="line">    <span class="keyword">private</span> Connection conn;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">afterPropertiesSet</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="comment">//자원의 할당 처리</span></span><br><span class="line">        conn = DBConnectionCaller.getConnection();</span><br><span class="line">        System.out.println(<span class="string">"bean 생성 및 초기화 : afterPropertiesSet() 호출됨"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">destroy</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="comment">//주로 할당된 자원의 해제를 한다.</span></span><br><span class="line">        <span class="keyword">if</span>(conn != <span class="keyword">null</span>) conn.close();</span><br><span class="line">        System.out.println(<span class="string">"bean 소멸 : destroy 호출됨"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestBeanClass</span> <span class="keyword">implements</span> <span class="title">InitializingBean</span>, <span class="title">DisposableBean</span></span>&#123;</span><br><span class="line">	</span><br><span class="line">    <span class="keyword">private</span> Connection conn;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">afterPropertiesSet</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="comment">//자원의 할당 처리</span></span><br><span class="line">        conn = DBConnectionCaller.getConnection();</span><br><span class="line">        System.out.println(<span class="string">"bean 생성 및 초기화 : afterPropertiesSet() 호출됨"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">destroy</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="comment">//주로 할당된 자원의 해제를 한다.</span></span><br><span class="line">        <span class="keyword">if</span>(conn != <span class="keyword">null</span>) conn.close();</span><br><span class="line">        System.out.println(<span class="string">"bean 소멸 : destroy 호출됨"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <h2><span id="bean정의-시-메소드-지정">Bean정의 시 , 메소드 지정</span></h2>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"testBean"</span> <span class="attr">class</span>=<span class="string">"com.example.TestBeanClass"</span>                      </span></span><br><span class="line"><span class="tag">   <span class="attr">init-method</span>=<span class="string">"init"</span> <span class="attr">destroy-method</span>=<span class="string">"destroy"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"testBean"</span> <span class="attr">class</span>=<span class="string">"com.example.TestBeanClass"</span>                      </span></span><br><span class="line"><span class="tag">   <span class="attr">init-method</span>=<span class="string">"init"</span> <span class="attr">destroy-method</span>=<span class="string">"destroy"</span>/&gt;</span></span><br></pre></td></tr></table></figure></p>
 <ul>
-<li>xml설정 파일 <bean>에서 <strong>init-method</strong> 지정 시 Bean생성과 properties의존성 주입 후 지정한 메소드 호출</bean></li>
-<li>xml설정 파일 <bean>에서 <strong>destroy-method</strong> 지정 시 Bean소멸 전 콜백으로 지정한 메소드 호출</bean></li>
+<li>xml설정 파일 &lt;bean&gt;에서 <strong>init-method</strong> 지정 시 Bean생성과 properties의존성 주입 후 지정한 메소드 호출</li>
+<li>xml설정 파일 &lt;bean&gt;에서 <strong>destroy-method</strong> 지정 시 Bean소멸 전 콜백으로 지정한 메소드 호출</li>
 </ul>
 <h2><span id="postconstruct-predestroy-annotation-사용">@PostConstruct, @PreDestroy Annotation 사용</span></h2>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestBeanClass</span> </span>&#123;be</span><br><span class="line">	</span><br><span class="line">    <span class="keyword">private</span> Connection conn;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@PostConstruct</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">//자원의 할당 처리</span></span><br><span class="line">        conn = DBConnectionCaller.getConnection();</span><br><span class="line">        System.out.println(<span class="string">"bean 생성 및 초기화"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@PreDestroy</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">destroy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">//주로 할당된 자원의 해제를 한다.</span></span><br><span class="line">        <span class="keyword">if</span>(conn != <span class="keyword">null</span>) conn.close();</span><br><span class="line">        System.out.println(<span class="string">"bean 소멸"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>@PostConstuct, @PreDestroy 은 <code>JSR-250 Annotation</code> 기반이다 (한마디로 자바기반)<br>
+<p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestBeanClass</span> </span>&#123;be</span><br><span class="line">	</span><br><span class="line">    <span class="keyword">private</span> Connection conn;</span><br><span class="line">    </span><br><span class="line">    <span class="meta">@PostConstruct</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">//자원의 할당 처리</span></span><br><span class="line">        conn = DBConnectionCaller.getConnection();</span><br><span class="line">        System.out.println(<span class="string">"bean 생성 및 초기화"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@PreDestroy</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">destroy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">//주로 할당된 자원의 해제를 한다.</span></span><br><span class="line">        <span class="keyword">if</span>(conn != <span class="keyword">null</span>) conn.close();</span><br><span class="line">        System.out.println(<span class="string">"bean 소멸"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>@PostConstuct, @PreDestroy 은 <code>JSR-250 Annotation</code> 기반이다 (한마디로 자바기반)
 따라서 Spring프레임워크에 종속적이지 않다는 장점이 있다. 따라서 Spring 기반에서 다른 Java기반의 프레임워크로 이식 할 경우 별도로 수정할 필요가 없다.</p>
-<p>@PostConstuct, @PreDestroy 을 사용하기 위해서는<br>
+<p>@PostConstuct, @PreDestroy 을 사용하기 위해서는
 <code>&lt;annotation-config/&gt;</code>설정이나, <code>@AnnotationDrivenConfig</code>어노테이션을 붙여줘야 한다.</p>
 <h1><span id="bean-scope">Bean Scope</span></h1>
-<p><a href="https://docs.spring.io/spring/docs/3.0.0.M3/reference/html/ch04s04.html" target="_blank" rel="noopener">https://docs.spring.io/spring/docs/3.0.0.M3/reference/html/ch04s04.html</a> 을 참고함</p>
+<p>https://docs.spring.io/spring/docs/3.0.0.M3/reference/html/ch04s04.html 을 참고함</p>
 <ul>
 <li>Singleton Scope : IoC Container 단위 별로 Bean이 생성 된다.</li>
 <li>Prototype Scope : Bean이 사용되는 시점 별로 다른 Bean이 생성된다.</li>
 <li>Request Scope : Web프로젝트에서 http 요청 별로 Bean이 생성된다. http의 Lifecycle동안 같은 Bean을 사용</li>
-<li>Session Scope : Request Scope와 마찬가지로 Web 프로젝트에서 사용하며, Session별로 Bean이 생성된다.<br>
+<li>Session Scope : Request Scope와 마찬가지로 Web 프로젝트에서 사용하며, Session별로 Bean이 생성된다.
 (이 경우에는 Bean에 Session정보를 세팅하여 사용할 수 있다.)</li>
 <li>Global Session Scope : Request Scope와 마찬가지로 Web 프로젝트에서 사용하며, Global Http Session별로 다른 Bean을 생성한다. 일반적으로 Portlet Context에서 사용된다.</li>
 </ul>
 <h1><span id="참조">참조</span></h1>
-<p><a href="http://www.javajigi.net/pages/viewpage.action?pageId=3664&amp;focusedCommentId=3751#Spring%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC%EC%86%8C%EA%B0%9C%EC%99%80IoC%EB%B0%8FSpringIoC%EC%9D%98%EA%B0%9C%EB%85%90-2.1IoC%EB%9E%80%EB%AC%B4%EC%97%87%EC%9D%B8%EA%B0%80%3F" target="_blank" rel="noopener">http://www.javajigi.net/pages/viewpage.action?pageId=3664&amp;focusedCommentId=3751#Spring프레임워크소개와IoC및SpringIoC의개념-2.1IoC란무엇인가%3F</a><br>
-<a href="http://wiki.javajigi.net/pages/viewpage.action?pageId=281" target="_blank" rel="noopener">http://wiki.javajigi.net/pages/viewpage.action?pageId=281</a><br>
-<a href="https://jongmin92.github.io/2018/02/11/Spring/spring-ioc-di/" target="_blank" rel="noopener">https://jongmin92.github.io/2018/02/11/Spring/spring-ioc-di/</a><br>
-<a href="https://okky.kr/article/415474" target="_blank" rel="noopener">https://okky.kr/article/415474</a><br>
-<a href="http://www.javajigi.net/pages/viewpage.action?pageId=68" target="_blank" rel="noopener">http://www.javajigi.net/pages/viewpage.action?pageId=68</a><br>
-<a href="http://www.javajigi.net/download/attachments/5614/V3_InversionOfControl.pdf?version=1" target="_blank" rel="noopener">http://www.javajigi.net/download/attachments/5614/V3_InversionOfControl.pdf?version=1</a><br>
-<a href="http://isstory83.tistory.com/91" target="_blank" rel="noopener">http://isstory83.tistory.com/91</a><br>
-<a href="https://spring.io/blog/2016/03/04/core-container-refinements-in-spring-framework-4-3" target="_blank" rel="noopener">https://spring.io/blog/2016/03/04/core-container-refinements-in-spring-framework-4-3</a><br>
+<p>http://www.javajigi.net/pages/viewpage.action?pageId=3664&amp;focusedCommentId=3751#Spring%ED%94%84%EB%A0%88%EC%9E%84%EC%9B%8C%ED%81%AC%EC%86%8C%EA%B0%9C%EC%99%80IoC%EB%B0%8FSpringIoC%EC%9D%98%EA%B0%9C%EB%85%90-2.1IoC%EB%9E%80%EB%AC%B4%EC%97%87%EC%9D%B8%EA%B0%80%3F
+http://wiki.javajigi.net/pages/viewpage.action?pageId=281
+https://jongmin92.github.io/2018/02/11/Spring/spring-ioc-di/
+https://okky.kr/article/415474
+http://www.javajigi.net/pages/viewpage.action?pageId=68
+http://www.javajigi.net/download/attachments/5614/V3_InversionOfControl.pdf?version=1
+http://isstory83.tistory.com/91
+https://spring.io/blog/2016/03/04/core-container-refinements-in-spring-framework-4-3
 토비의 스프링 VOL.2 Spring IoC</p>
-
-                
-
-                <hr>
-                <!-- Pager -->
-                <ul class="pager">
-                    
-                        <li class="previous">
-                            <a href="/2018/10/21/2018-10-21-spring-context/" data-toggle="tooltip" data-placement="top" title="Application-Context와 Servlet-Context">&larr; Previous Post</a>
-                        </li>
-                    
-                    
-                        <li class="next">
-                            <a href="/2018/09/21/2018-09-12-spring-ioc/" data-toggle="tooltip" data-placement="top" title="Spring IoC & DI(1) - IoC 등장배경(과정)">Next Post &rarr;</a>
-                        </li>
-                    
-                </ul>
-
-                <!-- duoshuo Share start -->
-                
-                <!-- 多说 Share end-->
-
-                <!-- 多说评论框 start -->
-                
-                <!-- 多说评论框 end -->
-
-                <!-- disqus comment start -->
-                
-                    <div class="comment">
-                        <div id="disqus_thread" class="disqus-thread"></div>
-                    </div>
-                
-                <!-- disqus comment end -->
-            </div>
-            
-            <!-- Tabe of Content -->
-            <!-- Table of Contents -->
-
-    
-      <aside id="sidebar">
-        <div id="toc" class="toc-article">
-        <strong class="toc-title">Contents</strong>
-        
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">IoC란?</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Container가 도데체 뭐람?</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">DI란?</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">의존성 주입 Annotation</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">DI 구현방식</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">5.1.</span> <span class="toc-nav-text">Constructor Injection</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">5.2.</span> <span class="toc-nav-text">Extension Constructor Injection</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">5.3.</span> <span class="toc-nav-text">Setter Injection</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">5.4.</span> <span class="toc-nav-text">Field Injection</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">용어 설명</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">Bean 등록 방법</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">7.1.</span> <span class="toc-nav-text">Component-Scan</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">7.2.</span> <span class="toc-nav-text">Servlet-Context.xml</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">7.3.</span> <span class="toc-nav-text">@Configuration</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">8.</span> <span class="toc-nav-text">Bean 생명주기</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">8.1.</span> <span class="toc-nav-text">InitializingBean, DisposableBean 인터페이스 구현</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">8.2.</span> <span class="toc-nav-text">Bean정의 시 , 메소드 지정</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">8.3.</span> <span class="toc-nav-text">@PostConstruct, @PreDestroy Annotation 사용</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">9.</span> <span class="toc-nav-text">Bean Scope</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">10.</span> <span class="toc-nav-text">참조</span></a></li></ol>
-        
-        </div>
-      </aside>
-    
-
-                
-            <!-- Sidebar Container -->
-            <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                sidebar-container">
-
-                <!-- Featured Tags -->
-                
-                <section>
-                    <!-- no hr -->
-                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
-                    <div class="tags">
-                       
-                          <a class="tag" href="/tags/#Spring" title="Spring">Spring</a>
-                        
-                    </div>
-                </section>
-                
-
-                <!-- Friends Blog -->
-                
-            </div>
-        </div>
-    </div>
-</article>
-
-
-
-
-<!-- disqus embedded js code start (one page only need to embed once) -->
-<script type="text/javascript">
-    /* * * CONFIGURATION VARIABLES * * */
-    var disqus_shortname = "your-disqus-ID";
-    var disqus_identifier = "http://yoursite-url/2018/09/22/2018-09-21-spring-ioc-2/";
-    var disqus_url = "http://yoursite-url/2018/09/22/2018-09-21-spring-ioc-2/";
-
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-</script>
-<!-- disqus embedded js code start end -->
-
-
-
-
-<!-- async load function -->
-<script>
-    function async(u, c) {
-      var d = document, t = 'script',
-          o = d.createElement(t),
-          s = d.getElementsByTagName(t)[0];
-      o.src = u;
-      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
-      s.parentNode.insertBefore(o, s);
-    }
-</script>
-<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
-<script>
-    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
-        anchors.options = {
-          visible: 'hover',
-          placement: 'left',
-          icon: 'ℬ'
-        };
-        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
-    })
-</script>
-<style>
-    /* place left on bigger screen */
-    @media all and (min-width: 800px) {
-        .anchorjs-link{
-            position: absolute;
-            left: -0.75em;
-            font-size: 1.1em;
-            margin-top : -0.1em;
-        }
-    }
-</style>
-
-
-
-    <!-- Footer -->
-    <!-- Footer -->
-<footer>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <ul class="list-inline text-center">
-                
-                
-                
-
-                
-
-                
-
-                
-                    <li>
-                        <a target="_blank"  href="https://github.com/jaehun2841">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                    </li>
-                
-
-                
-
-                </ul>
-                <p class="copyright text-muted">
-                    Copyright &copy; Carrey 2018 
-                    <br>
-                    Theme by <a href="http://huangxuan.me">Hux</a> 
-                    <span style="display: inline-block; margin: 0 5px;">
-                        <i class="fa fa-heart"></i>
-                    </span> 
-                    re-Ported by <a href="http://beantech.org">BeanTech</a> | 
-                    <iframe
-                        style="margin-left: 2px; margin-bottom:-5px;"
-                        frameborder="0" scrolling="0" width="91px" height="20px"
-                        src="https://ghbtns.com/github-btn.html?user=YenYuHsuan&repo=hexo-theme-beantech&type=star&count=true" >
-                    </iframe>
-                </p>
-            </div>
-        </div>
-    </div>
-</footer>
-
-<!-- jQuery -->
-<script src="../../../../js/jquery.min.js"></script>
-
-<!-- Bootstrap Core JavaScript -->
-<script src="../../../../js/bootstrap.min.js"></script>
-
-<!-- Custom Theme JavaScript -->
-<script src="../../../../js/hux-blog.min.js"></script>
-
-
-<!-- async load function -->
-<script>
-    function async(u, c) {
-      var d = document, t = 'script',
-          o = d.createElement(t),
-          s = d.getElementsByTagName(t)[0];
-      o.src = u;
-      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
-      s.parentNode.insertBefore(o, s);
-    }
-</script>
-
-<!-- 
-     Because of the native support for backtick-style fenced code blocks 
-     right within the Markdown is landed in Github Pages, 
-     From V1.6, There is no need for Highlight.js, 
-     so Huxblog drops it officially.
-
-     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
-     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
--->
-<!--
-    <script>
-        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
-            hljs.initHighlightingOnLoad();
-        })
-    </script>
-    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
--->
-
-
-<!-- jquery.tagcloud.js -->
-<script>
-    // only load tagcloud.js in tag.html
-    if($('#tag_cloud').length !== 0){
-        async("http://yoursite-url/js/jquery.tagcloud.js",function(){
-            $.fn.tagcloud.defaults = {
-                //size: {start: 1, end: 1, unit: 'em'},
-                color: {start: '#bbbbee', end: '#0085a1'},
-            };
-            $('#tag_cloud a').tagcloud();
-        })
-    }
-</script>
-
-<!--fastClick.js -->
-<script>
-    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
-        var $nav = document.querySelector("nav");
-        if($nav) FastClick.attach($nav);
-    })
-</script>
-
-
-<!-- Google Analytics -->
-
-
-<script>
-    // dynamic User by Hux
-    var _gaId = 'UA-XXXXXXXX-X';
-    var _gaDomain = 'yoursite';
-
-    // Originial
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-    ga('create', _gaId, _gaDomain);
-    ga('send', 'pageview');
-</script>
-
-
-
-
-<!-- Baidu Tongji -->
-
-
-
-
-
-
-	<a id="rocket" href="#top" class=""></a>
-	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
-    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
-<!-- Image to hack wechat -->
-<img src="http://yoursite-url/img/icon_wechat.png" width="0" height="0" />
-<!-- Migrate from head to bottom, no longer block render and still work -->
-
-</body>
-
-</html>
+</div></article><div class="post-meta__tag-list"><a class="post-meta__tags" href="../../../../tags/Spring/">Spring</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="../../../10/21/2018-10-21-spring-context/"><i class="fa fa-chevron-left">  </i><span>Application-Context와 Servlet-Context</span></a></div><div class="next-post pull-right"><a href="../../21/2018-09-12-spring-ioc/"><span>Spring IoC &amp; DI(1) - IoC 등장배경(과정)</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="disqus_thread"></div><script>var unused = null;
+var disqus_config = function () {
+  this.page.url = 'http://yoursite-url/2018/09/22/2018-09-21-spring-ioc-2/';
+  this.page.identifier = '2018/09/22/2018-09-21-spring-ioc-2/';
+  this.page.title = 'Spring IoC & DI(2)';
+}
+var d = document, s = d.createElement('script');
+s.src = "https://" + 'Carrey' +".disqus.com/embed.js";
+s.setAttribute('data-timestamp', '' + +new Date());
+(d.head || d.body).appendChild(s);</script></div></div><footer><div class="layout" id="footer"><div class="copyright">&copy;2018 By Carrey</div><div class="framework-info"><span>Driven - </span><a href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file-o"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="../../../../js/third-party/anime.min.js"></script><script src="../../../../js/third-party/jquery.min.js"></script><script src="../../../../js/third-party/jquery.fancybox.min.js"></script><script src="../../../../js/third-party/velocity.min.js"></script><script src="../../../../js/third-party/velocity.ui.min.js"></script><script src="../../../../js/utils.js?version=1.5.6"></script><script src="../../../../js/fancybox.js?version=1.5.6"></script><script src="../../../../js/sidebar.js?version=1.5.6"></script><script src="../../../../js/copy.js?version=1.5.6"></script><script src="../../../../js/fireworks.js?version=1.5.6"></script><script src="../../../../js/transition.js?version=1.5.6"></script><script src="../../../../js/scroll.js?version=1.5.6"></script><script src="../../../../js/head.js?version=1.5.6"></script></body></html>

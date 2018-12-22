@@ -1,560 +1,80 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<!-- Head tag -->
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="keyword"  content="">
-    <link rel="shortcut icon" href="/img/ironman-draw.png">
-    <!-- Place this tag in your head or just before your close body tag. -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
-    <title>
-        
-          Docker기반 Redis 구축하기 - (8) HAProxy를 이용한 분산처리 환경 구축하기 - Carrey`s 기술블로그
-        
-    </title>
-
-    <link rel="canonical" href="http://yoursite-url/2018/12/02/2018-12-02-docker-8/">
-
-    <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="../../../../css/bootstrap.min.css">
-
-    <!-- Custom CSS --> 
-    <link rel="stylesheet" href="../../../../css/beantech.min.css">
-    
-    <!-- Pygments Highlight CSS -->
-    <link rel="stylesheet" href="../../../../css/highlight.css">
-
-    <link rel="stylesheet" href="../../../../css/widget.css">
-
-    <link rel="stylesheet" href="../../../../css/rocket.css">
-
-    <link rel="stylesheet" href="../../../../css/signature.css">
-
-    <link rel="stylesheet" href="../../../../css/toc.css">
-
-    <!-- Custom Fonts -->
-    <!-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
-    <!-- Hux change font-awesome CDN to qiniu -->
-    <link href="https://cdn.staticfile.org/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-
-    <!-- Hux Delete, sad but pending in China
-    <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/
-    css'>
-    -->
-
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-    <!-- ga & ba script hoook -->
-    <script></script>
-</head>
-
-
-<!-- hack iOS CSS :active style -->
-<body ontouchstart="">
-	<!-- Modified by Yu-Hsuan Yen -->
-<!-- Post Header -->
-<style type="text/css">
-    header.intro-header{
-        
-            background-image: url('undefined')
-            /*post*/
-        
-    }
-    
-    #signature{
-        background-image: url('/img/signature/BeanTechSign-white.png');
-    }
-    
-</style>
-
-<header class="intro-header" >
-    <!-- Signature -->
-    <div id="signature">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                
-                    <div class="post-heading">
-                        <div class="tags">
-                            
-                              <a class="tag" href="/tags/#Docker" title="Docker">Docker</a>
-                            
-                        </div>
-                        <h1>Docker기반 Redis 구축하기 - (8) HAProxy를 이용한 분산처리 환경 구축하기</h1>
-                        <h2 class="subheading"></h2>
-                        <span class="meta">
-                            Posted by Carrey on
-                            2018-12-02
-                        </span>
-                    </div>
-                
-
-
-                </div>
-            </div>
-        </div>
-    </div>
-</header>
-
-	
-    <!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
-    <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header page-scroll">
-            <button type="button" class="navbar-toggle">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/">Carrey`s 기술블로그</a>
-        </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <!-- Known Issue, found by Hux:
-            <nav>'s height woule be hold on by its content.
-            so, when navbar scale out, the <nav> will cover tags.
-            also mask any touch event of tags, unfortunately.
-        -->
-        <div id="huxblog_navbar">
-            <div class="navbar-collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="/">Home</a>
-                    </li>
-
-                    
-
-                        
-                    
-
-                        
-                        <li>
-                            <a href="/about/">About</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
-                            <a href="/archive/">Archives</a>
-                        </li>
-                        
-                    
-
-                        
-                        <li>
-                            <a href="/tags/">Tags</a>
-                        </li>
-                        
-                    
-                    
-                </ul>
-            </div>
-        </div>
-        <!-- /.navbar-collapse -->
-    </div>
-    <!-- /.container -->
-</nav>
-<script>
-    // Drop Bootstarp low-performance Navbar
-    // Use customize navbar with high-quality material design animation
-    // in high-perf jank-free CSS3 implementation
-    var $body   = document.body;
-    var $toggle = document.querySelector('.navbar-toggle');
-    var $navbar = document.querySelector('#huxblog_navbar');
-    var $collapse = document.querySelector('.navbar-collapse');
-
-    $toggle.addEventListener('click', handleMagic)
-    function handleMagic(e){
-        if ($navbar.className.indexOf('in') > 0) {
-        // CLOSE
-            $navbar.className = " ";
-            // wait until animation end.
-            setTimeout(function(){
-                // prevent frequently toggle
-                if($navbar.className.indexOf('in') < 0) {
-                    $collapse.style.height = "0px"
-                }
-            },400)
-        }else{
-        // OPEN
-            $collapse.style.height = "auto"
-            $navbar.className += " in";
-        }
-    }
-</script>
-
-
-    <!-- Main Content -->
-    <!-- Modify by Yu-Hsuan Yen -->
-
-<!-- Post Content -->
-<article>
-    <div class="container">
-        <div class="row">
-
-            <!-- Post Container -->
-            <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                post-container">
-
-                <h1><span id="haproxy란">HAProxy란?</span></h1>
-<p>HAProxy는 기존의 하드웨어 스위치(L4/L7)을 대체하는 소프트웨어 로드밸런서입니다.<br>
+<!DOCTYPE html><html lang="lang"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="Docker기반 Redis 구축하기 - (8) HAProxy를 이용한 분산처리 환경 구축하기"><meta name="keywords" content="Docker"><meta name="author" content="Carrey,undefined"><meta name="copyright" content="Carrey"><title>Docker기반 Redis 구축하기 - (8) HAProxy를 이용한 분산처리 환경 구축하기 | Carrey`s 기술블로그</title><link rel="shortcut icon" href="../../../../my-favicon.ico"><link rel="stylesheet" href="../../../../css/index.css?version=1.5.6"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css?version=1.5.6"><link rel="dns-prefetch" href="https://cdn.staticfile.org"><link rel="dns-prefetch" href="https://cdn.bootcss.com"><link rel="dns-prefetch" href="https://creativecommons.org"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  }
+} </script></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">1.</span> <span class="toc-text">HAProxy란?</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">2.</span> <span class="toc-text">Redis-Cluster에 HAProxy가 필요한 이유</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">3.</span> <span class="toc-text">다시 한번 보는 Redis Cluster 구성도</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">4.</span> <span class="toc-text">HAProxy 설치방법</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">5.</span> <span class="toc-text">haproxy.cfg 파일 작성</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">6.</span> <span class="toc-text">HAProxy Web Console 확인하기</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">7.</span> <span class="toc-text">Failover Test</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#undefined"><span class="toc-number">8.</span> <span class="toc-text">참고</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://www.gravatar.com/avatar/3f8583b7b0f0c1ebd249dffad42707af?s=300"></div><div class="author-info__name text-center">Carrey</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="../../../../archives"><span class="pull-left">Articles</span><span class="pull-right">33</span></a><a class="author-info-articles__tags article-meta" href="../../../../tags"><span class="pull-left">Tags</span><span class="pull-right">12</span></a></div></div></div><div id="content-outer"><div class="no-bg" id="top-container" style="background-image: url(true)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="../../../../index.html">Carrey`s 기술블로그</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus"><a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span></div><div id="post-info"><div id="post-title">Docker기반 Redis 구축하기 - (8) HAProxy를 이용한 분산처리 환경 구축하기</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2018-12-02</time></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h1><span id="haproxy란">HAProxy란?</span></h1>
+<p>HAProxy는 기존의 하드웨어 스위치(L4/L7)을 대체하는 소프트웨어 로드밸런서입니다.
 로드 밸런싱이란 부하 분산을 위해서 가상IP를 통해 여러서버에 접속하도록 트래픽을 분배해 주는 기능을 의미합니다.</p>
 <h1><span id="redis-cluster에-haproxy가-필요한-이유">Redis-Cluster에 HAProxy가 필요한 이유</span></h1>
 <p>Redis Cluster에서는 Failover가 일어날 수 있습니다.</p>
-<p>처음에 1번이 Master였다가, 2번이 Master가 되고, 3번이 Master가 될 수 있습니다.<br>
+<p>처음에 1번이 Master였다가, 2번이 Master가 되고, 3번이 Master가 될 수 있습니다.
 하지만 Redis Cluster를 사용하는 Application에서 항상 바뀌는 Master의 포트정보를 찾는것은 매우 비용을 낭비하는 행위라 볼 수 있습니다.</p>
 <p>따라서 HAProxy에서 Health check를 하면서 실시간으로 Master를 찾아 신호를 보내줄 수 있기 때문에 HAProxy를 Redis-Cluster에 접목하였습니다.</p>
 <h1><span id="다시-한번-보는-redis-cluster-구성도">다시 한번 보는 Redis Cluster 구성도</span></h1>
 <p><img src="./Redis-Cluster-archi.PNG" alt="Redis-Cluster-archi"></p>
 <p>HAProxy Port를 6개를 지정합니다. (각각 1개는 Master Port, Slave Port라고 가정하고 (1(master)+1(slave)) x 3 (서버대수))</p>
-<p>5000, 5002, 5004번 Port는 각 서버의 Master Redis를 체크합니다.<br>
+<p>5000, 5002, 5004번 Port는 각 서버의 Master Redis를 체크합니다.
 따라서 5000, 5002, 5004으로 들어온 요청은 각각의 서버의 Master Redis에 전달 됩니다.</p>
-<p>다음으로 5001, 5003, 5005번 Port는 각 서버의 Slave Redis를 체크합니다.<br>
+<p>다음으로 5001, 5003, 5005번 Port는 각 서버의 Slave Redis를 체크합니다.
 따라서 5001, 5003, 5005으로 들어온 요청은 각각의 서버의 Slave Redis들에게 전달됩니다. (HAProxy에는 여러 서버에 대한 분배방식을 설정 할 수 있는데 고루게 요청할 수 있도록 RoundRobin 방식으로 설정하였습니다)</p>
 <h1><span id="haproxy-설치방법">HAProxy 설치방법</span></h1>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 관련 모듈을 yum으로 설치한다.</span></span><br><span class="line">yum install gcc gcc-c++ pcre-devel openssl-devel</span><br><span class="line"></span><br><span class="line"><span class="comment"># wget명령어도 haproxy 다운로드</span></span><br><span class="line">wget http://www.haproxy.org/download/1.8/src/haproxy-1.8.3.tar.gz</span><br><span class="line"></span><br><span class="line"><span class="comment"># 압축을 풀어준다.</span></span><br><span class="line">tar zxvf haproxy-1.8.3.tar.gz</span><br><span class="line"></span><br><span class="line"><span class="comment"># 디렉토리 이동</span></span><br><span class="line"><span class="built_in">cd</span> haproxy-1.8.3</span><br><span class="line"></span><br><span class="line"><span class="comment"># c파일을 컴파일 해준다. https 사용이 필요한 경우 USE_OPENSSL=1 설정 추가</span></span><br><span class="line">make TARGET=linux2628 USE_PCRE=1 USE_OPENSSL=1 USE_ZLIB=1 </span><br><span class="line"></span><br><span class="line"><span class="comment"># /usr/local/haproxy 디렉토리에 설치</span></span><br><span class="line">make PREFIX=/usr/<span class="built_in">local</span>/haproxy DESTDIR= install</span><br></pre></td></tr></table></figure>
+<p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 관련 모듈을 yum으로 설치한다.</span></span><br><span class="line">yum install gcc gcc-c++ pcre-devel openssl-devel</span><br><span class="line"></span><br><span class="line"><span class="comment"># wget명령어도 haproxy 다운로드</span></span><br><span class="line">wget http://www.haproxy.org/download/1.8/src/haproxy-1.8.3.tar.gz</span><br><span class="line"></span><br><span class="line"><span class="comment"># 압축을 풀어준다.</span></span><br><span class="line">tar zxvf haproxy-1.8.3.tar.gz</span><br><span class="line"></span><br><span class="line"><span class="comment"># 디렉토리 이동</span></span><br><span class="line"><span class="built_in">cd</span> haproxy-1.8.3</span><br><span class="line"></span><br><span class="line"><span class="comment"># c파일을 컴파일 해준다. https 사용이 필요한 경우 USE_OPENSSL=1 설정 추가</span></span><br><span class="line">make TARGET=linux2628 USE_PCRE=1 USE_OPENSSL=1 USE_ZLIB=1 </span><br><span class="line"></span><br><span class="line"><span class="comment"># /usr/local/haproxy 디렉토리에 설치</span></span><br><span class="line">make PREFIX=/usr/<span class="built_in">local</span>/haproxy DESTDIR= install</span><br></pre></td></tr></table></figure></p>
 <h1><span id="haproxycfg-파일-작성">haproxy.cfg 파일 작성</span></h1>
 <p>haproxy.cfg 파일을 작성 할 때는 크게 2가지 관점으로 작성합니다.</p>
 <ul>
 <li>frontend : haproxy에서 사용할 포트 설정, 포트로 신호가 왔을 시 실행할 backend 연결</li>
 <li>backend : frontend로 부터 온 신호를 바탕으로 연결가능한 서버에 트래픽을 분배</li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">global</span><br><span class="line">  <span class="built_in">log</span> 127.0.0.1 local0</span><br><span class="line">  <span class="built_in">log</span> 127.0.0.1 local1 notice</span><br><span class="line"> </span><br><span class="line">defaults REDIS</span><br><span class="line">mode tcp</span><br><span class="line">timeout connect 4s</span><br><span class="line">timeout server 15s</span><br><span class="line">timeout client 15s</span><br><span class="line"><span class="comment"># timeout tunnel 365d</span></span><br><span class="line"> </span><br><span class="line">frontend front_redis_master1</span><br><span class="line"> <span class="built_in">bind</span> *:5000 name redis                 <span class="comment">#5000번 포트에 대한 bind 정보입니다.</span></span><br><span class="line"> default_backend back_redis_master1     <span class="comment">#5000번 포트로 신호가 들어오면 backend를 실행</span></span><br><span class="line"> </span><br><span class="line">backend back_redis_master1</span><br><span class="line"> option tcp-check                       <span class="comment">#tcp-check를 통해 접근가능한 서버 필터링</span></span><br><span class="line"> tcp-check send AUTH\ password1234\r\n  <span class="comment">#비밀번호 password1234를 입력하고 Redis 서버에 접속합니다.</span></span><br><span class="line"> tcp-check expect string +OK            <span class="comment">#OK가 왔는지?</span></span><br><span class="line"> tcp-check send PING\r\n                <span class="comment">#PING을 날려 신호를 점검합니다.</span></span><br><span class="line"> tcp-check expect string +PONG          <span class="comment">#PONG이라는 응답이 왔는지?</span></span><br><span class="line"> tcp-check send info\ replication\r\n   <span class="comment">#info replication 명령을 날려 Redis에 대한 정보를 받아옵니다.</span></span><br><span class="line"> tcp-check expect string role:master    <span class="comment">#role이 master인지 확인 합니다.</span></span><br><span class="line"> </span><br><span class="line"> <span class="comment">#repl_backlog_active의 값이 1인지 확인합니다 </span></span><br><span class="line"> <span class="comment">#이 조건을 추가한 이유는 Failover간 잠시의 시간동안 Master가 2대가 되는데 그것을 방지 하기 위함입니다.</span></span><br><span class="line"> <span class="comment">#(진짜 Master Redis에만 1, slave는 0)</span></span><br><span class="line"> tcp-check expect string repl_backlog_active:1 </span><br><span class="line"> tcp-check send QUIT\r\n                <span class="comment">#QUIT 명령을 전송</span></span><br><span class="line"> tcp-check expect string +OK</span><br><span class="line"> server redis1 192.168.137.101:6379 check inter 1s  <span class="comment">#1초 단위로 해당 ip의 port로 체크합니다.</span></span><br><span class="line"> server redis2 192.168.137.101:6380 check inter 1s  <span class="comment">#1초 단위로 해당 ip의 port로 체크합니다.</span></span><br><span class="line"> server redis3 192.168.137.101:6381 check inter 1s  <span class="comment">#1초 단위로 해당 ip의 port로 체크합니다.</span></span><br><span class="line"> </span><br><span class="line">frontend front_redis_slave1</span><br><span class="line"><span class="built_in">bind</span> *:5001 name redis                <span class="comment">#5001번 포트에 대한 bind 정보입니다.</span></span><br><span class="line">default_backend back_redis_slave1</span><br><span class="line"> </span><br><span class="line">backend back_redis_slave1</span><br><span class="line"> balance roundrobin                   <span class="comment">#라운드 로빈 방식으로 분배</span></span><br><span class="line"> option tcp-check</span><br><span class="line"> tcp-check send AUTH\ password1234\r\n        </span><br><span class="line"> tcp-check expect string +OK</span><br><span class="line"> tcp-check send PING\r\n              </span><br><span class="line"> tcp-check expect string +PONG</span><br><span class="line"> tcp-check send info\ replication\r\n </span><br><span class="line"> tcp-check expect string role:slave   <span class="comment">#role key가 slave인지 확인 합니다.</span></span><br><span class="line"> tcp-check send QUIT\r\n</span><br><span class="line"> tcp-check expect string +OK</span><br><span class="line"> server redis1 192.168.137.101:6379 check inter 1s  <span class="comment">#1초 단위로 해당 ip의 port로 체크합니다.</span></span><br><span class="line"> server redis2 192.168.137.101:6380 check inter 1s  <span class="comment">#1초 단위로 해당 ip의 port로 체크합니다.</span></span><br><span class="line"> server redis3 192.168.137.101:6381 check inter 1s  <span class="comment">#1초 단위로 해당 ip의 port로 체크합니다.</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">#Listen on all IP's on port 9000 //9000 포트로 접근 시, Web Console에 진입할 수 있습니다. </span></span><br><span class="line">listen stats</span><br><span class="line">   <span class="built_in">bind</span> 0.0.0.0:9000 </span><br><span class="line">   mode http</span><br><span class="line">   balance</span><br><span class="line">   timeout client 5000</span><br><span class="line">   timeout connect 4000</span><br><span class="line">   timeout server 30000</span><br><span class="line"> </span><br><span class="line">   <span class="comment">#This is the virtual URL to access the stats page</span></span><br><span class="line">   stats uri /haproxy_stats //URL주소는 ip:9000/haproxy_stats입니다.</span><br><span class="line">   <span class="comment">#Authentication realm. This can be set to anything. Escape space characters with a backslash.</span></span><br><span class="line">   stats realm HAProxy\ Statistics</span><br><span class="line"> </span><br><span class="line">   <span class="comment">#The user/pass you want to use. Change this password!</span></span><br><span class="line">   stats auth admin:1234 <span class="comment">#Web Console에 접근하는 계정/암호 설정</span></span><br><span class="line"> </span><br><span class="line">   <span class="comment">#This allows you to take down and bring up back end servers.</span></span><br><span class="line">   <span class="comment">#This will produce an error on older versions of HAProxy.</span></span><br><span class="line">   stats admin <span class="keyword">if</span> TRUE</span><br></pre></td></tr></table></figure>
-<p>위의 내용에서는 일단 하나의 Master-Slave에 대한 설정값만 있습니다.<br>
-여태까지 설치 내용에서는 Master-Slave 구성이 3세트이기 때문에 실제 haproxy.cfg를 작성 할 경우에는<br>
+<p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">global</span><br><span class="line">  <span class="built_in">log</span> 127.0.0.1 local0</span><br><span class="line">  <span class="built_in">log</span> 127.0.0.1 local1 notice</span><br><span class="line"> </span><br><span class="line">defaults REDIS</span><br><span class="line">mode tcp</span><br><span class="line">timeout connect 4s</span><br><span class="line">timeout server 15s</span><br><span class="line">timeout client 15s</span><br><span class="line"><span class="comment"># timeout tunnel 365d</span></span><br><span class="line"> </span><br><span class="line">frontend front_redis_master1</span><br><span class="line"> <span class="built_in">bind</span> *:5000 name redis                 <span class="comment">#5000번 포트에 대한 bind 정보입니다.</span></span><br><span class="line"> default_backend back_redis_master1     <span class="comment">#5000번 포트로 신호가 들어오면 backend를 실행</span></span><br><span class="line"> </span><br><span class="line">backend back_redis_master1</span><br><span class="line"> option tcp-check                       <span class="comment">#tcp-check를 통해 접근가능한 서버 필터링</span></span><br><span class="line"> tcp-check send AUTH\ password1234\r\n  <span class="comment">#비밀번호 password1234를 입력하고 Redis 서버에 접속합니다.</span></span><br><span class="line"> tcp-check expect string +OK            <span class="comment">#OK가 왔는지?</span></span><br><span class="line"> tcp-check send PING\r\n                <span class="comment">#PING을 날려 신호를 점검합니다.</span></span><br><span class="line"> tcp-check expect string +PONG          <span class="comment">#PONG이라는 응답이 왔는지?</span></span><br><span class="line"> tcp-check send info\ replication\r\n   <span class="comment">#info replication 명령을 날려 Redis에 대한 정보를 받아옵니다.</span></span><br><span class="line"> tcp-check expect string role:master    <span class="comment">#role이 master인지 확인 합니다.</span></span><br><span class="line"> </span><br><span class="line"> <span class="comment">#repl_backlog_active의 값이 1인지 확인합니다 </span></span><br><span class="line"> <span class="comment">#이 조건을 추가한 이유는 Failover간 잠시의 시간동안 Master가 2대가 되는데 그것을 방지 하기 위함입니다.</span></span><br><span class="line"> <span class="comment">#(진짜 Master Redis에만 1, slave는 0)</span></span><br><span class="line"> tcp-check expect string repl_backlog_active:1 </span><br><span class="line"> tcp-check send QUIT\r\n                <span class="comment">#QUIT 명령을 전송</span></span><br><span class="line"> tcp-check expect string +OK</span><br><span class="line"> server redis1 192.168.137.101:6379 check inter 1s  <span class="comment">#1초 단위로 해당 ip의 port로 체크합니다.</span></span><br><span class="line"> server redis2 192.168.137.101:6380 check inter 1s  <span class="comment">#1초 단위로 해당 ip의 port로 체크합니다.</span></span><br><span class="line"> server redis3 192.168.137.101:6381 check inter 1s  <span class="comment">#1초 단위로 해당 ip의 port로 체크합니다.</span></span><br><span class="line"> </span><br><span class="line">frontend front_redis_slave1</span><br><span class="line"><span class="built_in">bind</span> *:5001 name redis                <span class="comment">#5001번 포트에 대한 bind 정보입니다.</span></span><br><span class="line">default_backend back_redis_slave1</span><br><span class="line"> </span><br><span class="line">backend back_redis_slave1</span><br><span class="line"> balance roundrobin                   <span class="comment">#라운드 로빈 방식으로 분배</span></span><br><span class="line"> option tcp-check</span><br><span class="line"> tcp-check send AUTH\ password1234\r\n        </span><br><span class="line"> tcp-check expect string +OK</span><br><span class="line"> tcp-check send PING\r\n              </span><br><span class="line"> tcp-check expect string +PONG</span><br><span class="line"> tcp-check send info\ replication\r\n </span><br><span class="line"> tcp-check expect string role:slave   <span class="comment">#role key가 slave인지 확인 합니다.</span></span><br><span class="line"> tcp-check send QUIT\r\n</span><br><span class="line"> tcp-check expect string +OK</span><br><span class="line"> server redis1 192.168.137.101:6379 check inter 1s  <span class="comment">#1초 단위로 해당 ip의 port로 체크합니다.</span></span><br><span class="line"> server redis2 192.168.137.101:6380 check inter 1s  <span class="comment">#1초 단위로 해당 ip의 port로 체크합니다.</span></span><br><span class="line"> server redis3 192.168.137.101:6381 check inter 1s  <span class="comment">#1초 단위로 해당 ip의 port로 체크합니다.</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">#Listen on all IP's on port 9000 //9000 포트로 접근 시, Web Console에 진입할 수 있습니다. </span></span><br><span class="line">listen stats</span><br><span class="line">   <span class="built_in">bind</span> 0.0.0.0:9000 </span><br><span class="line">   mode http</span><br><span class="line">   balance</span><br><span class="line">   timeout client 5000</span><br><span class="line">   timeout connect 4000</span><br><span class="line">   timeout server 30000</span><br><span class="line"> </span><br><span class="line">   <span class="comment">#This is the virtual URL to access the stats page</span></span><br><span class="line">   stats uri /haproxy_stats //URL주소는 ip:9000/haproxy_stats입니다.</span><br><span class="line">   <span class="comment">#Authentication realm. This can be set to anything. Escape space characters with a backslash.</span></span><br><span class="line">   stats realm HAProxy\ Statistics</span><br><span class="line"> </span><br><span class="line">   <span class="comment">#The user/pass you want to use. Change this password!</span></span><br><span class="line">   stats auth admin:1234 <span class="comment">#Web Console에 접근하는 계정/암호 설정</span></span><br><span class="line"> </span><br><span class="line">   <span class="comment">#This allows you to take down and bring up back end servers.</span></span><br><span class="line">   <span class="comment">#This will produce an error on older versions of HAProxy.</span></span><br><span class="line">   stats admin <span class="keyword">if</span> TRUE</span><br></pre></td></tr></table></figure></p>
+<p>위의 내용에서는 일단 하나의 Master-Slave에 대한 설정값만 있습니다.
+여태까지 설치 내용에서는 Master-Slave 구성이 3세트이기 때문에 실제 haproxy.cfg를 작성 할 경우에는
 5002~5005번 포트를 사용하는 설정에 대해서도 추가해야 합니다.</p>
 <h1><span id="haproxy-web-console-확인하기">HAProxy Web Console 확인하기</span></h1>
 <p><img src="./haproxy1.PNG" alt="haproxy1"></p>
-<p><strong>haproxy-server-ip:9000</strong> 으로 접속하였습니다<br>
-현재 192.168.137.101 서버에는 6379, 6380, 6381 포트를 사용하는 Redis 노드가 3개가 동작하고 있습니다.<br>
-현재 master 역할을 수행하는 것은 6380 포트를 사용하는 redis2 노드입니다.<br>
+<p><strong>haproxy-server-ip:9000</strong> 으로 접속하였습니다
+현재 192.168.137.101 서버에는 6379, 6380, 6381 포트를 사용하는 Redis 노드가 3개가 동작하고 있습니다.
+현재 master 역할을 수행하는 것은 6380 포트를 사용하는 redis2 노드입니다.
 따라서 <strong>haproxy-server-ip:5000</strong> 으로 접속하게 되면 redis2 노드에 신호가 분배되어 Redis master서버에 대한 명령을 실행 할 수 있습니다.</p>
-<p>현재 slave 역할을 수행하는 것은 6379, 6381포트를 사용하는 redis1, redis3노드 입니다.<br>
+<p>현재 slave 역할을 수행하는 것은 6379, 6381포트를 사용하는 redis1, redis3노드 입니다.
 따라서 <strong>haproxy-server-ip:5001</strong>으로 접속하게 되면 RoundRobin 방식으로 redis1, redis3 노드에 신호가 분배되어 Redis slave 서버에 대한 명령을 실행 할 수 있습니다</p>
 <blockquote>
 <p><strong>HAProxy를 구성한 이유</strong></p>
-<p>Application에서 Redis를 사용하면서, Master에만 데이터를 입력하고, Slave에서만 데이터를 조회하려는 행위를 많이 하게 됩니다. 아무래도 Redis서버에 대한 부하를 줄여주고자 이러한 행위를 하게 되는데, Haproxy를 설정 해 두면, Application Server에서 failover로 인해 변하는 master/slave 포트에 대한 걱정을 할 필요가 없습니다.<br>
+<p>Application에서 Redis를 사용하면서, Master에만 데이터를 입력하고, Slave에서만 데이터를 조회하려는 행위를 많이 하게 됩니다. 아무래도 Redis서버에 대한 부하를 줄여주고자 이러한 행위를 하게 되는데, Haproxy를 설정 해 두면, Application Server에서 failover로 인해 변하는 master/slave 포트에 대한 걱정을 할 필요가 없습니다.
 HAProxy에서 알아서 tcp-check를 통해 master/slave를 정해주기 때문입니다.</p>
 </blockquote>
 <h1><span id="failover-test">Failover Test</span></h1>
 <p>Sentinel 테스트와 동일하게 Master를 죽여보도록 하겠습니다.</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker stop &lt;master-node-id&gt;</span><br></pre></td></tr></table></figure>
+<p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker stop &lt;master-node-id&gt;</span><br></pre></td></tr></table></figure></p>
 <p><img src="./haproxy2.PNG" alt="haproxy2"></p>
-<p>Master node를 죽이니, 5000번 포트에서는 더이상 master로 갈 수 있는 서버가 없다고 나옵니다.<br>
+<p>Master node를 죽이니, 5000번 포트에서는 더이상 master로 갈 수 있는 서버가 없다고 나옵니다.
 (<strong>이 때 순단을 최소화 하려면 failover 시간과, HAProxy tcp-check 시간을 최소로 줄여야 합니다.</strong>)</p>
 <p><img src="./haproxy3.PNG" alt="haproxy3"></p>
 <p>잠시 시간이 지나고 Redis Failover가 진행됩니다. 진행이 완료되면, HAProxy에서도 tcp-check가 이루어집니다.</p>
 <p><img src="./haproxy4.PNG" alt="haproxy4"></p>
 <p>tcp-check가 끝나고 redis1 노드가 master로 선출되어, 5000번 포트로 접근 시, redis1 노드로 분산되게 됩니다.</p>
 <p>다시, 죽었던 redis2 노드를 살려보겠습니다.</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker start &lt;redis2_node_id&gt;</span><br></pre></td></tr></table></figure>
+<p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker start &lt;redis2_node_id&gt;</span><br></pre></td></tr></table></figure></p>
 <p><img src="./haproxy5.PNG" alt="haproxy5"></p>
-<p>redis2 노드가 다시 살아나고, sentinel에서도 role-change 작업이 이루어집니다.<br>
+<p>redis2 노드가 다시 살아나고, sentinel에서도 role-change 작업이 이루어집니다.
 곧이어, HAProxy에서도 tcp-check를 통해 redis2노드가 slave가 되었음을 확인하고 5001 포트에서 분배가능한 서버로 분류됩니다.</p>
 <p><img src="./haproxy6.PNG" alt="haproxy6"></p>
 <p>이와 같이 Application Server에서는 무조건 master port는 5000번, slave port는 5001번 이라고만 알고 있으면 Redis서버에서 failover가 진행되더라도, 설정을 바꿀 필요없이 사용이 가능합니다.</p>
 <h1><span id="참고">참고</span></h1>
 <ul>
-<li><a href="http://blog.whitelife.co.kr/321" target="_blank" rel="noopener">http://blog.whitelife.co.kr/321</a></li>
+<li>http://blog.whitelife.co.kr/321</li>
 </ul>
-
-                
-
-                <hr>
-                <!-- Pager -->
-                <ul class="pager">
-                    
-                        <li class="previous">
-                            <a href="/2018/12/03/2018-12-03-redis-stats/" data-toggle="tooltip" data-placement="top" title="Docker기반 Redis 구축하기 - (9) Redis-Stats을 이용한 모니터링">&larr; Previous Post</a>
-                        </li>
-                    
-                    
-                        <li class="next">
-                            <a href="/2018/12/02/2018-12-02-docker-7/" data-toggle="tooltip" data-placement="top" title="Docker기반 Redis 구축하기 - (7) Docker를 이용한 Redis Sentinel 설치하기">Next Post &rarr;</a>
-                        </li>
-                    
-                </ul>
-
-                <!-- duoshuo Share start -->
-                
-                <!-- 多说 Share end-->
-
-                <!-- 多说评论框 start -->
-                
-                <!-- 多说评论框 end -->
-
-                <!-- disqus comment start -->
-                
-                    <div class="comment">
-                        <div id="disqus_thread" class="disqus-thread"></div>
-                    </div>
-                
-                <!-- disqus comment end -->
-            </div>
-            
-            <!-- Tabe of Content -->
-            <!-- Table of Contents -->
-
-    
-      <aside id="sidebar">
-        <div id="toc" class="toc-article">
-        <strong class="toc-title">Contents</strong>
-        
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">HAProxy란?</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Redis-Cluster에 HAProxy가 필요한 이유</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">다시 한번 보는 Redis Cluster 구성도</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">HAProxy 설치방법</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">haproxy.cfg 파일 작성</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">6.</span> <span class="toc-nav-text">HAProxy Web Console 확인하기</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">7.</span> <span class="toc-nav-text">Failover Test</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#undefined"><span class="toc-nav-number">8.</span> <span class="toc-nav-text">참고</span></a></li></ol>
-        
-        </div>
-      </aside>
-    
-
-                
-            <!-- Sidebar Container -->
-            <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                sidebar-container">
-
-                <!-- Featured Tags -->
-                
-                <section>
-                    <!-- no hr -->
-                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
-                    <div class="tags">
-                       
-                          <a class="tag" href="/tags/#Docker" title="Docker">Docker</a>
-                        
-                    </div>
-                </section>
-                
-
-                <!-- Friends Blog -->
-                
-            </div>
-        </div>
-    </div>
-</article>
-
-
-
-
-<!-- disqus embedded js code start (one page only need to embed once) -->
-<script type="text/javascript">
-    /* * * CONFIGURATION VARIABLES * * */
-    var disqus_shortname = "your-disqus-ID";
-    var disqus_identifier = "http://yoursite-url/2018/12/02/2018-12-02-docker-8/";
-    var disqus_url = "http://yoursite-url/2018/12/02/2018-12-02-docker-8/";
-
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-</script>
-<!-- disqus embedded js code start end -->
-
-
-
-
-<!-- async load function -->
-<script>
-    function async(u, c) {
-      var d = document, t = 'script',
-          o = d.createElement(t),
-          s = d.getElementsByTagName(t)[0];
-      o.src = u;
-      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
-      s.parentNode.insertBefore(o, s);
-    }
-</script>
-<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
-<script>
-    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
-        anchors.options = {
-          visible: 'hover',
-          placement: 'left',
-          icon: 'ℬ'
-        };
-        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
-    })
-</script>
-<style>
-    /* place left on bigger screen */
-    @media all and (min-width: 800px) {
-        .anchorjs-link{
-            position: absolute;
-            left: -0.75em;
-            font-size: 1.1em;
-            margin-top : -0.1em;
-        }
-    }
-</style>
-
-
-
-    <!-- Footer -->
-    <!-- Footer -->
-<footer>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <ul class="list-inline text-center">
-                
-                
-                
-
-                
-
-                
-
-                
-                    <li>
-                        <a target="_blank"  href="https://github.com/jaehun2841">
-                            <span class="fa-stack fa-lg">
-                                <i class="fa fa-circle fa-stack-2x"></i>
-                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                    </li>
-                
-
-                
-
-                </ul>
-                <p class="copyright text-muted">
-                    Copyright &copy; Carrey 2018 
-                    <br>
-                    Theme by <a href="http://huangxuan.me">Hux</a> 
-                    <span style="display: inline-block; margin: 0 5px;">
-                        <i class="fa fa-heart"></i>
-                    </span> 
-                    re-Ported by <a href="http://beantech.org">BeanTech</a> | 
-                    <iframe
-                        style="margin-left: 2px; margin-bottom:-5px;"
-                        frameborder="0" scrolling="0" width="91px" height="20px"
-                        src="https://ghbtns.com/github-btn.html?user=YenYuHsuan&repo=hexo-theme-beantech&type=star&count=true" >
-                    </iframe>
-                </p>
-            </div>
-        </div>
-    </div>
-</footer>
-
-<!-- jQuery -->
-<script src="../../../../js/jquery.min.js"></script>
-
-<!-- Bootstrap Core JavaScript -->
-<script src="../../../../js/bootstrap.min.js"></script>
-
-<!-- Custom Theme JavaScript -->
-<script src="../../../../js/hux-blog.min.js"></script>
-
-
-<!-- async load function -->
-<script>
-    function async(u, c) {
-      var d = document, t = 'script',
-          o = d.createElement(t),
-          s = d.getElementsByTagName(t)[0];
-      o.src = u;
-      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
-      s.parentNode.insertBefore(o, s);
-    }
-</script>
-
-<!-- 
-     Because of the native support for backtick-style fenced code blocks 
-     right within the Markdown is landed in Github Pages, 
-     From V1.6, There is no need for Highlight.js, 
-     so Huxblog drops it officially.
-
-     - https://github.com/blog/2100-github-pages-now-faster-and-simpler-with-jekyll-3-0  
-     - https://help.github.com/articles/creating-and-highlighting-code-blocks/    
--->
-<!--
-    <script>
-        async("http://cdn.bootcss.com/highlight.js/8.6/highlight.min.js", function(){
-            hljs.initHighlightingOnLoad();
-        })
-    </script>
-    <link href="http://cdn.bootcss.com/highlight.js/8.6/styles/github.min.css" rel="stylesheet">
--->
-
-
-<!-- jquery.tagcloud.js -->
-<script>
-    // only load tagcloud.js in tag.html
-    if($('#tag_cloud').length !== 0){
-        async("http://yoursite-url/js/jquery.tagcloud.js",function(){
-            $.fn.tagcloud.defaults = {
-                //size: {start: 1, end: 1, unit: 'em'},
-                color: {start: '#bbbbee', end: '#0085a1'},
-            };
-            $('#tag_cloud a').tagcloud();
-        })
-    }
-</script>
-
-<!--fastClick.js -->
-<script>
-    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
-        var $nav = document.querySelector("nav");
-        if($nav) FastClick.attach($nav);
-    })
-</script>
-
-
-<!-- Google Analytics -->
-
-
-<script>
-    // dynamic User by Hux
-    var _gaId = 'UA-XXXXXXXX-X';
-    var _gaDomain = 'yoursite';
-
-    // Originial
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-    ga('create', _gaId, _gaDomain);
-    ga('send', 'pageview');
-</script>
-
-
-
-
-<!-- Baidu Tongji -->
-
-
-
-
-
-
-	<a id="rocket" href="#top" class=""></a>
-	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
-    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
-<!-- Image to hack wechat -->
-<img src="http://yoursite-url/img/icon_wechat.png" width="0" height="0" />
-<!-- Migrate from head to bottom, no longer block render and still work -->
-
-</body>
-
-</html>
+</div></article><div class="post-meta__tag-list"><a class="post-meta__tags" href="../../../../tags/Docker/">Docker</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="../../03/2018-12-03-redis-stats/"><i class="fa fa-chevron-left">  </i><span>Docker기반 Redis 구축하기 - (9) Redis-Stats을 이용한 모니터링</span></a></div><div class="next-post pull-right"><a href="../2018-12-02-docker-7/"><span>Docker기반 Redis 구축하기 - (7) Docker를 이용한 Redis Sentinel 설치하기</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="disqus_thread"></div><script>var unused = null;
+var disqus_config = function () {
+  this.page.url = 'http://yoursite-url/2018/12/02/2018-12-02-docker-8/';
+  this.page.identifier = '2018/12/02/2018-12-02-docker-8/';
+  this.page.title = 'Docker기반 Redis 구축하기 - (8) HAProxy를 이용한 분산처리 환경 구축하기';
+}
+var d = document, s = d.createElement('script');
+s.src = "https://" + 'Carrey' +".disqus.com/embed.js";
+s.setAttribute('data-timestamp', '' + +new Date());
+(d.head || d.body).appendChild(s);</script></div></div><footer><div class="layout" id="footer"><div class="copyright">&copy;2018 By Carrey</div><div class="framework-info"><span>Driven - </span><a href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file-o"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="../../../../js/third-party/anime.min.js"></script><script src="../../../../js/third-party/jquery.min.js"></script><script src="../../../../js/third-party/jquery.fancybox.min.js"></script><script src="../../../../js/third-party/velocity.min.js"></script><script src="../../../../js/third-party/velocity.ui.min.js"></script><script src="../../../../js/utils.js?version=1.5.6"></script><script src="../../../../js/fancybox.js?version=1.5.6"></script><script src="../../../../js/sidebar.js?version=1.5.6"></script><script src="../../../../js/copy.js?version=1.5.6"></script><script src="../../../../js/fireworks.js?version=1.5.6"></script><script src="../../../../js/transition.js?version=1.5.6"></script><script src="../../../../js/scroll.js?version=1.5.6"></script><script src="../../../../js/head.js?version=1.5.6"></script></body></html>
