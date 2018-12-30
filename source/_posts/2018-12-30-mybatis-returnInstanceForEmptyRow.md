@@ -19,7 +19,7 @@ Mybatis를 통해 데이터를 조회 한다음 데이터를 가공하는 과정
 일단 디버깅 이전에 코드를 봤다. 아무리 생각해도 null이 발생하지 않을 것 같았다.
 
 실제 코드를 돌려보았다.
-![all_elememt_are_null 에러](./all_element_are_null-6151072.png)
+![all_elememt_are_null 에러](./all_element_are_null.png)
 
 이 메세지는 무엇?
 구글에 검색해 보니 List내의 모든 Element의 reference가 null인 것이었다.
