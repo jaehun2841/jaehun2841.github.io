@@ -3,8 +3,10 @@ title: Mybatis 조회 시, All element are null 이슈
 catalog: true
 Categories:
   - Spring
+  - Mybatis
 tags:
   - Spring
+  - Mybatis
 typora-root-url: 2018-12-30-mybatis-returnInstanceForEmptyRow
 typora-copy-images-to: 2018-12-30-mybatis-returnInstanceForEmptyRow
 date: 2018-12-30 14:55:24
@@ -28,7 +30,7 @@ Mybatis를 통해 데이터를 조회 한다음 데이터를 가공하는 과정
 
 일단은 조회된 모든 컬럼이 null이면 mybatis에는 null을 리턴해 주는건가? 라는 심증만 가지고
 절대 null이 될 수 없는 id 컬럼을 조회컬럼에 추가해 주었다. (쿼리내에 outer join의 여파로 null만 나오는 쿼리였다.)
-일단은 id 컬럼을 추가 해주니, 정상적으로 id만 값이 있고 다른 property는 모두 null인 객체가 생성되었다.
+일단은 id 컬럼을 추가 해주니, 정상적으로 id만 값이 있고 다른 property는 모두 null인 객체가 생성되었다.  
 일단 이렇게 이슈를 종료하고자 했지만, 너무 찝찝했다
 
 아니 왜? 모든 컬럼이 null이면 왜 객체 생성을 안하지? 우리가 원하는건 null이 아닐텐데...

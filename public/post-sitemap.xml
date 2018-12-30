@@ -7,6 +7,14 @@
     </url>
 
     <url>
+        <loc>https://jaehun2841.github.io/2018/12/30/2018-12-30-mybatis-returnInstanceForEmptyRow/</loc>
+        <lastmod>2018-12-30T07:43:53.295Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>https://jaehun2841.github.io/2018/11/07/2018-10-03-spring-ehcache/</loc>
         <lastmod>2018-12-22T10:58:35.335Z</lastmod>
         <changefreq>weekly</changefreq>
