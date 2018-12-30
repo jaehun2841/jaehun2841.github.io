@@ -210,7 +210,8 @@ public class MybatisTest {
                 .getMapper(TestRepository.class)
                 .getTestAll();
 
-        //모든 항목이 null인 경우, List내의 Element가 null이 되므로 제거 된다
+        //모든 항목이 null인 경우, List내의 Element가 Empty 인스턴스를 가르키므로
+        //제거되지 않는다.
         tests.removeIf(Objects::isNull);
         assertThat(tests).isNotEmpty();
     }
