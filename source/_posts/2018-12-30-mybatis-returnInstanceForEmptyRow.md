@@ -156,15 +156,13 @@ public class MybatisTest {
 
         @Bean
         public SqlSessionFactoryBean sqlSessionFactoryBean(DataSource dataSource) throws Exception {
-            SqlSessionFactoryBean sqlSessionFactoryBean = 
-            									new SqlSessionFactoryBean();
+            SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
             sqlSessionFactoryBean.setDataSource(dataSource);
             sqlSessionFactoryBean.getObject()
-            					 .getConfiguration()
+            		         .getConfiguration()
                                  .setMapUnderscoreToCamelCase(true);
                                  
-            sqlSessionFactoryBean.setMapperLocations(new ClassPathResource[]{
-            				new ClassPathResource("mapper/TestSqlMap.xml")});
+            sqlSessionFactoryBean.setMapperLocations(new ClassPathResource[]{new ClassPathResource("mapper/TestSqlMap.xml")});
             return sqlSessionFactoryBean;
         }
     }
