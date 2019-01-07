@@ -1,0 +1,118 @@
+<!DOCTYPE html><html lang="lang"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="Item 7. 다 쓴 객체는 참조를 해제하라"><meta name="keywords" content="Effective-Java"><meta name="author" content="Carrey,undefined"><meta name="copyright" content="Carrey"><title>Item 7. 다 쓴 객체는 참조를 해제하라 | Carrey`s 기술블로그</title><link rel="shortcut icon" href="../../../../my-favicon.ico"><link rel="stylesheet" href="../../../../css/index.css?version=1.5.6"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css?version=1.5.6"><link rel="dns-prefetch" href="https://cdn.staticfile.org"><link rel="dns-prefetch" href="https://cdn.bootcss.com"><link rel="dns-prefetch" href="https://creativecommons.org"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  }
+} </script></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#서론"><span class="toc-number">1.</span> <span class="toc-text">서론</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#가비지-컬렉션의-소멸-대상이-되기-위해서는"><span class="toc-number">2.</span> <span class="toc-text">가비지 컬렉션의 소멸 대상이 되기 위해서는...</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#직접-할당-해제"><span class="toc-number">2.1.</span> <span class="toc-text">직접 할당 해제</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#scope를-통한-자동-할당-해제"><span class="toc-number">2.2.</span> <span class="toc-text">Scope를 통한 자동 할당 해제</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#메모리-누수를-일으키는-주범"><span class="toc-number">3.</span> <span class="toc-text">메모리 누수를 일으키는 주범</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#java-reference"><span class="toc-number">3.1.</span> <span class="toc-text">Java Reference</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#weakhashmap"><span class="toc-number">3.2.</span> <span class="toc-text">WeakHashMap</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#리스너-혹은-콜백"><span class="toc-number">3.3.</span> <span class="toc-text">리스너 혹은 콜백</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#추가적으로"><span class="toc-number">4.</span> <span class="toc-text">추가적으로..</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#참고"><span class="toc-number">5.</span> <span class="toc-text">참고</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://www.gravatar.com/avatar/3f8583b7b0f0c1ebd249dffad42707af?s=300"></div><div class="author-info__name text-center">Carrey</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="../../../../archives"><span class="pull-left">Articles</span><span class="pull-right">43</span></a><a class="author-info-articles__tags article-meta" href="../../../../tags"><span class="pull-left">Tags</span><span class="pull-right">14</span></a></div></div></div><div id="content-outer"><div class="no-bg" id="top-container" style="background-image: url(true)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="../../../../index.html">Carrey`s 기술블로그</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus"><a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span></div><div id="post-info"><div id="post-title">Item 7. 다 쓴 객체는 참조를 해제하라</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2019-01-07</time></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h1 id="서론">서론</h1>
+<p>Java의 장점 중 하나는 가비지 컬렉션을 지원하는 언어라는 점이다.<br>
+C, C++ 처럼 개발자가 메모리를 직접 할당하고 해제하는 방식이 아니기 때문에 Java에서는 메모리 관리가 굉장히 편하다는 장점이 있다.</p>
+<p>하지만 <code>아예 신경을 안써도 되는 것은 아니다.</code><br>
+가비지 컬렉션을 통해 소멸 대상이 되는 객체가 되기 위해서는 어떠한 reference 변수에서 가르키지 않아야 한다.<br>
+다 쓴 객체에 대한 참조를 해제하지 않으면 가비지 컬렉션의 대상이 되지 않아 계속 메모리가 할당 되는 <strong>메모리 누수</strong> 현상이 발생 된다.</p>
+<p>가비지 컬렉션을 지원하는 언어에서는 메모리 누수를 찾기가 까다롭다<br>
+객체 참조(reference)를 하나 살려두면, 가비지 컬렉터는 그 객체 뿐만 아니라 그 객체 내에서 참조하고 있는 객체까지 회수 할 수 없다.</p>
+<p>이로 인해 잠재적으로 성능에 악영향을 줄 수 있다.</p>
+<h1 id="가비지-컬렉션의-소멸-대상이-되기-위해서는">가비지 컬렉션의 소멸 대상이 되기 위해서는...</h1>
+<h2 id="직접-할당-해제">직접 할당 해제</h2>
+<ul>
+<li>이 방법은 굉장히 단순하다.<br>
+말 그대로 객체 참조 변수를 null로 초기화 한다.<br>
+그렇게 되면 실제 heap 메모리에 존재하는 객체는 어떠한 참조(reference)도 가지지 않기 때문에
+<code>가비지 컬렉션의 소멸 대상</code>이 된다.</li>
+<li>하지만 바람직한 방법은 아니다. 반드시 필요한 경우에만 사용 할 수 있도록 하는 것이 좋다.<br>
+(소스코드가 드러워짐 -_-)</li>
+<li>클래스 내에서 메모리를 관리 하는 객체(Stack 같은...)라면 이 방법을 통해 다 쓴 객체는 할당을 해제 하는 것이 옳다.</li>
+</ul>
+<h2 id="scope를-통한-자동-할당-해제">Scope를 통한 자동 할당 해제</h2>
+<ul>
+<li>보통은 변수 선언<code>(대게 지역변수)</code>과 동시에 초기화를 사용한다.<br>
+그 변수에 대한 scope가 종료되는 순간 reference가 해제되어 가비지 컬렉션의 대상이 된다.</li>
+<li>try~catch와 같은 구문에서는 catch 구문에서 try내에서 사용하는 변수를 참조하지 못하므로
+try~catch 변수 초기화를 하기 어렵다.<br>
+그렇게 때문에 finally 구문에서 변수에 대한 참조를 해제한다.</li>
+</ul>
+<h1 id="메모리-누수를-일으키는-주범">메모리 누수를 일으키는 주범</h1>
+<ul>
+<li>첫번째는 위에서 설명한 class내에서 instance에 대한 참조(reference)를 관리하는 객체이다.</li>
+<li>두번째는 Map과 같은 캐시</li>
+<li>세번째는 리스너(Listener) 혹은 콜백(Callback)</li>
+</ul>
+<p>Map과 같은 캐시에 객체참조를 넣어두고 사용이 끝났는데도 초기화를 안시켜주는 경우 메모리 누수가 발생한다.<br>
+엔트리가 살아있는 동안만 캐시를 사용하려면 <code>WeakHashMap</code>을 사용하자.<br>
+WeakHashMap을 이해하려면 Java의 Reference를 좀 알아야 한다.</p>
+<h2 id="java-reference">Java Reference</h2>
+<p>Java에는 4가지의 Reference가 있다.</p>
+<ul>
+<li>
+<p>Strong Reference</p>
+<ul>
+<li>우리가 흔히 사용하는 reference</li>
+<li>String str = new String(&quot;abc&quot;); 와 같은 형태</li>
+<li>Strong Reference는 GC의 대상이 되지 않는다.</li>
+<li>Strong Reference관계의 객체가 GC가 되기 위해선 null로 초기화해<br>
+객체에 대한 Reachability상태를 UnReachable 상태로 만들어 줘야 한다.</li>
+</ul>
+</li>
+<li>
+<p>Soft Reference</p>
+<ul>
+<li>객체의 Reachability가 Strongly Reachable 객체가 아닌 객체 중 Soft Reference만 있는 상태</li>
+<li>SoftReference&lt;Class&gt; ref = new SoftReference&lt;&gt;(new String(&quot;abc&quot;));와 같은 형태로 사용</li>
+<li>Soft Reference는 대게 GC대상이 아니다가 <code>out of memory에러</code>가 나기 직전까지 가면<br>
+Soft Reference 관계에 있는 객체들은 GC대상이 된다.</li>
+</ul>
+</li>
+<li>
+<p>Weak Reference</p>
+<ul>
+<li>객체의 Reachability가 Strongly Reachable 객체가 아닌 객체 중 Soft Reference가 없고 Weak Reference만 있는 상태</li>
+<li>WeakReference&lt;Class&gt; ref = new WeakReference&lt;Class&gt;(new String(&quot;abc&quot;)); 와 같은 형태로 사용</li>
+<li>WeakReference는 GC가 발생 할 때마다 대상이 된다.</li>
+</ul>
+</li>
+<li>
+<p>Phantomly Reference</p>
+<ul>
+<li>객체의 Reachability가 Strongly Reachable 객체가 아닌 객체 중 Soft Reference와 Weak Referencerk 모두가 해당되지 않는 객체</li>
+<li>finalize 되었지만 메모리가 아직 회수 되지 않은 객체</li>
+<li>아직 잘 이해가... 안됨</li>
+</ul>
+</li>
+</ul>
+<h2 id="weakhashmap">WeakHashMap</h2>
+<p>Weak Reference를 이용한 HashMap<br>
+아래의 예제코드를 보자
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ClassWeakHashMap</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Referred</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">finalize</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            System.out.println(<span class="string">"Good bye cruel world"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">    * GC를 발생 시켜 메모리를 회수하는 코드</span></span><br><span class="line"><span class="comment">    * System.gc()가 잘 동작할지는 모르겠다.</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">collect</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"Suggesting collection"</span>);</span><br><span class="line">        System.gc();</span><br><span class="line">        System.out.println(<span class="string">"Sleeping"</span>);</span><br><span class="line">        Thread.sleep(<span class="number">5000</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"Creating weak references"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// This is now a weak reference. </span></span><br><span class="line">        <span class="comment">// The object will be collected only if no strong references. </span></span><br><span class="line">        Referred strong = <span class="keyword">new</span> Referred(); <span class="comment">//Strong Reference로 하나 추가</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//Weak Reference를 이용한 WeakHashMap에 엔트리를 추가하여</span></span><br><span class="line">        <span class="comment">//Weak Reference 추가</span></span><br><span class="line">        Map&lt;Referred, String&gt; metadata = <span class="keyword">new</span> WeakHashMap&lt;Referred, String&gt;();</span><br><span class="line">        metadata.put(strong, <span class="string">"WeakHashMap's make my world go around"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Attempt to claim a suggested reference. </span></span><br><span class="line">        ClassWeakHashMap.collect();</span><br><span class="line">        <span class="comment">//여기서는 gc가 발생해도 GC대상이 아니게 된다.</span></span><br><span class="line">        <span class="comment">//strong이라는 변수를 통해 Strong Reference를 가지므로 GC 대상이 아니다.</span></span><br><span class="line">        System.out.println(<span class="string">"Still has metadata entry? "</span> + (metadata.size() == <span class="number">1</span>));</span><br><span class="line">        System.out.println(<span class="string">"Removing reference"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// The object may be collected. </span></span><br><span class="line">        <span class="comment">//Strong Reference를 끊었다.</span></span><br><span class="line">        strong = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//여기서는 Weak Reference만 남아 있기 때문에 GC대상이 된다.</span></span><br><span class="line">        ClassWeakHashMap.collect();</span><br><span class="line">        System.out.println(<span class="string">"Still has metadata entry? "</span> + (metadata.size() == <span class="number">1</span>));</span><br><span class="line">        System.out.println(<span class="string">"Done"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Weak Reference를 가지고 있으면 GC가 발생되기 전까지 객체에 접근이 가능하기 때문에 메모리 누수의 입장으로 볼 때 유리한 것 같다.<br>
+한번 캐싱하고 사용하고 버리는 대상에 좋은 방법이다.</p>
+<p>하지만 static한 Map을 사용하는 경우에는 비추이다.<br>
+언제 GC가 일어날지 모를 뿐더러.. 갑자기 데이터가 사라져 자칫 하면 장애가 발생 할 수 있으니,
+특별한 경우에만 WeakHashMap을 사용해야 한다.</p>
+<h2 id="리스너-혹은-콜백">리스너 혹은 콜백</h2>
+<p>리스너와 콜백은 root set에 대한 직접 참조가 아닌 객체에서 참조를 가지고 있다.<br>
+그렇기 때문에 리스너와 콜백을 사용하는 객체가 unreachable 상태가 되지 않는 이상 메모리에서 GC대상이 되지 않는다.<br>
+이 경우 weak reference를 이용하면 리스너와 콜백을 사용하고, GC 작동 시에 메모리 해제를 시킬 수 있어, 메모리 누수에 도움이 된다.</p>
+<h1 id="추가적으로">추가적으로..</h1>
+<p>메모리 누수는 겉으로 잘 드러나지 않아 수년 간 잠복하는 사례가 있다고 한다.<br>
+이런 누수는 철저한 코드리뷰나 힙 프로파일링 도구를 통해 디버깅을 동원해야 발견할 수 있으므로,<br>
+평소에 코드를 작성할 때 메모리 누수에 대한 부분을 신경을 써주는 것이 중요하다.</p>
+<h1 id="참고">참고</h1>
+<ul>
+<li>Effective Java 3rd Edition - Item 7. 다 쓴 객체는 참조를 해제하라</li>
+<li>https://d2.naver.com/helloworld/329631</li>
+<li>https://tourspace.tistory.com/42</li>
+</ul>
+</div></article><div class="post-meta__tag-list"><a class="post-meta__tags" href="../../../../tags/Effective-Java/">Effective-Java</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="../../08/effective-java-item8/"><i class="fa fa-chevron-left">  </i><span>Item 8. Finalizer와 Cleaner 사용은 피하라</span></a></div><div class="next-post pull-right"><a href="../effective-java-item6/"><span>Item 6. 불필요한 객체 생성을 피하라</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="disqus_thread"></div><script>var unused = null;
+var disqus_config = function () {
+  this.page.url = 'https://jaehun2841.github.io/2019/01/07/effective-java-item7/';
+  this.page.identifier = '2019/01/07/effective-java-item7/';
+  this.page.title = 'Item 7. 다 쓴 객체는 참조를 해제하라';
+}
+var d = document, s = d.createElement('script');
+s.src = "https://" + 'Carrey' +".disqus.com/embed.js";
+s.setAttribute('data-timestamp', '' + +new Date());
+(d.head || d.body).appendChild(s);</script></div></div><footer><div class="layout" id="footer"><div class="copyright">&copy;2018 - 2019 By Carrey</div><div class="framework-info"><span>Driven - </span><a href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file-o"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="../../../../js/third-party/anime.min.js"></script><script src="../../../../js/third-party/jquery.min.js"></script><script src="../../../../js/third-party/jquery.fancybox.min.js"></script><script src="../../../../js/third-party/velocity.min.js"></script><script src="../../../../js/third-party/velocity.ui.min.js"></script><script src="../../../../js/utils.js?version=1.5.6"></script><script src="../../../../js/fancybox.js?version=1.5.6"></script><script src="../../../../js/sidebar.js?version=1.5.6"></script><script src="../../../../js/copy.js?version=1.5.6"></script><script src="../../../../js/fireworks.js?version=1.5.6"></script><script src="../../../../js/transition.js?version=1.5.6"></script><script src="../../../../js/scroll.js?version=1.5.6"></script><script src="../../../../js/head.js?version=1.5.6"></script></body></html>
