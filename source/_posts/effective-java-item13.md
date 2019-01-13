@@ -149,9 +149,10 @@ class PhoneNumber implements Cloneable {
 ```
 * super.clone()을 실행하면 PhoneNumber에 대한 완벽한 복제가 이루어진다.
 * super.clone()의 리턴 타입은 Object이지만, 자바의 공변 반환타이핑 기능을 통해 PhoneNumber 타입으로 캐스팅하여 리턴하는 것이 가능하다.  
-(추찬하는 기능)
+(추천하는 기능)
 * try-catch 부분으로 감싼것은 super.clone() 메서드에서 ClassNotSupportedException이라는 checked exception을 리턴하기 떄문에 처리 해주었다. 
-  * 하지만 PhoneNumber가 Cloneable을 구현하기 떄문에 절대 실패하지 않는다. 따라서 이부분은 RuntimeException으로 처리하거나, 아무것도 설정하지 않아야 한다.
+  * 하지만 PhoneNumber가 Cloneable을 구현하기 떄문에 절대 실패하지 않는다.  
+  따라서 이부분은 RuntimeException으로 처리하거나, 아무것도 설정하지 않아야 한다.
 
 ## 가변 상태를 갖는 필드에 대한 복제
 ```java
@@ -178,12 +179,14 @@ public class Stack implements Cloneable{
   }
 }
 ```
-이 클래스가 단순히 clone메서드를 이용해 super.clone()만 실행하게 된다면, new Stack()을 통해 새로운 객체가 생성되고 필드모두 원본 객체와 동일하게 초기화가 될 것이다.  
+이 클래스가 단순히 clone메서드를 이용해 super.clone()만 실행하게 된다면,  
+new Stack()을 통해 새로운 객체가 생성되고 필드모두 원본 객체와 동일하게 초기화가 될 것이다.  
 하지만, 위에서 얘기한 Object의 clone 기본규약에는 Deep copy가 아닌 Shallow Copy를 이용해 초기화를 진행한다고 적혀있다.  
 따라서 배열과 같은 가변필드는 원본 필드와 객체를 공유하게 된다. 
 
 Clone메서드는 사실상 생성자와 같은 효과를 낸다.  
-즉, clone은 원본 객체에 아무런 해를 끼치지 않는 동시에 복제된 객체의 불변식을 보장해야 한다. 그렇기 때문에 제대로 복제하기 위해서는, elements라는 배열을 똑같이 복사해서 만들어줘야 한다.
+즉, clone은 원본 객체에 아무런 해를 끼치지 않는 동시에 복제된 객체의 불변식을 보장해야 한다.  
+그렇기 때문에 제대로 복제하기 위해서는, elements라는 배열을 똑같이 복사해서 만들어줘야 한다.
 
 ## 배열 복사 
 배열을 복제하는 방법 중 가장 권장하는 방법은 
@@ -191,7 +194,8 @@ array.clone()을 이용해 복사하는 방법이다.
 사실, 배열은 clone기능을 가장 제대로 사용하는 유일한 예이다.
 
 하지만, array 필드가 final이 적용되어 있다면 array.clone()을 통한 초기화는 할 수 없다. (final이기 떄문에 객체 생성 이후 초기화 불가)  
-**Cloneable 아키텍처는 가변객체를 참조하는 필드는 final로 선언하라 라는 일반 용법과 충돌한다.** 그래서 복제 할 수 있는 클래스를 만들기 위해 일부 필드에서 final 한정자를 제거해야 할 수도 있다.
+**Cloneable 아키텍처는 가변객체를 참조하는 필드는 final로 선언하라 라는 일반 용법과 충돌한다.**  
+그래서 복제 할 수 있는 클래스를 만들기 위해 일부 필드에서 final 한정자를 제거해야 할 수도 있다.
 
 ## Stack overflow 문제
 ```java
@@ -227,7 +231,8 @@ public class HashTable implements Cloneable  {
 이 문제를 해결하기 위해서는 재귀 호출을 통한 deepcopy대신 반복자를 써서 순회하는 방법으로 수정해야 한다.
 
 ## 안전하지만 느린 copy
-HashTable을 예로 들면, buckets필드를 새로운 배열로 초기화 한다음 원본테이블의 있는 버킷의 내용을 put(key, value) 메서드를 호출해 새로 버킷을 만드는 방법이 있다.  
+HashTable을 예로 들면, buckets필드를 새로운 배열로 초기화 한다음 원본테이블의 있는 버킷의 내용을 put(key, value) 메서드를 호출해  
+새로 버킷을 만드는 방법이 있다.  
 이 방법은 안전하긴 하지만, low level에서 작동하는 copy보다는 느리다.
 
 ## 생성자 내에서는 재정의 될 수 있는 메서드를 호출 하지 말자
@@ -277,7 +282,7 @@ public static Yum newInstance(Yum yum) {}
 * 복사 생성자와 복사 팩터리는 인터페이스 타입의 인스턴스를 인수로 받을 수 있다. 
 
 # Deep copy vs Shallow copy
-
+[Shallow Copy와 Deep Copy](http://localhost:4000/2019/01/13/java-object-copy) - 이 포스팅을 참고하자
 
 
 # 참고
