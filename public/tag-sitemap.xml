@@ -16,13 +16,6 @@
     </url>
 
     <url>
-        <loc>https://jaehun2841.github.io/tags/Java/</loc>
-        <lastmod>2018-11-27T07:23:32.369Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>https://jaehun2841.github.io/tags/Java-Config/</loc>
         <lastmod>2018-11-27T07:23:32.380Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -94,7 +87,14 @@
 
     <url>
         <loc>https://jaehun2841.github.io/tags/Effective-Java/</loc>
-        <lastmod>2019-01-07T13:32:09.408Z</lastmod>
+        <lastmod>2019-01-13T11:38:31.427Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://jaehun2841.github.io/tags/Java/</loc>
+        <lastmod>2019-01-13T11:38:31.427Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
