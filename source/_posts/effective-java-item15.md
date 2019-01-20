@@ -54,11 +54,26 @@ public interface WithdrawalService {
 쉬운 예로 Mockito를 이용한 TestCase 작성이다.
 
 ```java
+
 @RunWith(MockitoJUnitRunner.class)
 public class WithdrawalTest {
 
+    private class TestWithdrawalService implements WithdrawalService {
+
+        @Override
+        public String withdrawalMember(Member member) {
+            return null;
+        }
+
+        @Override
+        public List<Member> getMembers() {
+            return null;
+        }
+    }
+
+
     @Mock
-    private WithdrawalService withdrawalService;
+    private TestWithdrawalService testWithdrawalService;
 
     @Before
     public void initMocks(){
@@ -69,12 +84,12 @@ public class WithdrawalTest {
     public void 회원탈퇴_테스트() {
 
         //given
-        doReturn(Arrays.asList(new Member("Carrey"))).when(withdrawalService).getMembers();
-        doCallRealMethod().when(withdrawalService).startProcess();
+        doReturn(Arrays.asList(new Member("Carrey"))).when(testWithdrawalService).getMembers();
+        doCallRealMethod().when(testWithdrawalService).startProcess();
         //when
-        withdrawalService.startProcess();
+        String result = testWithdrawalService.startProcess();
         //then
-        verify(withdrawalService).startProcess().equals("FINISHED");
+        assertThat(result, is("FINISHED"));
     }
 }
 ```
