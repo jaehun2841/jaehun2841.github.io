@@ -36,8 +36,8 @@ public class Member {
 }
 ```
 ## 모든 필드를 final로 선언한다.
+**내용 수정 필요!!!! final도 된다!!!!**
 ```java
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE, staticName="of")
 public class Member {
   private final String name;
