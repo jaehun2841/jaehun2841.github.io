@@ -7,8 +7,40 @@
     </url>
 
     <url>
-        <loc>https://jaehun2841.github.io/2019/01/13/effective-java-item12/</loc>
-        <lastmod>2019-01-13T11:38:31.427Z</lastmod>
+        <loc>https://jaehun2841.github.io/2019/01/20/effective-java-item16/</loc>
+        <lastmod>2019-01-28T12:46:25.349Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://jaehun2841.github.io/2019/01/20/effective-java-item17/</loc>
+        <lastmod>2019-01-28T12:46:25.349Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://jaehun2841.github.io/2019/01/19/effective-java-item15/</loc>
+        <lastmod>2019-01-28T12:46:25.349Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://jaehun2841.github.io/2019/01/28/effective-java-item32/</loc>
+        <lastmod>2019-01-28T12:46:13.573Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://jaehun2841.github.io/2019/01/26/effective-java-item31/</loc>
+        <lastmod>2019-01-28T12:46:13.572Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
@@ -16,6 +48,14 @@
 
     <url>
         <loc>https://jaehun2841.github.io/2019/01/13/effective-java-item14/</loc>
+        <lastmod>2019-01-13T11:41:52.703Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>https://jaehun2841.github.io/2019/01/13/effective-java-item12/</loc>
         <lastmod>2019-01-13T11:38:31.427Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
