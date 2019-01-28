@@ -155,7 +155,7 @@ public class Food {
 public 클래스의 private -> package-private으로 바꾸는거는 괜찮다. 하지만 그이상의 경우 공개 API에 문제가 될 수 있다.
 
 # public 클래스의 인스턴스 필드는 되도록 public이 아니어야 한다.
-필드가 가변객체를 참조하거나(Collections이나 배열), final이 아닌 인스턴스 필드를 public으로 선언하면 **불변식을 보장할 수 없다.**
+필드가 가변객체를 참조하거나(Collections이나 배열), final이 아닌 인스턴스 필드를 public으로 선언하면 **불변식을 보장할 수 없다.**  
 public 가변 필드를 갖는 클래스는 일반적으로 thread safe 하지않다.  
 내부 구현을 바꾸고 싶어도 public 필드를 없애는 방식으로는 리팩터링이 불가하다.
 
@@ -188,28 +188,29 @@ public static final Thing[] values() {
 Java9 부터는 Module시스템이라는 개념이 도입 되었다.  
 
 패키지는 클래스의 묶음인 것 처럼, 모듈(Modules)은 패키지의 묶음이다.
-모듈은 관례 상, 자신이 속하는 패키지 중 공개(export) 할 것을 선언한다. (관례상 module-info.java)에 선언한다.
+모듈은 관례 상, 자신이 속하는 패키지 중 공개(export) 할 것을 선언한다.  
+관례상 **module-info.java** 에 선언한다.
 모듈을 정의하기 위해 3가지 정보를 작성해야 한다.
 1. module 명 - module 명칭
 2. 공개할 package (export) 
-- 공개한 package의 public type에 접근제한자만 외부에서 접근 할 수 있다.
+- 공개한 package의 public type에 접근제한자만 외부에서 접근할 수 있다.
 - 만약 export에 적지 않은 패키지의 클래스 중 public 접근제한자가 있어도 접근을 할 수 없다.
 3. module내 package의 클래스를 사용하기 위해 종속되는 package (require)
 - 다른 모듈의 대한 require를 작성하면 다른 모듈에서 export하는 클래스의 public type에 접근이 가능하다
 
 ## Java 8에서 접근 제한자
 * private: 멤버를 선언한 톱레벨 클래스에서만 접근할 수 있다. 
-* package-private: 멤버가 소속된 패키지 안의 모든 클래스에서 접근 할 수 있다.
+* package-private: 멤버가 소속된 패키지 안의 모든 클래스에서 접근할 수 있다.
 * protected: package-private의 접근 범위를 포함하며, 이 멤버를 선언한 클래스의 하위 클래스에서도 접근할 수 있다.
-* public: 모든 곳에서 접근 할 수 있다.
+* public: 모든 곳에서 접근할 수 있다.
 
 ## Java 9부터의 접근 제한자
 * private: 멤버를 선언한 톱레벨 클래스에서만 접근할 수 있다. 
-* package-private: 멤버가 소속된 패키지 안의 모든 클래스에서 접근 할 수 있다.
+* package-private: 멤버가 소속된 패키지 안의 모든 클래스에서 접근할 수 있다.
 * protected: package-private의 접근 범위를 포함하며, 이 멤버를 선언한 클래스의 하위 클래스에서도 접근할 수 있다.
-* 모듈 내부의 public: 모듈 내부의 모든 곳에서 접근 할 수 있다.
-* required의 public: 모듈에 종속하는 모듈의 모든 패키지 내의 클래스에 접근 할 수 있다.
-* export public: module-info.java에서 제공하는 모든 public에 접근 할 수 있다.
+* 모듈 내부의 public: 모듈 내부의 모든 곳에서 접근할 수 있다.
+* required의 public: 모듈에 종속하는 모듈의 모든 패키지 내의 클래스에 접근할 수 있다.
+* export public: module-info.java에서 제공하는 모든 public에 접근할 수 있다.
 
 # 참고 
 * Effective Java 3rd Edition - Item 15. 클래스와 멤버의 접근 권한을 최소화하라
