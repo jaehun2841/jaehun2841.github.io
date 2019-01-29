@@ -50,7 +50,7 @@
 <p>정답은 바로 String[] attributes = pickTwo(); 메서드에서 보이지 않는 형변환 시 발생한다.</p>
 <p>실제로는 아래와 같다.
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String[] attributes = (String[]) pickTwo(<span class="string">"좋은"</span>, <span class="string">"빠른"</span>, <span class="string">"저렴한"</span>);</span><br></pre></td></tr></table></figure></p>
-<p>Object[]는 String[]의 상위타입이 아니므로 형변환할 수 없다.<br>
+<p>Object[]는 String[]의 <code>하위타입</code>이 아니므로 형변환할 수 없다. (다운캐스팅 불가)<br>
 이 예시는 <strong>제네릭 varargs 매개변수 배열에 다른 메서드가 접근하도록 허용하면 안전하지 않다.</strong> 를 다시금 알려주는 예제이다.</p>
 <p>단 예외가 두 가지 있다.</p>
 <ul>

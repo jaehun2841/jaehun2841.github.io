@@ -90,7 +90,7 @@ public static void main(String[] args) {
 ```java
 String[] attributes = (String[]) pickTwo("좋은", "빠른", "저렴한");
 ```
-Object[]는 String[]의 `하위타입`이 아니므로 형변환할 수 없다. (다운캐스팅 불가) 
+Object[]는 String[]의 `하위타입`이 아니므로 형변환할 수 없다. (다운캐스팅 불가)  
 이 예시는 **제네릭 varargs 매개변수 배열에 다른 메서드가 접근하도록 허용하면 안전하지 않다.** 를 다시금 알려주는 예제이다.
 
 단 예외가 두 가지 있다.
