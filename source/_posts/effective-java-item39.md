@@ -7,7 +7,7 @@ tags:
   - Effective-Java
 typora-root-url: effective-java-item39
 typora-copy-images-to: effective-java-item39
-date: 2019-02-03 21:07:10
+date: 2019-02-04 19:49:36
 subtitle:
 header-img:
 ---
@@ -385,7 +385,7 @@ try {
 
 
 
-# 정리
+# 요약
 
 * 애너테이션이 명명패턴을 이용할 때 보다 확실히 낫다.
 

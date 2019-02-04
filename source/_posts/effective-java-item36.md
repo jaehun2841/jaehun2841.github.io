@@ -79,7 +79,7 @@ text.applyStyles(EnumSet.of(Style.BOLD, Style.ITALIC));
 
 
 
-# 정리
+# 요약
 
 * 열거할 수 있는 타입을 한데 모아 집합 형태로 사용한다고 해도, 비트 필드를 사용할 이유는 없다.
 * EnumSet 클래스가 비트 필드 수준의 명료함과 성능을 제공한다.
