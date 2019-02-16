@@ -18,13 +18,13 @@ mathjax: true
 Array형태의 Linear한 자료구조를 반환하는 메서드는 수없이 많다.  
 이런 메서드의 반환타입으로 아래와 같은 타입을 사용했다.
 
-* Collection`<`E`>`, Set`<`E`>`, List`<`E`>`와 같은 컬렉션 인터페이스
-* E와 같은 배열
-* Iterable`<`E`>` 인터페이스
+* Collection<E>, Set<E>, List<E>와 같은 컬렉션 인터페이스
+*  E[]와 같은 배열
+*  Iterable<E> 인터페이스
 
-기본은 Collection`<`E`>` 타입이다.  
+기본은 Collection<E> 타입이다.  
 for-each 문에서만 쓰이거나, (contain(Object) 같은) 일부 Collection 메서드를 구현 할 수 없을 때는 Iterable 인터페이스를 사용한다.  
-성능에 민감한 상황이면, E 형태의 배열을 주로 사용해 왔다. 
+성능에 민감한 상황이면, E[] 형태의 배열을 주로 사용해 왔다. 
 
 자바 8이 스트림이라는 개념을 들고오면서 선택이 더욱 복잡해지게 되었다.
 
@@ -128,8 +128,8 @@ public static<E> Stream<E> streamOf(Iterable<E> iterable) {
 ## 예시 - 입력 집합의 멱집합을 전용 컬렉션에 담아 반환한다.
 
 멱집합이란, **한 집합의 모든 부분집합을 원소로 하는 집합**이다.  
-예를 들어 `\{a, b, c\}`의 멱집합은 `\{\{\}, \{a\}, \{b\}, \{c\}, \{a,b\}, \{a,c\}, \{b,c\}, \{a,b,c\} \}`이다.  
-원소의 갯수가 n개일 때, 원소의 갯수는 $$2^n$$개가 된다.  
+예를 들어 (a, b, c)의 멱집합은 ((), (a), (b), (c), (a, b), (a, c), (b, c), (a, b, c))이다.  
+원소의 갯수가 n개일 때, 원소의 갯수는 2^n개가 된다.  
 
 ```java
 public class PowerSet {
@@ -166,7 +166,7 @@ public class PowerSet {
 ```
 
 * 입력 집합의 원소 수가 30을 넘으면 Power.of가 예외를 던진다.  
-  (size() 메서드의 리턴타입은 int이기 때문에 최대길이는 $$2^{31} - 1$$ 또는 Integer.MAX_VALUE로 제한 되기 때문)
+  (size() 메서드의 리턴타입은 int이기 때문에 최대길이는 2^31 - 1 또는 Integer.MAX_VALUE로 제한 되기 때문)
 * 이는 Stream이나, Iterable이 아닌 Collection을 쓸 때의 단점을 보여준다.  
   (Stream이나 Iterable은 size에 대한 고민이 필요없기 때문)
 
