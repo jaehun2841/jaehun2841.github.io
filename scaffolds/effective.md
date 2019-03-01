@@ -11,3 +11,8 @@ tags:
 typora-root-url: {{ title }}
 typora-copy-images-to: {{ title }}
 ---
+
+# 서론
+
+# 참고
+* Effective Java 3rd Edition - 
