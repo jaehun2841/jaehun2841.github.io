@@ -22,8 +22,7 @@ header-img:
 
 > 최적화를 할 때는 다음 두 규칙을 따르라.
 >
-> 첫 번째, 하지마라.
->
+> 첫 번째, 하지마라.  
 > 두 번째, (전문가 한정) 아직 하지 마라. 다시 말해, 완전히 명백하고 최적화되지 않은 해법을 찾을 때까지는 하지 마라.  
 > \- M.A 잭슨 (Jackson75)
 
@@ -91,4 +90,5 @@ header-img:
 
 # 참고
 
-* Effective Java 3rd Edition - 
+* Effective Java 3rd Edition - Item 67. 최적화는 신중히 하라
+
