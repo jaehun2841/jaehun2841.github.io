@@ -1,5 +1,5 @@
 ---
-ㅅtitle: Item 57. 지역변수의 범위를 최소화하라
+title: Item 57. 지역변수의 범위를 최소화하라
 catalog: true
 Categories:
   - Effective-Java
@@ -7,7 +7,7 @@ tags:
   - Effective-Java
 typora-root-url: effective-java-item57
 typora-copy-images-to: effective-java-item57
-date: 2019-03-02 18:23:54
+date: 2019-02-28 18:23:54
 subtitle:
 header-img:
 ---

@@ -7,7 +7,7 @@ tags:
   - Effective-Java
 typora-root-url: effective-java-item58
 typora-copy-images-to: effective-java-item58
-date: 2019-03-02 18:39:24
+date: 2019-02-28 18:39:24
 subtitle:
 header-img:
 ---
@@ -87,7 +87,7 @@ for(Suit suit : suits) {
 
 # for-each를 사용할 수 없는 상황
 
-* **파괴적인 필터링(destructive filtering) **
+* **파괴적인 필터링(destructive filtering)**
   * 컬렉션을 순회하면서 선택된 원소를 제거해야 한다면 반복자의 remove 메서드를 호출해야 한다.
   * Java 8 부터 Collection의 removeIf 메서드를 사용해 컬렉션을 명시적으로 순회하지 않을 수 있다.
 * **변형(transforming)**
