@@ -93,8 +93,15 @@
     </url>
 
     <url>
+        <loc>https://jaehun2841.github.io/tags/MongoDB/</loc>
+        <lastmod>2019-02-27T14:55:09.570Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>https://jaehun2841.github.io/tags/Effective-Java/</loc>
-        <lastmod>2019-02-17T13:36:01.685Z</lastmod>
+        <lastmod>2019-03-11T17:03:01.849Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
