@@ -1,5 +1,5 @@
 _site
 .sass-cache
 .jekyll-metadata
-public/**/*.html
+public/
 db.json

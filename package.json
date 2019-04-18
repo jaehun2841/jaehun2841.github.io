@@ -18,7 +18,7 @@
     "hexo-renderer-jade": "^0.4.1",
     "hexo-renderer-markdown-it": "^3.4.1",
     "hexo-renderer-stylus": "^0.3.3",
-    "hexo-server": "^0.2.0",
+    "hexo-server": "^0.2.2",
     "hexo-toc": "^1.0.8"
   }
 }
