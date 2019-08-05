@@ -312,7 +312,7 @@ class UserControllerTest {
 
     //given
     given(userService.search((eq(1L))))
-            .willReturn(User(1, "배달이", 30, "서울특별시 송파구 올림픽로 295")) // (6)
+            .willReturn(User(1, "배달이", 10, "서울특별시 송파구 올림픽로 295")) // (6)
 
     //when
     val resultActions = mockMvc.perform(
@@ -330,7 +330,7 @@ class UserControllerTest {
                             getDocumentRequest(), // (10)
                             getDocumentResponse(), // (11)
                             requestHeaders(*header()),  // (12)
-                      			pathParameters(userIdPathParameter()),  // (13)
+                      	    pathParameters(userIdPathParameter()),  // (13)
                             responseFields(*common())  // (14)
                                     .andWithPrefix("data.", *user()) 
                                     .andWithPrefix("data.roles[].", *role())
@@ -344,7 +344,7 @@ class UserControllerTest {
     return """
       {
         "name": "배달이",
-        "age": 30,
+        "age": 10,
         "address": "서울특별시 송파구 올림픽로 295"
       }
     """.trimIndent()
@@ -413,7 +413,7 @@ object RestApiDocumentUtils {
 ### 코드 설명
 
 1. Junit5에서 Spring Rest Docs를 사용할 때, RestDocumentationExtension::class, SpringExtension::class Extension 두개를 사용합니다.  
-  Junit 4 에서 RunWith와 같은 기능입니다.
+  ExtendWith는 Junit 4 에서 RunWith와 같은 기능입니다.
 2. @WebMvcTest annotation을 사용하여, mockMvc를 사용할 수 있는 환경을 설정합니다.  
   1. 이 예제에서는 UserController에 대한 테스트와 API문서를 작성하므로, controller를 UserController로 지정합니다.
   2. spring security를 사용하는 경우, `secure=false` 옵션을 통해 Spring Security 사용 안함으로 설정할 수 있습니다.
@@ -503,7 +503,7 @@ $ http GET 'http://user.api.com/user/1' \
   "data" : {
     "id" : 1,
     "name" : "배달이",
-    "age" : 30,
+    "age" : 10,
     "address" : "서울특별시 송파구 올림픽로 295",
     "roles" : [ ]
   },
@@ -643,7 +643,7 @@ resultActions
                             getDocumentRequest(),
                             getDocumentResponse(),
                             requestHeaders(headerWithName("api-auth-key").description("API 인증 키")),
-                            pathParameters(userIdPathParameter(), roleIdPathParameter()),
+                      	  pathParameters(userIdPathParameter(), roleIdPathParameter()),
                             responseFields(*common())
                                     .andWithPrefix("data.", *user())
                                     .andWithPrefix("data.roles[].", *role())
@@ -674,12 +674,12 @@ resultActions
                             pathParameters(userIdPathParameter(), roleIdPathParameter()),
                             responseFields(
                             fieldWithPath("code").type(JsonFieldType.NUMBER).description("응답 코드"),
-            fieldWithPath("message").type(JsonFieldType.STRING).description("응답 메세지"),
-            subsectionWithPath("error").type(JsonFieldType.OBJECT).description("에러 Data").optional(),
-            subsectionWithPath("data").type(JsonFieldType.OBJECT).description("응답 Data").optional()
-                            )
-                                    .andWithPrefix("data.", *user())
-                                    .andWithPrefix("data.roles[].", *role())
+            		    fieldWithPath("message").type(JsonFieldType.STRING).description("응답 메세지"),
+            		    subsectionWithPath("error").type(JsonFieldType.OBJECT).description("에러 Data").optional(),
+            		    subsectionWithPath("data").type(JsonFieldType.OBJECT).description("응답 Data").optional()
+		      )
+                      .andWithPrefix("data.", *user())
+                      .andWithPrefix("data.roles[].", *role())
                     )
             )
 ```
@@ -766,7 +766,7 @@ resultActions
 
 * response에 대한 Field정보가 많은 경우 가독성을 해칠 수 있고, Field Snippet에 대한 재사용성이 떨어질 수 있습니다.
 * 이럴때 and를 사용하면 좋습니다.
-* requestField(), responseField() 함수 뒤에 and() 함수를 사용하여 FieldDescriptor에 대한 Concatination이 가능합니다.
+* requestField(), responseField() 함수 뒤에 and() 함수를 사용하여 FieldDescriptor에 대한 Concatenation이 가능합니다.
 
 ```json
 {
@@ -774,7 +774,7 @@ resultActions
   "message": "OK",
   "id": 1,
   "name": "배달이",
-  "age": 30,
+  "age": 10,
   "address": "서울특별시 송파구 올림픽로 295"
 }
 ```
@@ -786,7 +786,7 @@ id, name, age, address는 User API Response에만 응답오는 요소라고 할 
 
 
 
-아래와 같이 and를 사용하여 Response에 대한 FieldDesciptor를 concatination 하여 구성할 수 있습니다. 
+아래와 같이 and를 사용하여 Response에 대한 FieldDesciptor를 concatenation 하여 구성할 수 있습니다. 
 
 ```kotlin
 resultActions
@@ -818,7 +818,7 @@ resultActions
   "data" : {
     "id": 1,
   	"name": "배달이",
-  	"age": 30,
+  	"age": 10,
   	"address": "서울특별시 송파구 올림픽로 295"
   }
 }
@@ -857,7 +857,7 @@ resultActions
   "data" : {
     "id": 1,
   	"name": "배달이",
-  	"age": 30,
+  	"age": 10,
   	"address": "서울특별시 송파구 올림픽로 295"
   }
 }
@@ -877,7 +877,7 @@ resultActions
                                     beneathPath("data").withSubsectionId("user"),
                                     *user(),
                                     subsectionWithPath("roles").description("User Role")
-                                    )
+                    )
 ```
 * data 필드 하위의 내용을 문서화 해줍니다.
 * beneathPath("data") : data 필드 하위의 내용이라는 Path 지정
@@ -914,8 +914,7 @@ resultActions
                             getDocumentRequest(),
                             getDocumentResponse(),
                             requestHeaders(*header()),
-                            pathParameters(
-                              userIdPathParameter()
+                            pathParameters(userIdPathParameter()
                               .maxLength(10)
                               .remarks("User ID가 없는 경우는 먼저 생성하세요")),
                             responseFields(*common())
@@ -944,7 +943,6 @@ ParameterDescriptor 뿐만 아니라, AbstractDescriptor를 구현하는 모든 
 .+{{path}}+
 |===
 |Parameter|Description|최대길이|비고
-
 {{#parameters}}
 |{{#tableCellContent}}`+{{name}}+`{{/tableCellContent}}
 |{{#tableCellContent}}{{description}}{{/tableCellContent}}
