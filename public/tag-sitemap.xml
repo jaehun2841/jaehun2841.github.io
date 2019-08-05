@@ -58,13 +58,6 @@
     </url>
 
     <url>
-        <loc>https://jaehun2841.github.io/tags/Spring/</loc>
-        <lastmod>2019-04-18T15:44:17.060Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>https://jaehun2841.github.io/tags/Docker/</loc>
         <lastmod>2019-04-18T15:44:17.060Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -116,6 +109,20 @@
     <url>
         <loc>https://jaehun2841.github.io/tags/Architecture/</loc>
         <lastmod>2019-06-23T12:35:35.271Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://jaehun2841.github.io/tags/Spring/</loc>
+        <lastmod>2019-08-05T17:23:38.048Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://jaehun2841.github.io/tags/Spring-Rest-Docs/</loc>
+        <lastmod>2019-08-05T17:23:38.048Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
