@@ -268,13 +268,15 @@ call tree를 찾아보니 다행히도 딱  세 군데에서만 호출하고 있
 * KTableBoundElementFactory
 * GlobalKTableBoundElementFactory
 
-![createInput](./createInput.png)
+![createInput 2.2.0](./createInput2-2-0.png)
+![createInput 2.3.4](./createInput.png)
 
 createInput 메서드에 집중해 보겠습니다.  
 createInput 메서드는 @StreamListener에 대한 post processing 단계에서 호출되는 코드입니다.
 
 parameter로 들어오는 name은 input binding name입니다. (@StreamListener에 설정한 input name)  
-코드를 보면 consumerProperties의 useNativeDecoding을 무조건 true로 만들어 주고 있습니다.
+코드를 보면 consumerProperties의 useNativeDecoding을 무조건 true로 만들어 주고 있습니다.  
+(2.2.0 버전에서는 없던 코드가 추가되었습니다. useNativeDecoding이 default false였네요)
 
 - KStreamBoundElementFactory
 - KTableBoundElementFactory
@@ -303,7 +305,7 @@ parameter로 들어오는 name은 input binding name입니다. (@StreamListener�
 
 ## 1. useNativeDecoding을 false로 설정한다. 
 
-![createInput](./createInput.png)
+![createInput](/createInput.png)
 
 위의 코드를 잘 보게되면, encodingDecodingBindAdviceHandler.isDecodingSettingProvided() = false일때 true로 설정하게 합니다.  
 저 코드도 궁금해서 한번 들어가보았습니다.
