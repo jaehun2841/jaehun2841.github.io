@@ -305,7 +305,7 @@ parameter로 들어오는 name은 input binding name입니다. (@StreamListener�
 
 ## 1. useNativeDecoding을 false로 설정한다. 
 
-![createInput](/createInput.png)
+![createInput](./createInput.png)
 
 위의 코드를 잘 보게되면, encodingDecodingBindAdviceHandler.isDecodingSettingProvided() = false일때 true로 설정하게 합니다.  
 저 코드도 궁금해서 한번 들어가보았습니다.
