@@ -282,8 +282,6 @@ parameter로 들어오는 name은 input binding name입니다. (@StreamListener�
 - KTableBoundElementFactory
 - GlobalKTableBoundElementFactory
 
-이 3가지에서 호출한다면.. 어쩌면 ConsumerProperties의 useNativeDecoding 주석을 `default: true`로 수정해야 할  수도 있을 것 같습니다.
-
 
 
 그래서 useNativeDecoding가 true가 되었다는 의미는  
@@ -381,4 +379,14 @@ default key, value serde는 `spring.cloud.stream.kafka.streams.binder.configurat
 binding input 별 key, value serde는 `spring.cloud.stream.kafka.streams.bindings.[input-name].consumer` 아래에 정의합니다.
 
 
+
+
+
+# 추가내용
+
+<https://cloud.spring.io/spring-cloud-static/spring-cloud-stream-binder-kafka/3.0.0.M3/reference/html/spring-cloud-stream-binder-kafka.html#_kafka_streams_properties>
+
+내용을 보면 `useNativeEncoding` 과 `useNativeDecoding` 의 default value가 true라고 알려주고 있습니다.  
+spring-cloud-stream의 backend가 무엇이냐에 따라 default 값이 달라지므로 주의해야할 것 같습니다.  
+(kafka에서는 default가 true이고 다른 backend는 default가 false일 수 있습니다.)
 
