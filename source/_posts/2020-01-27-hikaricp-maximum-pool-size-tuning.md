@@ -137,10 +137,10 @@ Hikari CP에서는 **ConcurrentBag**이라는 구조체를 이용해 Connection�
 
 ## Hikari님! Connection 다 썼어요
 
-HikariCP에서 얻은 Connection은 (ProxyConnection) Connection.close()를 하게 되면 HikariPool에 반납이 됩니다. 
+HikariCP에서 얻은 Connection은 `(ProxyConnection) Connection.close()`를 하게 되면 HikariPool에 반납이 됩니다.  
 (HikariPool에서 얻은 Connection은 ProxyConnection 타입입니다.)  
-정상적인 transaction이 마무리 되거나, Rollback이 호출 되어도 connection.close()가 호출되어 Connection을 반납합니다.   
-getConnection과 마찬가지로 connection.close() 시, concurrentBag.requite()이 실행되며 Connection이 반납됩니다.
+정상적인 transaction이 마무리 되거나, Rollback이 호출 되어도 `connection.close()`가 호출되어 Connection을 반납합니다.   
+getConnection과 마찬가지로 `connection.close()` 시, `concurrentBag.requite()`이 실행되며 Connection이 반납됩니다.
 
 
 
@@ -149,7 +149,7 @@ getConnection과 마찬가지로 connection.close() 시, concurrentBag.requite()
 ***[Thread-1님]** Transaction내의 쿼리를 모두 수행하고 Commit이 되었어 이제 Connection을 반납해볼까?*  
 ***[Thread-1님]** Thread-1님이 (ProxyConnection) connection.close()을 실행하였습니다.*  
 **[Hikari님]** 안녕하세요 Thread-1님! Connection 이용은 만족스러우셨나요? Connection 반납 절차 도와드리겠습니다.  
-**[Hikari님]** 일단 PoolEntry의 상태를 STATE_NOT_IN_USE로 바꿀게요. (idle connection이 됩니다.)  
+**[Hikari님]** 일단 PoolEntry의 상태를 STATE_NOT_IN_USE로 바꿀게요. **(여기서 idle connection이 됩니다.)**  
 **[Hikari님]** handOffQueue에서 Connection을 받길 원하는 다른 Thread님이 있나봐요~  
 **[Hikari님]** (handOffQueue에 Connection 삽입)  
 **[Hikari님]** Thread-1님 고생하셨습니다~ 이번에 사용한 Connection 정보 등록해 드릴께요~! 다음에 빠르게 이용하실 수 있으실거에요  
@@ -200,13 +200,13 @@ Thread count와 maximum pool size의 조건은 아래와 같습니다.
       **(PoolStats : total=1, active=1, idle=0, waiting=1)**
    4. 결국 30초가 지나고 Connection Timeout이 발생하고  
       `hikari-pool-1 - Connection is not available, request timed out after 30000ms.` 와 같은 에러가 발생
-5. Transaction에 대한 evictMark가 찍히고 전체 트랜잭션이 롤백 됩니다. 
+5. Transaction에 대한 evictMark가 찍히고 트랜잭션이 롤백 됩니다. 
 6. 롤백 됨과 동시에 Transaction용 Connection은 다시 Pool에 반납됩니다. **(PoolStats : total=1, active=0, idle=0, waiting=0)**
 
 
 
-이렇게 Thread내에서 하나의 Task에 수행하는데 필요한 Connection갯수가 모자라게 되면 Dead Lock 상태에 빠져  
-Insert Query를 실행할 수 없게 됩니다.
+이렇게 Thread내에서 하나의 Task에 수행하는데 필요한 Connection갯수가 모자라게 되면  
+**Dead Lock 상태에 빠져 Insert Query를 실행할 수 없게 됩니다.**
 
 
 
@@ -289,16 +289,16 @@ call tree에 대한 대략적인 단계는 아래와 같습니다.
 
 
 
-## 하나 Task에서 필요한 Connection은 2개인데 왜 Dead Lock이 걸리죠?
+## 하나의 Task에서 필요한 Connection은 2개인데 왜 Dead Lock이 걸리죠?
 
-일반적인 상황에서는 부하가 크게 걸리지는 않을 것입니다. 스레드 전체가 일을 하지 않을 것이기 때문입니다.  
-문제는 전체 스레드가 동시에 일을하게 되는 부하 상황 시에 발생합니다.  
+부하가 크게 걸리지 않는 일반적인 상황에서는 문제가 없을 것입니다. 스레드 전체가 일을 하지 않을 것이기 때문입니다.  
+문제는 전체 스레드가 동시에 일을 하게 되는 부하 상황 시에 발생합니다.  
 
 ![dead-lock-case2](./dead-lock-case2.png)
 
 이런 식으로 16개의 스레드 중 10개의 스레드가 10개의 Connection을 모두 잡고 있으면 10개의 스레드 중 하나의 스레드에서  
 2번째 Connection에 대한 timeout이 발생하지 않으면 계속 30초씩 지연이 발생하게 됩니다.  
-하물며 idle Connection이 다시 발생한 들 남은 6개의 Thread들 중 하나가 Connection을 가져가면 dead lock의 악순환의 고리에 빠지게 됩니다.  
+하물며 idle Connection이 다시 발생한들 남은 6개의 Thread들 중 하나가 Connection을 가져가면 dead lock의 악순환의 고리에 빠지게 됩니다.  
 간혹 운이 좋게 하나의 스레드가 Connection 2개를 획득하여 트랜잭션이 성공하는 case도 있을 것 입니다.  
 (이런 경우 간헐적으로 동작하기 때문에 원인 파악이 매우 힘들어 집니다.)
 
@@ -339,14 +339,15 @@ HikariCP에서는 Dead Lock을 피하기 위한 최적의 Maximum Pool Size를 �
 
   * 기본적으로 task당 1개의 connection만 필요하면 poolSize 1개로도 모든 요청은 다 처리할 수 있다.
   * 2개 이상의 connection이 필요한 경우에는 tomcat thread count를 줄이고 hikari pool size도 100개 이하로 조정한다.
-  * 퍼포먼스가 안나오는 경우에는 insert하는 application의 아키텍쳐를 수정하는 방법도 있을 것 같다.
+  * 퍼포먼스가 안나오는 경우에는 DB에 insert하는 application의 아키텍쳐를 수정하는 방법도 있을 것 같다.
 
 * 퍼포먼스 저하는 없었나?
 
   * 기존 16개인 thread를 4개 정도로 조절했다.
   * 1 thread 당 300 TPS정도의 성능이 나와 4 core인 환경에서는 문제 없이 처리할 수 있다.
   * 오히려 thread 수를 줄여 message queue의 throttling을 할 수 있게 되었다.
-  * core 수에 맞게 제한된 리소스를 사용하는 것이 오히려 context-switching에 대한 overhead를 줄여 성능상의 이점이 있다고 한다. ([About Pool Sizing] - <https://github.com/brettwooldridge/HikariCP/wiki/About-Pool-Sizing)
+  * core 수에 맞게 제한된 리소스를 사용하는 것이 오히려 context-switching에 대한 overhead를 줄여 성능상의 이점이 있다고 한다.  
+    ([About Pool Sizing] - <https://github.com/brettwooldridge/HikariCP/wiki/About-Pool-Sizing)
  > #### Limited Resources
     >
     > It is not quite as simple as stated above, but it's close. There are a few other factors at play. When we look at what the major bottlenecks for a database are, they can be summarized as three basic categories: *CPU*, *Disk*, *Network*. We could add *Memory* in there, but compared to *Disk* and *Network* there are several orders of magnitude difference in bandwidth.
