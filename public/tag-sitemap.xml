@@ -114,13 +114,6 @@
     </url>
 
     <url>
-        <loc>https://jaehun2841.github.io/tags/Spring/</loc>
-        <lastmod>2019-12-22T10:48:46.928Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>https://jaehun2841.github.io/tags/Spring-Configuration/</loc>
         <lastmod>2019-12-22T10:48:46.928Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -142,15 +135,22 @@
     </url>
 
     <url>
+        <loc>https://jaehun2841.github.io/tags/Spring/</loc>
+        <lastmod>2020-01-27T07:29:14.705Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>https://jaehun2841.github.io/tags/Springboot/</loc>
-        <lastmod>2020-01-08T11:55:23.383Z</lastmod>
+        <lastmod>2020-01-27T13:37:01.041Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>https://jaehun2841.github.io/tags/Hikari-CP/</loc>
-        <lastmod>2020-01-08T11:55:23.383Z</lastmod>
+        <lastmod>2020-01-27T13:37:01.041Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
