@@ -114,6 +114,13 @@
     </url>
 
     <url>
+        <loc>https://jaehun2841.github.io/tags/Spring/</loc>
+        <lastmod>2019-12-22T10:48:46.928Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
         <loc>https://jaehun2841.github.io/tags/Spring-Configuration/</loc>
         <lastmod>2019-12-22T10:48:46.928Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -130,13 +137,6 @@
     <url>
         <loc>https://jaehun2841.github.io/tags/Kafka-streams/</loc>
         <lastmod>2019-12-25T07:19:59.830Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
-        <loc>https://jaehun2841.github.io/tags/Spring/</loc>
-        <lastmod>2020-01-27T07:29:14.705Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
