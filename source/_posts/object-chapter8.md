@@ -431,4 +431,4 @@ new Movie(
 
 # 참고
 
-* Objects(코드로 이해하는 객체지향 설계) - 
+* Objects(코드로 이해하는 객체지향 설계) - chapter8. 의존성 관리하기
