@@ -277,4 +277,5 @@ chunk의 작업 시간에 영향을 미치는 것은 아래와 같습니다.
 
 
 
-
+테스트 한 코드는 아래 repository를 참고 부탁드립니다.  
+https://github.com/jaehun2841/spring-batch-connection-close-issue
