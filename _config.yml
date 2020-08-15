@@ -95,3 +95,8 @@ feed:
   path: rss2.xml
   # 최신 포스트의 갯수 설정. (0 또는 false 입력시 전체 포스트)
   limit: 20
+
+# Coupang Adsense
+coupang_adsense:
+  top: 301414
+  bottom: 301410
