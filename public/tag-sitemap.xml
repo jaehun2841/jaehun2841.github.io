@@ -37,14 +37,14 @@
     </url>
 
     <url>
-        <loc>https://jaehun2841.github.io/tags/Spring-Boot/</loc>
+        <loc>https://jaehun2841.github.io/tags/EHCache/</loc>
         <lastmod>2019-04-18T15:44:17.022Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>https://jaehun2841.github.io/tags/EHCache/</loc>
+        <loc>https://jaehun2841.github.io/tags/Spring-Boot/</loc>
         <lastmod>2019-04-18T15:44:17.022Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
@@ -65,14 +65,14 @@
     </url>
 
     <url>
-        <loc>https://jaehun2841.github.io/tags/2018-remind/</loc>
+        <loc>https://jaehun2841.github.io/tags/Mybatis/</loc>
         <lastmod>2019-04-18T15:44:17.060Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>https://jaehun2841.github.io/tags/Mybatis/</loc>
+        <loc>https://jaehun2841.github.io/tags/2018-remind/</loc>
         <lastmod>2019-04-18T15:44:17.060Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
@@ -142,29 +142,29 @@
     </url>
 
     <url>
-        <loc>https://jaehun2841.github.io/tags/Object-Study/</loc>
-        <lastmod>2020-07-12T14:02:32.232Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>https://jaehun2841.github.io/tags/Springboot/</loc>
-        <lastmod>2020-08-08T08:36:06.067Z</lastmod>
+        <lastmod>2020-08-22T10:57:00.163Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>https://jaehun2841.github.io/tags/Hikari-CP/</loc>
-        <lastmod>2020-08-08T08:36:06.067Z</lastmod>
+        <lastmod>2020-08-22T10:57:00.163Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
         <loc>https://jaehun2841.github.io/tags/Spring-Batch/</loc>
-        <lastmod>2020-08-08T08:36:06.067Z</lastmod>
+        <lastmod>2020-08-22T10:57:00.163Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://jaehun2841.github.io/tags/Object-Study/</loc>
+        <lastmod>2020-08-22T14:59:44.607Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
