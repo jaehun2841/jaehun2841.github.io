@@ -37,14 +37,14 @@
     </url>
 
     <url>
-        <loc>https://jaehun2841.github.io/tags/EHCache/</loc>
+        <loc>https://jaehun2841.github.io/tags/Spring-Boot/</loc>
         <lastmod>2019-04-18T15:44:17.022Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>
 
     <url>
-        <loc>https://jaehun2841.github.io/tags/Spring-Boot/</loc>
+        <loc>https://jaehun2841.github.io/tags/EHCache/</loc>
         <lastmod>2019-04-18T15:44:17.022Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
@@ -114,13 +114,6 @@
     </url>
 
     <url>
-        <loc>https://jaehun2841.github.io/tags/Spring/</loc>
-        <lastmod>2019-12-22T10:48:46.928Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.2</priority>
-    </url>
-
-    <url>
         <loc>https://jaehun2841.github.io/tags/Spring-Configuration/</loc>
         <lastmod>2019-12-22T10:48:46.928Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -165,6 +158,20 @@
     <url>
         <loc>https://jaehun2841.github.io/tags/Object-Study/</loc>
         <lastmod>2020-08-22T14:59:44.607Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://jaehun2841.github.io/tags/Spring/</loc>
+        <lastmod>2020-11-22T16:00:49.389Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.2</priority>
+    </url>
+
+    <url>
+        <loc>https://jaehun2841.github.io/tags/JPA/</loc>
+        <lastmod>2020-11-22T16:00:49.389Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.2</priority>
     </url>

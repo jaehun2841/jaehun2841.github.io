@@ -94,7 +94,7 @@ parser.parseExpression("Officers['advisors'][0].PlaceOfBirth.Country").setValue(
 
 * 대괄호`[]` 를 사용하여 Map의 key를 바탕으로 데이터에 접근한다.
   (위의 예제에서는 Officers가 `Map`, president가 `key`이다.)
-* SpEL은 표준 'dot' 표기법(예: prop1.prop2.prop3)을 사용해서 Map내의 value 객체의 프로퍼티에도 접근 가능하다.
+* SpEL은 표준 'dot' 표기법 (예: prop1.prop2.prop3)을 사용해서 Map내의 value 객체의 프로퍼티에도 접근 가능하다.
 * setValue 메서드를 통해 데이터를 수정할 수 있다.
 
 # 인라인 리스트 (Inline list)
