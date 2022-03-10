@@ -318,7 +318,7 @@ class BeanB(
 
 클라이언트 모듈을 여러 대 운영하면 일일이 /actuator/refresh를 호출해야 할까요? 
 
-이런 고통과 고민을 덜어주기 위해 다음 글에서는 Spring Cloud Bus라는 기능을 소개합니다.
+이런 고통과 고민을 덜어주기 위해 다음 글에서는 [Spring Cloud Bus](../2022-03-11-spring-cloud-bus)라는 기능을 소개합니다.
 
 # 참고
 

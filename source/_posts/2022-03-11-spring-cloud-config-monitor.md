@@ -3,8 +3,12 @@ title: Spring Cloud Config Monitor 시작하기
 catalog: true
 Categories:
   - Spring
+  - Spring Cloud
+  - Spring Cloud Config
 tags:
   - Spring
+  - Spring Cloud
+  - Spring Cloud Config
 typora-root-url: 2022-03-11-spring-cloud-config-monitor
 typora-copy-images-to: 2022-03-11-spring-cloud-config-monitor
 date: 2022-03-11 03:07:28
