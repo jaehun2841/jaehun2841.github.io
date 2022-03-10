@@ -1,0 +1,70 @@
+<!DOCTYPE html><html lang="lang"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="Item 66. 네이티브 메서드는 신중히 사용하라"><meta name="keywords" content="Effective-Java"><meta name="author" content="Carrey"><meta name="copyright" content="Carrey"><title>Item 66. 네이티브 메서드는 신중히 사용하라 | Carrey`s 기술블로그</title><link rel="shortcut icon" href="../../../../melody-favicon.ico"><link rel="stylesheet" href="../../../../css/index.css?version=1.9.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.9.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  hexoVersion: '6.0.0'
+} </script><meta name="generator" content="Hexo 6.0.0"></head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%EC%84%9C%EB%A1%A0"><span class="toc-number">1.</span> <span class="toc-text">서론</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EB%84%A4%EC%9D%B4%ED%8B%B0%EB%B8%8C-%EB%A9%94%EC%84%9C%EB%93%9C%EC%9D%98-%EC%A3%BC%EC%9A%94-%EC%93%B0%EC%9E%84"><span class="toc-number">2.</span> <span class="toc-text">네이티브 메서드의 주요 쓰임</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EB%84%A4%EC%9D%B4%ED%8B%B0%EB%B8%8C-%EB%A9%94%EC%84%9C%EB%93%9C%EB%A5%BC-%EC%84%B1%EB%8A%A5%EA%B0%9C%EC%84%A0%EC%9D%98-%EB%AA%A9%EC%A0%81%EC%9C%BC%EB%A1%9C-%EC%82%AC%EC%9A%A9%ED%95%98%EC%A7%80-%EB%A7%90%EB%9D%BC"><span class="toc-number">3.</span> <span class="toc-text">네이티브 메서드를 성능개선의 목적으로 사용하지 말라</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EB%84%A4%EC%9D%B4%ED%8B%B0%EB%B8%8C-%EB%A9%94%EC%84%9C%EB%93%9C%EC%9D%98-%EB%8B%A8%EC%A0%90"><span class="toc-number">4.</span> <span class="toc-text">네이티브 메서드의 단점</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EC%A0%95%EB%A6%AC"><span class="toc-number">5.</span> <span class="toc-text">정리</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EC%B0%B8%EA%B3%A0"><span class="toc-number">6.</span> <span class="toc-text">참고</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://www.gravatar.com/avatar/3f8583b7b0f0c1ebd249dffad42707af?s=300"></div><div class="author-info__name text-center">Carrey</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="../../../../archives"><span class="pull-left">Articles</span><span class="pull-right">112</span></a><a class="author-info-articles__tags article-meta" href="../../../../tags"><span class="pull-left">Tags</span><span class="pull-right">27</span></a></div></div></div><div id="content-outer"><div class="no-bg" id="top-container"><div id="page-header"><span class="pull-left"> <a id="site-name" href="../../../../index.html">Carrey`s 기술블로그</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span><span class="pull-right"></span></div><div id="post-info"><div id="post-title">Item 66. 네이티브 메서드는 신중히 사용하라</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2019-03-03</time></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h1 id="서론"><a href="#서론" class="headerlink" title="서론"></a>서론</h1><p>자바 네이티브 인터페이스(Java Native Interface, JNI)는 자바 프로그램이 네이티브 메서드를 호출하는 기술이다.  </p>
+<blockquote>
+<p>네이티브 메서드란?</p>
+<p>C나 C++ 같은 네이티브 프로그래밍 언어로 작성한 메서드를 말한다.</p>
+</blockquote>
+<h1 id="네이티브-메서드의-주요-쓰임"><a href="#네이티브-메서드의-주요-쓰임" class="headerlink" title="네이티브 메서드의 주요 쓰임"></a>네이티브 메서드의 주요 쓰임</h1><ul>
+<li>Registry 같은 플랫폼 특화기능을 사용한다.<ul>
+<li>하지만 자바가 진화해가면서 하부 플랫폼의 기능을 흡수하고 있다.</li>
+<li>네이티브 메서드를 사용해야하는 일이 줄어들고 있다.</li>
+<li>자바9 부터는 process API를 추가해 OS에 접근하는 길을 열어주었다.</li>
+</ul>
+</li>
+<li>네이티브 코드로 작성된 기존 라이브러리를 사용해야 하는 경우<ul>
+<li>레거시 데이터를 사용하는 레거시 라이브러리</li>
+<li>Java로 된 라이브러리가 없는 경우 네이티브 라이브러리를 사용한다.</li>
+</ul>
+</li>
+<li>성능 개선을 목적으로 성능에 결정적인 영향을 주는 영역만 따로 네이티브 언어로 작성한다.</li>
+</ul>
+<h1 id="네이티브-메서드를-성능개선의-목적으로-사용하지-말라"><a href="#네이티브-메서드를-성능개선의-목적으로-사용하지-말라" class="headerlink" title="네이티브 메서드를 성능개선의 목적으로 사용하지 말라"></a>네이티브 메서드를 성능개선의 목적으로 사용하지 말라</h1><ul>
+<li>자바 초기 시절 (Java 1.3)이전이라면 다른 얘기지만, 그동안 JVM은 빠른 속도로 발전해 왔다.  </li>
+<li>대부분의 작업에서 Java는 다른 플랫폼과 견줄만한 성능을 보인다 (자바가 느리다는 것도 옛말)</li>
+<li>네이티브 라이브러리 쪽은 GNU 다중 정밀 연산 라이브러리(GMP)를 필두로 개선 작업이 계속돼왔다.<br>고성능의 다중 정밀 연산이 필요한 경우에는 네이티브 메서드를 통해 GMP를 사용하는것을 고려해보자</li>
+</ul>
+<h1 id="네이티브-메서드의-단점"><a href="#네이티브-메서드의-단점" class="headerlink" title="네이티브 메서드의 단점"></a>네이티브 메서드의 단점</h1><ul>
+<li>네이티브 언어가 안전하지 않으므로 네이티브 메서드를 사용하는 애플리케이션도 메모리 훼손 오류로 부터 안전하지 않다.</li>
+<li>네이티브 언어는 플랫폼 종속성이 있으므로 이식성이 좋지 못하다</li>
+<li>디버깅도 어렵다</li>
+<li>오히려 속도가 더 느릴 수 있다.</li>
+<li>JVM의 가비지 컬렉터는 네이티브 메모리는 자동 회수 하지 못하고 추적도 할 수 없다.</li>
+<li>자바 코드와 네이티브 코드의 경계를 넘나 들때마다 비용이 발생한다.</li>
+<li>자바 코드와 네이티브 코드간의 접착 코드(glue code)를 작성해야 하는데 이 부분도 귀찮고 가독성도 떨어진다.</li>
+</ul>
+<h1 id="정리"><a href="#정리" class="headerlink" title="정리"></a>정리</h1><ul>
+<li><p>네이티브 메서드를 사용하는 경우는 한번 더 생각하라</p>
+</li>
+<li><p>네이티브 메서드가 그렇게 성능 향상에 도움을 주지는 않는다.</p>
+</li>
+<li><p>네이티브 메서드를 사용해야 하는 경우에는 최소한으로 사용하고 철저한 테스트를 해야한다.</p>
+</li>
+<li><p>숨은 버그하나가 애플리케이션 전체에 영향을 줄 수도 있다.</p>
+</li>
+</ul>
+<h1 id="참고"><a href="#참고" class="headerlink" title="참고"></a>참고</h1><ul>
+<li>Effective Java 3rd Edition - Item 66. 네이티브 메서드는 신중히 사용하라</li>
+</ul>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">Carrey</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://jaehun2841.github.io/2019/03/03/effective-java-item66/">https://jaehun2841.github.io/2019/03/03/effective-java-item66/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="../../../../tags/Effective-Java/">Effective-Java</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="../effective-java-item67/"><i class="fa fa-chevron-left">  </i><span>Item 67. 최적화는 신중히 하라</span></a></div><div class="next-post pull-right"><a href="../effective-java-item65/"><span>Item 65. 리플렉션보다는 인터페이스를 사용하라</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="disqus_thread"></div><script>var unused = null;
+var disqus_config = function () {
+  this.page.url = 'https://jaehun2841.github.io/2019/03/03/effective-java-item66/';
+  this.page.identifier = '2019/03/03/effective-java-item66/';
+  this.page.title = 'Item 66. 네이티브 메서드는 신중히 사용하라';
+}
+var d = document, s = d.createElement('script');
+s.src = "https://" + 'Carrey' +".disqus.com/embed.js";
+s.setAttribute('data-timestamp', '' + +new Date());
+(d.head || d.body).appendChild(s);</script></div></div><footer><div class="layout" id="footer"><div class="copyright">&copy;2018 - 2022 By Carrey</div><div class="framework-info"><span>Driven - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="../../../../js/utils.js?version=1.9.0"></script><script src="../../../../js/fancybox.js?version=1.9.0"></script><script src="../../../../js/sidebar.js?version=1.9.0"></script><script src="../../../../js/copy.js?version=1.9.0"></script><script src="../../../../js/fireworks.js?version=1.9.0"></script><script src="../../../../js/transition.js?version=1.9.0"></script><script src="../../../../js/scroll.js?version=1.9.0"></script><script src="../../../../js/head.js?version=1.9.0"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script></body></html>

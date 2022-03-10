@@ -1,0 +1,261 @@
+<!DOCTYPE html><html lang="lang"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="Objects Study - Chapter7. 객체 분해"><meta name="keywords" content="Object-Study"><meta name="author" content="Carrey"><meta name="copyright" content="Carrey"><title>Objects Study - Chapter7. 객체 분해 | Carrey`s 기술블로그</title><link rel="shortcut icon" href="../../../../melody-favicon.ico"><link rel="stylesheet" href="../../../../css/index.css?version=1.9.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.9.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  hexoVersion: '6.0.0'
+} </script><meta name="generator" content="Hexo 6.0.0"></head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%EC%B6%94%EC%83%81%ED%99%94%EC%99%80-%EB%B6%84%ED%95%B4"><span class="toc-number">1.</span> <span class="toc-text">추상화와 분해</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%ED%94%84%EB%A1%9C%EC%8B%9C%EC%A0%80-%EC%B6%94%EC%83%81%ED%99%94%EC%99%80-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%B6%94%EC%83%81%ED%99%94"><span class="toc-number">2.</span> <span class="toc-text">프로시저 추상화와 데이터 추상화</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%ED%94%84%EB%A1%9C%EC%8B%9C%EC%A0%80-%EC%B6%94%EC%83%81%ED%99%94"><span class="toc-number">2.1.</span> <span class="toc-text">프로시저 추상화</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%A4%91%EC%8B%AC-%EC%B6%94%EC%83%81%ED%99%94"><span class="toc-number">2.2.</span> <span class="toc-text">데이터 중심 추상화</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%ED%94%84%EB%A1%9C%EC%8B%9C%EC%A0%80-%EC%B6%94%EC%83%81%ED%99%94%EC%99%80-%EA%B8%B0%EB%8A%A5-%EB%B6%84%ED%95%B4"><span class="toc-number">3.</span> <span class="toc-text">프로시저 추상화와 기능 분해</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%ED%95%98%ED%96%A5%EC%8B%9D-%EC%A0%91%EA%B7%BC%EB%B2%95-Top-Down-Approach"><span class="toc-number">4.</span> <span class="toc-text">하향식 접근법(Top-Down Approach)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%ED%95%98%ED%96%A5%EC%8B%9D-%EC%A0%91%EA%B7%BC%EB%B2%95%EC%9D%98-%EB%AC%B8%EC%A0%9C%EC%A0%90"><span class="toc-number">4.1.</span> <span class="toc-text">하향식 접근법의 문제점</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%8B%9C%EC%8A%A4%ED%85%9C%EC%9D%80-%ED%95%98%EB%82%98%EC%9D%98-%EB%A9%94%EC%9D%B8-%ED%95%A8%EC%88%98%EB%A1%9C-%EA%B5%AC%EC%84%B1%EB%90%98%EC%A7%80-%EC%95%8A%EB%8A%94%EB%8B%A4"><span class="toc-number">4.2.</span> <span class="toc-text">시스템은 하나의 메인 함수로 구성되지 않는다.</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EA%B8%B0%EB%8A%A5-%EC%B6%94%EA%B0%80%EB%82%98-%EC%9A%94%EA%B5%AC%EC%82%AC%ED%95%AD-%EB%B3%80%EA%B2%BD%EC%9C%BC%EB%A1%9C-%EC%9D%B8%ED%95%B4-%EB%A9%94%EC%9D%B8-%ED%95%A8%EC%88%98%EB%8A%94-%EB%B9%88%EB%B2%88%ED%95%98%EA%B2%8C-%EC%88%98%EC%A0%95%EB%90%9C%EB%8B%A4"><span class="toc-number">4.3.</span> <span class="toc-text">기능 추가나 요구사항 변경으로 인해 메인 함수는 빈번하게 수정된다.</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EB%B9%84%EC%A7%80%EB%8B%88%EC%8A%A4-%EB%A1%9C%EC%A7%81%EC%9D%B4-%EC%82%AC%EC%9A%A9%EC%9E%90-%EC%9D%B8%ED%84%B0%ED%8E%98%EC%9D%B4%EC%8A%A4%EC%99%80-%EA%B0%95%ED%95%98%EA%B2%8C-%EA%B2%B0%ED%95%A9%EB%90%9C%EB%8B%A4"><span class="toc-number">4.4.</span> <span class="toc-text">비지니스 로직이 사용자 인터페이스와 강하게 결합된다.</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EB%84%88%EB%AC%B4-%EC%9D%B4%EB%A5%B8-%EC%8B%9C%EA%B8%B0%EC%97%90-%ED%95%A8%EC%88%98%EB%93%A4%EC%9D%98-%EC%8B%A4%ED%96%89-%EC%88%9C%EC%84%9C%EB%A5%BC-%EA%B3%A0%EC%A0%95%EC%8B%9C%ED%82%A4%EA%B8%B0-%EB%95%8C%EB%AC%B8%EC%97%90-%EC%9C%A0%EC%97%B0%EC%84%B1%EA%B3%BC-%EC%9E%AC%EC%82%AC%EC%9A%A9%EC%84%B1%EC%9D%B4-%EC%A0%80%ED%95%98%EB%90%9C%EB%8B%A4"><span class="toc-number">4.5.</span> <span class="toc-text">너무 이른 시기에 함수들의 실행 순서를 고정시키기 때문에 유연성과 재사용성이 저하된다.</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EB%8D%B0%EC%9D%B4%ED%84%B0-%ED%98%95%EC%8B%9D%EC%9D%B4-%EB%B3%80%EA%B2%BD%EB%90%A0-%EA%B2%BD%EC%9A%B0-%ED%8C%8C%EA%B8%89%ED%9A%A8%EA%B3%BC%EB%A5%BC-%EC%98%88%EC%B8%A1%ED%95%A0-%EC%88%98-%EC%97%86%EB%8B%A4"><span class="toc-number">4.6.</span> <span class="toc-text">데이터 형식이 변경될 경우 파급효과를 예측할 수 없다.</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%96%B8%EC%A0%9C-%ED%95%98%ED%96%A5%EC%8B%9D-%EB%B6%84%ED%95%B4%EA%B0%80-%EC%9C%A0%EC%9A%A9%ED%95%9C%EA%B0%80"><span class="toc-number">4.7.</span> <span class="toc-text">언제 하향식 분해가 유용한가?</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EC%A0%95%EB%B3%B4-%EC%9D%80%EB%8B%89%EA%B3%BC-%EB%AA%A8%EB%93%88"><span class="toc-number">5.</span> <span class="toc-text">정보 은닉과 모듈</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EB%AA%A8%EB%93%88%EC%9D%98-%EC%9E%A5%EC%A0%90%EA%B3%BC-%ED%95%9C%EA%B3%84"><span class="toc-number">6.</span> <span class="toc-text">모듈의 장점과 한계</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%B6%94%EC%83%81%ED%99%94%EC%99%80-%EC%B6%94%EC%83%81-%EB%8D%B0%EC%9D%B4%ED%84%B0-%ED%83%80%EC%9E%85"><span class="toc-number">7.</span> <span class="toc-text">데이터 추상화와 추상 데이터 타입</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%B6%94%EC%83%81-%EB%8D%B0%EC%9D%B4%ED%84%B0-%ED%83%80%EC%9E%85"><span class="toc-number">7.1.</span> <span class="toc-text">추상 데이터 타입</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%ED%81%B4%EB%9E%98%EC%8A%A4%EB%8A%94-%EC%B6%94%EC%83%81-%EB%8D%B0%EC%9D%B4%ED%84%B0-%ED%83%80%EC%9E%85%EC%9D%B8%EA%B0%80"><span class="toc-number">8.</span> <span class="toc-text">클래스는 추상 데이터 타입인가?</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EB%B3%80%EA%B2%BD%EC%9D%84-%EA%B8%B0%EC%A4%80%EC%9C%BC%EB%A1%9C-%EC%84%A0%ED%83%9D%ED%95%98%EB%9D%BC"><span class="toc-number">9.</span> <span class="toc-text">변경을 기준으로 선택하라</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EC%B6%94%EC%83%81-%EB%8D%B0%EC%9D%B4%ED%84%B0-%ED%83%80%EC%9E%85-vs-%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5-%EB%8B%B9%EC%8B%A0%EC%9D%98-%EC%84%A0%ED%83%9D%EC%9D%80"><span class="toc-number">10.</span> <span class="toc-text">추상 데이터 타입 vs 객체지향 당신의 선택은?</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EC%B0%B8%EA%B3%A0"><span class="toc-number">11.</span> <span class="toc-text">참고</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://www.gravatar.com/avatar/3f8583b7b0f0c1ebd249dffad42707af?s=300"></div><div class="author-info__name text-center">Carrey</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="../../../../archives"><span class="pull-left">Articles</span><span class="pull-right">112</span></a><a class="author-info-articles__tags article-meta" href="../../../../tags"><span class="pull-left">Tags</span><span class="pull-right">27</span></a></div></div></div><div id="content-outer"><div class="no-bg" id="top-container"><div id="page-header"><span class="pull-left"> <a id="site-name" href="../../../../index.html">Carrey`s 기술블로그</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span><span class="pull-right"></span></div><div id="post-info"><div id="post-title">Objects Study - Chapter7. 객체 분해</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-05-30</time></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h1 id="추상화와-분해"><a href="#추상화와-분해" class="headerlink" title="추상화와 분해"></a>추상화와 분해</h1><p>불필요한 정보를 제거하고 현재의 문제 해결에 필요한 핵심만을 남기는 작업을 <strong>추상화</strong> 라고 부른다.<br>가장 일반적인 추상화 방법은 한 번에 다뤄야 하는 문제의 크기를 줄이는 것이다. </p>
+<p>이처럼 큰 문제를 해결 가능한 작은 문제로 나누는 작업을 <strong>분해(decomposition)</strong> 이라고 부른다.<br>분해의 목적은 큰 문제를 한번에 처리할 수 있는 규모의 문제로 나누는 것이다.<br>한 가지 주목할 점은 정보의 가장 작은 단위로서의 개별 항목을 의미하는 것이 아니라 하나의 단위로 취급될 수 있는 논리적인 chunk를 의미한다.</p>
+<p>추상화와 분해는 인간이 세계를 인식하고 반응하기 위해 사용하는 가장 기본적인 사고 도구이다.<br>복잡성이 존재하는 곳에 추상화와 분해 역시 함께 존재한다.<br>소프트웨어 개발 영역에서는 복잡한 문제를 해결하기 위해 추상화와 분해를 사용한다.</p>
+<h1 id="프로시저-추상화와-데이터-추상화"><a href="#프로시저-추상화와-데이터-추상화" class="headerlink" title="프로시저 추상화와 데이터 추상화"></a>프로시저 추상화와 데이터 추상화</h1><p>프로그래밍 언어의 발전은 좀 더 효과적인 추상화를 이용해 복잡성을 극복하려는 개발자들의 노력에서 출발했다.<br>프로그래밍 언어를 통해 표현되는 추상화의 발전은 다양한 프로그래밍 패러다임의 탄생으로 이어졌다.<br>프로그래밍 패러다임은 프로그래밍을 구성하기 위해 사용하는 추상화의 종류와 이 추상화를 이용해 소프트웨어를 분해나는 방법의 두 가지 요소로 결정된다.<br>따라서 모든 프로그래밍 패러다임은 추상화와 분해의 관점에서 설명할 수 있다.</p>
+<p>현대적인 프로그래밍 언어를 특징 짓는 중요한 두 가지 추상화 메커니즘은 <strong>프로시저 추상화</strong>와 <strong>데이터 추상화</strong> 이다.</p>
+<h2 id="프로시저-추상화"><a href="#프로시저-추상화" class="headerlink" title="프로시저 추상화"></a>프로시저 추상화</h2><ul>
+<li>프로시저 추상화를 중심으로 시스템을 분해하는 것은 기능 분해(functional decomposition)을 통해 추상화 하는 기법이다.  </li>
+<li>기능 분해는 알고리즘 분해(algorithmic decomposition)이라고 부르기도 한다.</li>
+</ul>
+<h2 id="데이터-중심-추상화"><a href="#데이터-중심-추상화" class="headerlink" title="데이터 중심 추상화"></a>데이터 중심 추상화</h2><p>데이터 중심으로 추상화 하는 방법은 타입 추상화와 프로시저 추상화 두 가지가 있다. </p>
+<ul>
+<li><strong>타입 추상화(type abstraction)</strong><ul>
+<li>추상 데이터 타입이라 부른다.</li>
+</ul>
+</li>
+<li><strong>프로시저 추상화(procedure abstraction)</strong><ul>
+<li>객체지향이라 부른다.</li>
+<li>역할과 책임을 수행하는 객체</li>
+</ul>
+</li>
+</ul>
+<h1 id="프로시저-추상화와-기능-분해"><a href="#프로시저-추상화와-기능-분해" class="headerlink" title="프로시저 추상화와 기능 분해"></a>프로시저 추상화와 기능 분해</h1><p>기능은 오랜 시간 동안 시스템을 분해하기 위한 기준으로 사용됐다.<br>이 같은 시스템 분해 방식을 <strong>알고리즘 분해</strong> 또는 <strong>기능 분해</strong>라고 부른다.<br>기능 분해의 관점에서 추상화의 단위는 프로시저이며 시스템은 프로시저를 단위로 분해된다.</p>
+<p><strong>프로시저(procedure)</strong> 란</p>
+<ul>
+<li>반복적으로 실행되거나 거의 유사하게 실행되는 작업들의 모임</li>
+<li>로직을 재상용하고 중복을 방지할 수 있는 추상화 방법</li>
+<li>내부의 상세구현을 모르더라도 외부에 공개된 인터페이스만 알면 프로시저를 사용할 수 있다.</li>
+<li>프로시저는 잠재적으로 정보 은닉의 가능성을 제시<ul>
+<li>하지만 효과적인 정보은닉 체계를 구축하는데는 한계가 있다.</li>
+</ul>
+</li>
+</ul>
+<h1 id="하향식-접근법-Top-Down-Approach"><a href="#하향식-접근법-Top-Down-Approach" class="headerlink" title="하향식 접근법(Top-Down Approach)"></a>하향식 접근법(Top-Down Approach)</h1><p>전통적인 분해 방법은 <strong>하향식 접근법</strong>을 따른다.<br>하향식 접근법이란 시스템을 구성하는 최상위 기능을 정의하고 최상위 기능을 좀 더 작은 단계의 하위 기능으로 분해해 나가는 방법<br>분해는 세분화된 마지막 하위 기능이 프로그래밍 언어로 구현 가능한 수준이 될 때까지 계속된다.<br>각 세분화 단계는 바로 위 단계보다 구체적이어야 한다. (상위 기능보다 덜 추상적이어야 한다.)</p>
+<h2 id="하향식-접근법의-문제점"><a href="#하향식-접근법의-문제점" class="headerlink" title="하향식 접근법의 문제점"></a>하향식 접근법의 문제점</h2><p>하향식 기능 분해 방법은 겉으로는 이상적일 수 있지만, 실제로 설계에 적용하다 보면 다음과 같은 다양한 문제에 직면한다.</p>
+<ul>
+<li>시스템은 하나의 메인 함수로 구성돼 있지 않다.</li>
+<li>기능 추가나 요구사항 변경으로 인해 메인 함수를 빈번하게 수정해야 한다.</li>
+<li>비지니스 로직이 사용자 인터페이스와 강하게 결합된다.</li>
+<li>하향식 분해는 너무 이른 시기에 함수들의 실행 순서를 고정시키기 때문에 유연성과 재사용성이 저하된다.</li>
+<li>데이터 형식이 변경될 경우 파급효과를 예측할 수 없다.</li>
+</ul>
+<p>위와 같은 문제로 인해 하향식 접근법과 기능 분해가 가지는 근본적인 문제점은 변경에 취약한 설계를 낳는다는 것이다.</p>
+<h2 id="시스템은-하나의-메인-함수로-구성되지-않는다"><a href="#시스템은-하나의-메인-함수로-구성되지-않는다" class="headerlink" title="시스템은 하나의 메인 함수로 구성되지 않는다."></a>시스템은 하나의 메인 함수로 구성되지 않는다.</h2><ul>
+<li><p>어떤 시스템도 최초에 릴리즈됐던 당시의 모습을 그대로 유지하지는 않는다.  </p>
+</li>
+<li><p>시간이 지나고 사용자를 만족시키기 위한 새로운 요구사항을 도출해나가면서 지속적으로 새로운 기능을 추가하게 된다.<br>이것은 시스템이 오직 하나의 메인 함수만으로 구현된다는 개념과는 완전히 모순된다.  </p>
+</li>
+<li><p>하향식 접근법은 하나의 알고리즘을 구현하거나 배치 처리를 구현하기에는 적합하지만 현대적인 상호작용 시스템을 개발하는 데는 적합하지 않다.</p>
+</li>
+</ul>
+<h2 id="기능-추가나-요구사항-변경으로-인해-메인-함수는-빈번하게-수정된다"><a href="#기능-추가나-요구사항-변경으로-인해-메인-함수는-빈번하게-수정된다" class="headerlink" title="기능 추가나 요구사항 변경으로 인해 메인 함수는 빈번하게 수정된다."></a>기능 추가나 요구사항 변경으로 인해 메인 함수는 빈번하게 수정된다.</h2><ul>
+<li>시스템 안에는 여러 개의 정상급 함수가 존재하기 때문에 결과적으로 하나의 메인 함수를 유일한 정상으로 간주하기 어렵다.  </li>
+<li>하향식 기능 분해의 경우에는 새로운 기능을 추가할 때마다 매번 메인 함수를 수정해야 한다.  </li>
+<li><strong>기존 로직과는 아무런 상관이 없는 새로운 함수의 적절한 위치를 확보해야 하기 때문</strong>에 메인 함수의 구조를 급격하게 변경하거나 새로 짤 수 밖에 없다.</li>
+<li>코드의 빈번한 수정으로 인한 버그 발생 확률이 높아지고 시스템은 변경에 취약해질 수 밖에 없다.</li>
+</ul>
+<h2 id="비지니스-로직이-사용자-인터페이스와-강하게-결합된다"><a href="#비지니스-로직이-사용자-인터페이스와-강하게-결합된다" class="headerlink" title="비지니스 로직이 사용자 인터페이스와 강하게 결합된다."></a>비지니스 로직이 사용자 인터페이스와 강하게 결합된다.</h2><ul>
+<li>하향식 접근법은 비지니스 로직을 설계하는 초기 단계부터 입력 방법과 출력 양식을 함께 고민하도록 강요한다.  </li>
+<li>결과적으로 코드 안에서 비즈니스 로직과 사용자 인터페이스 로직이 밀접하게 결합된다.</li>
+<li>사용자 인터페이스 로직과 비즈니스 로직을 한데 섞기 때문에 사용자 인터페이스를 변경하면 비즈니스 로직까지 영향을 받게 된다.</li>
+<li>하향식 접근법은 기본적으로 변경에 불안정한 아키텍처 구조를 갖게 된다.</li>
+</ul>
+<h2 id="너무-이른-시기에-함수들의-실행-순서를-고정시키기-때문에-유연성과-재사용성이-저하된다"><a href="#너무-이른-시기에-함수들의-실행-순서를-고정시키기-때문에-유연성과-재사용성이-저하된다" class="headerlink" title="너무 이른 시기에 함수들의 실행 순서를 고정시키기 때문에 유연성과 재사용성이 저하된다."></a>너무 이른 시기에 함수들의 실행 순서를 고정시키기 때문에 유연성과 재사용성이 저하된다.</h2><ul>
+<li>하향식으로 기능을 분해하는 과정에서 함수는 더 작은 함수들로 분해되고, 분해된 함수들의 실행 순서를 결정하는 작업으로 요약된다.</li>
+<li>설계를 시작하는 시점부터 시스템이 무엇을 해야하는지가 아니라 어떻게 동작해야 하는지에 집중하게 한다</li>
+<li>처음부터 구현을 염두에 두기 때문에 자연스럽게 함수들의 시간적 실행 순서를 강조한다.</li>
+<li>결과적으로 모든 중요한 제어 흐름의 결정이 상위 함수에서 이뤄지고 하위 함수는 상위 함수의 흐름에 따라 적절한 시점에 호출된다.</li>
+<li>결과적으로 기능을 추가하서나 변경하는 작업은 기존의 함수 제어 구조를 변경하게 만든다.</li>
+<li>분해된 함수를 재사용하기 어렵다.<ul>
+<li>재사용이라는 개념은 <strong>일반성</strong>이라는 의미를 내포한다. (상위 함수보다 일반적이다)</li>
+<li>하향식 접근법에서는 하위 함수는 상위 함수에 비해 일반적일 수 없다. (재사용이 어렵다.)</li>
+</ul>
+</li>
+</ul>
+<h2 id="데이터-형식이-변경될-경우-파급효과를-예측할-수-없다"><a href="#데이터-형식이-변경될-경우-파급효과를-예측할-수-없다" class="headerlink" title="데이터 형식이 변경될 경우 파급효과를 예측할 수 없다."></a>데이터 형식이 변경될 경우 파급효과를 예측할 수 없다.</h2><p>하향식 기능분해의 가장 큰 문제점은 어떤 데이터를 어떤 함수가 사용하고 있는지를 추적하기 어렵다.<br>따라서 데이터 변경으로 인해 어떤 함수가 영향을 받을지 예상하기 어렵다.<br>이것은 의존성과 결합도의 문제이다. 그리고 테스트의 문제이기도 하다</p>
+<p>데이터의 변경으로 인한 영향은 데이터를 직접 참조하는 모든 함수로 퍼져나간다.<br>따라서 데이터 변경으로 인해 발생하는 함수에 대한 영향도를 파악하는 것은 예측할 수 없다. </p>
+<p>데이터 변경으로 인한 영향을 최소화하려면 데이터와 함께 변경되는 부분과 그렇지 않은 부분을 명확하게 분리해야 한다.<br>데이터와 함께 변경되는 부분을 하나의 구현 단위로 묶고 외부에서는 퍼블릭 인터페이스를 통해 데이터에 대한 접근을 통제한다</p>
+<p>변경에 대한 영향을 최소화하기 위해 영향을 받는 부분과 받지않는 부분을 명확하게 분리하고<br>잘 정의된 퍼블릭 인터페이스를 통해 변경되는 부분에 대한 접근을 통제해야 한다.</p>
+<h2 id="언제-하향식-분해가-유용한가"><a href="#언제-하향식-분해가-유용한가" class="headerlink" title="언제 하향식 분해가 유용한가?"></a>언제 하향식 분해가 유용한가?</h2><ul>
+<li><p>하향식 접근법은 이미 완전히 이해된 사실을 서술하기에 적합하다</p>
+<ul>
+<li>시스템이나 프로그램 개발자가 이미 완료한 결과에 대한 명확한 아이디어를 서술하기 위해 하향식을 사용하기 좋다.</li>
+<li>작은 프로그램과 개별 알고리즘을 위해서는 하향식 접근법은 유용하다</li>
+<li>프로그래밍 과정에서 이미 해결된 알고리즘을 문서화하고 서술하는 데에는 훌륭한 기법이다.</li>
+</ul>
+</li>
+<li><p>새로운 것을 개발하고 설계하고 발전하는 데는 적합하지 않다.</p>
+</li>
+</ul>
+<h1 id="정보-은닉과-모듈"><a href="#정보-은닉과-모듈" class="headerlink" title="정보 은닉과 모듈"></a>정보 은닉과 모듈</h1><p>시스템의 변경을 관리하는 기본적인 전략은 함께 변경되는 부분을 하나의 구현단위로 묶고 퍼블릭 인터페이스를 통해서만 접근하도록 만드는 것이다.<br>기능을 기반으로 시스템을 분해하는 것이 아니라 변경의 방향에 맞춰 시스템을 분해하는 것이다.</p>
+<p>정보 은닉은 시스템을 모듈 단위로 분해하기 위한 기본 원리로<br>시스템에서 <strong>자주 변경되는 부분을 상대적으로 덜 변경되는 안정적인 인터페이스 뒤로 감춰야 한다는 것</strong>이 핵심이다.</p>
+<p>정보 은닉은 외부에 감춰야 하는 비밀에 따라 시스템을 분할하는 모듈 분할 원리다.<br>모듈은 변경될 가능성이 있는 비밀을 내부로 감추고 잘 정의되고 쉽게 변경되지 않을 퍼블릭 인터페이스를 외부에 제공해서<br>내부의 비밀에 함부로 접근하지 못하게 한다.</p>
+<p>비밀을 결정하고 모듈을 분해한 후에는 기능 분해를 이용해 모듈에 필요한 퍼블릭 인터페이스를 구현할 수 있다.  </p>
+<blockquote>
+<p>시스템을 모듈 단위로 어떻게 분해할 것인가?<br>정답은 시스템이 감춰야하는 비밀을 찾는 것이다.<br>외부에서 내부의 비밀에 접근하지 못하도록 커다란 방어막을 쳐서 에워싸라.<br>그렇게 하면 이 방어막이 바로 퍼블릭 인터페이스가 된다.</p>
+</blockquote>
+<p>모듈은 다음과 같은 두 가지 비밀을 감춰야 한다.</p>
+<ul>
+<li>복잡성 <ul>
+<li>모듈이 너무 복잡한 경우 이해하고 사용하기 어렵다.</li>
+<li>외부에 모듈을 추상화할 수 있는 간단한 인터페이스를 제공해서 모듈의 복잡도를 낮춘다.</li>
+</ul>
+</li>
+<li>변경 가능성<ul>
+<li>변경 가능한 설계 결정이 외부에 노출될 경우 실제로 변경이 발생했을 때 파급효과가 커진다.</li>
+<li>변경 발생 시 하나의 모듈만 수정하면 되도록 변경 가능한 설계 결정을 모듈 내부로 감춘다.</li>
+<li>외부에는 쉽게 변경되지 않을 인터페이스를 제공한다.</li>
+</ul>
+</li>
+</ul>
+<p>시스템의 가장 일반적인 비밀은 <strong>데이터</strong>다<br>비밀이 반드시 데이터일 필요는 없으며 복잡한 로직이나 변경 가능성이 큰 자료 구조일 수도 있다.<br>그럼에도 변경 시 시스템을 굴복시키는 대부분의 경우는 데이터가 변경되는 경우다.</p>
+<h1 id="모듈의-장점과-한계"><a href="#모듈의-장점과-한계" class="headerlink" title="모듈의 장점과 한계"></a>모듈의 장점과 한계</h1><p><strong>모듈의 장점</strong></p>
+<ul>
+<li><p>모듈 내부의 변수가 변경되더라도 모듈 내부에만 영향을 미친다.</p>
+<ul>
+<li>모듈을 사용하면 모듈 내부에 정의된 변수를 직접 참조하는 코드의 위치를 모듈 내부로 제한할 수 있다.  </li>
+<li>어떤 데이터가 변경됐을 때 영향을 받는 함수를 찾기 위해 해당 데이터를 정의한 모듈만 검색하면 된다. </li>
+<li>모듈은 데이터 변경으로 인한 파급효과를 제어할 수 있기 때문에 코드를 수정하고 디버깅하기 용이하다</li>
+</ul>
+</li>
+<li><p>비즈니스 로직과 사용자 인터페이스에 대한 관심사를 분리한다</p>
+</li>
+<li><p>전역 변수와 전역 함수를 제거함으로써 네임스페이스 오염(namespace pollution)을 방지한다.</p>
+<ul>
+<li>모듈의 한 가지 용도는 네임스페이스를 제공하는 것이다.</li>
+<li>변수와 함수를 모듈 내부에 포함시키기 때문에 다른 모듈에서도 동일한 이름을 사용할 수 있다.</li>
+<li>모듈은 전역 네임스페이스의 오염을 방지하는 동시에 이름 충돌의 위험을 완화한다.</li>
+</ul>
+</li>
+<li><p>모듈은 기능이 아니라 변경의 정도에 따라 시스템을 분해하게 한다.</p>
+<ul>
+<li>모듈은 외부에 감춰야 하는 비밀과 관련성 높은 데이터와 함수의 집합이다.<ul>
+<li>모듈에 있어 외부에 감춰야 하는 비밀은 데이터다.</li>
+</ul>
+</li>
+<li>모듈 내부는 높은 응집도를 유지한다</li>
+<li>모듈과 모듈 사이에는 퍼블릭 인터페이스를 통해서만 통신한다</li>
+<li>모듈과 모듈 사이에는 낮은 결합도를 유지한다.</li>
+<li>모듈은 데이터와 함수가 통함된 한 차원 높은 추상화를 제공하는 설계 단위이다.</li>
+</ul>
+</li>
+</ul>
+<p><strong>모듈의 단점</strong></p>
+<ul>
+<li>모듈이 프로시저 추상화 보다는 높은 추상화를 제공한다.</li>
+<li>모듈은 인스턴스의 개념을 제공하지 않는다는 단점이 있다.</li>
+</ul>
+<h1 id="데이터-추상화와-추상-데이터-타입"><a href="#데이터-추상화와-추상-데이터-타입" class="headerlink" title="데이터 추상화와 추상 데이터 타입"></a>데이터 추상화와 추상 데이터 타입</h1><h2 id="추상-데이터-타입"><a href="#추상-데이터-타입" class="headerlink" title="추상 데이터 타입"></a>추상 데이터 타입</h2><ul>
+<li><p>프로그래밍 언어에서 <strong>타입(Type)</strong> 이란 변수에 저장할 수 있는 내용물의 종류와 변수에 적용될 수 있는 연산의 가짓수를 의미한다.</p>
+</li>
+<li><p>프로그래밍 언어는 다양한 형태의 내장 타입(built-in type)을 제공한다.</p>
+<ul>
+<li>기능 분해 시대에 사용되던 절차형 언어들은 적은 수의 내장 타입만을 제공</li>
+<li>새로운 타입을 추가하는 것이 불가능하거나 제한적이었다.</li>
+</ul>
+</li>
+</ul>
+<p>추상 데이터 타입은 프로시저 추상화 대신 데이터 추상화를 시반으로 소프트웨어를 개발하게 된 최초의 한걸음이다.<br>추상 데이터 타입을 구현하려면 다음과 같은 특성을 위한 프로그래밍 언어의 지원이 필요하다. </p>
+<ul>
+<li>타입 정의를 선언할 수 있어야 한다.</li>
+<li>타입의 인스턴스를 다루기 위해 사용할 수 있는 오퍼레이션의 집합을 정의할 수 있어야 한다.</li>
+<li>제공된 오퍼레이션을 통해서만 조작할 수 있도록 데이터를 외부로부터 보호할 수 있어야 한다.</li>
+<li>타입에 대해 여러 개의 인스턴스를 생성할 수 있어야 한다.</li>
+</ul>
+<blockquote>
+<p>리스코프는 추상 데이터 타입을 정의하기 위해 제시한 언어적인 메커니즘을 <strong>오퍼레이션 클러스터(operation cluster)</strong> 라고 불렀다.</p>
+</blockquote>
+<h1 id="클래스는-추상-데이터-타입인가"><a href="#클래스는-추상-데이터-타입인가" class="headerlink" title="클래스는 추상 데이터 타입인가?"></a>클래스는 추상 데이터 타입인가?</h1><p>대부분의 프로그래밍 서적에서는 클래스를 추상 데이터 타입으로 설명한다.<br>그러나 명확한 의미에서 추상 데이터 타입과 클래스는 동일하지 않다.</p>
+<ul>
+<li>클래스는 상속과 다형성을 지원하는 데 비해 추상 데이터 타입은 지원하지 못한다.</li>
+<li>상속과 다형성을 지원하는 프로그래밍 기법을 객체지향 프로그래밍 (Object-Oriented Programming)이라 한다.</li>
+<li>상속과 다형성을 지원하지 않는 추상 데이터 타입 기반의 프로그래밍 기법을 객체기반 프로그래밍(Object-Based Programming)이라 한다.</li>
+<li>추상 데이터 타입은 Type을 추상화한 것</li>
+<li>클래스는 절차를 추상화한 것</li>
+</ul>
+<p>윌리엄 쿡은 하나의 대표적인 타입이 다수의 세부적인 타입을 감출 수 있기 때문에 이를 타입 추상화라 불렀다.  </p>
+<p><strong>타입 추상화</strong></p>
+<p><img src="./type-abstraction.jpg" alt="type-abstraction"></p>
+<ul>
+<li>개별 오퍼레이션이 모든 개념적인 타입에 대한 구현을 포괄 하도록 함으로써 하나의 물리적인 타입 안에 전체 타임을 감춘다.  </li>
+<li>타입 추상화는 오퍼레이션을 기준으로 타입을 통합하는 데이터 추상화 기법이다.</li>
+</ul>
+<p><strong>객체지향</strong></p>
+<p><img src="./procedural-abstraction.jpg" alt="procedural-abstraction"></p>
+<ul>
+<li>타입을 기준으로 오퍼레이션을 묶는다.</li>
+<li>두 가지 이상의 클래스로 분리할 경우 공통로직을 어디에 둘 것인지가 이슈<ul>
+<li>공통 로직을 제공하기 위한 간단한 방법은 공통 로직을 포함할 부모 클래스를 정의하고 상속 시킨다.</li>
+</ul>
+</li>
+<li>클라이언트는 부모 클래스 참조자에 대해 메세지를 전송하면 실제 클래스가 무엇인지에 따라 다른 메소드가 실행된다.</li>
+<li>실제로 내부에서 수행되는 절차는 다르지만 클래스를 이용한 다형성은 절차에 대한 차이점을 감춘다.<ul>
+<li>따라서 객체지향은 절차 추상화(procedural abstraction)이다</li>
+</ul>
+</li>
+</ul>
+<h1 id="변경을-기준으로-선택하라"><a href="#변경을-기준으로-선택하라" class="headerlink" title="변경을 기준으로 선택하라"></a>변경을 기준으로 선택하라</h1><p>단순히 클래스를 구현 단위로 사용한다는 것이 객체지향 프로그래밍을 한다는 것을 의미하지 않는다.<br>비록 클래스를 사용하고 있더라도 타입을 기준으로 절차를 추상화하지 않았다면 그것은 객체지향 분해가 아니다.  </p>
+<p><strong>추상 데이터 타입 위반 사항 check list</strong></p>
+<ul>
+<li>클래스 내부에 인스턴스의 타입을 표현하는 변수가 있는가?<ul>
+<li>인스턴스 변수에 저장된 값을 기반으로 메서드 내에서 타입을 명시적으로 구분하는 방식은 객체 지향을 위반하는 것으로 간주된다.</li>
+</ul>
+</li>
+</ul>
+<p><strong>객체 지향 위반 사항 check list</strong></p>
+<p><img src="./Polymorphism.jpg" alt="Polymorphism"></p>
+<ul>
+<li><p>타입 변수를 이용한 조건문으로 구분하는가?</p>
+<ul>
+<li>클라이언트가 객체의 타입을 확인하고 메서드를 호출하게 해선 안된다.</li>
+<li>객체가 메세지를 처리할 적절한 메서드를 처리하게 해야한다.</li>
+</ul>
+</li>
+<li><p>OCP (Open-Closed Principle) 개방-폐쇄 원칙을 위반하는가?</p>
+<ul>
+<li>OCP란 기존 코드에 아무런 영향도 미치지 않고 새로운 객체 유형과 행위를 추가할 수 있는 객체지향의 특성이다.</li>
+<li>기존코드에서 특성 변수에 대한 분기 로직이 있었다면, 새로운 요구사항이 있는 경우 코드를 수정해야 한다.</li>
+<li>하지만 객체지향을 이용하면 코드 수정없이도 새로운 유형과 행위를 추가할 수 있다.</li>
+</ul>
+</li>
+</ul>
+<h1 id="추상-데이터-타입-vs-객체지향-당신의-선택은"><a href="#추상-데이터-타입-vs-객체지향-당신의-선택은" class="headerlink" title="추상 데이터 타입 vs 객체지향 당신의 선택은?"></a>추상 데이터 타입 vs 객체지향 당신의 선택은?</h1><ul>
+<li>타입 추가가 빈번한가?  &#x3D;&gt; <strong>객체지향</strong><ul>
+<li>추상데이터 타입의 경우 일일이 새로운 타입에 대해 체크하는 클라이언트 코드를 수정해야 한다.</li>
+<li>객체지향의 경우 코드 수정없이 새로운 클래스를 상속 계층에 추가하면 된다.</li>
+</ul>
+</li>
+<li>오퍼레이션 추가가 빈번한가?  &#x3D;&gt; <strong>추상 데이터 타입</strong><ul>
+<li>객체지향의 경우 새로운 오퍼레이션을 추가하기 위해서는 상속 계층에 속하는 모든 클래스를 한번에 수정해야 한다.</li>
+<li>추상 데이터 타입의 경우에는 전체 타입에 대한 구현 코드가 하나의 구현체에 포함되어 있다.</li>
+<li>따라서 새로운 오퍼레이션을 추가하는 작업이 상대적으로 간단하다</li>
+</ul>
+</li>
+</ul>
+<h1 id="참고"><a href="#참고" class="headerlink" title="참고"></a>참고</h1><ul>
+<li>Objects(코드로 이해하는 객체지향 설계) - chapter7. 객체 분해</li>
+</ul>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">Carrey</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://jaehun2841.github.io/2020/05/30/object-chapter7/">https://jaehun2841.github.io/2020/05/30/object-chapter7/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="../../../../tags/Object-Study/">Object-Study</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="../../../06/06/object-chapter8/"><i class="fa fa-chevron-left">  </i><span>Objects Study - Chapter8. 의존성 관리하기</span></a></div><div class="next-post pull-right"><a href="../../24/object-chapter6/"><span>Objects Study - Chapter6. 메세지와 인터페이스</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="disqus_thread"></div><script>var unused = null;
+var disqus_config = function () {
+  this.page.url = 'https://jaehun2841.github.io/2020/05/30/object-chapter7/';
+  this.page.identifier = '2020/05/30/object-chapter7/';
+  this.page.title = 'Objects Study - Chapter7. 객체 분해';
+}
+var d = document, s = d.createElement('script');
+s.src = "https://" + 'Carrey' +".disqus.com/embed.js";
+s.setAttribute('data-timestamp', '' + +new Date());
+(d.head || d.body).appendChild(s);</script></div></div><footer><div class="layout" id="footer"><div class="copyright">&copy;2018 - 2022 By Carrey</div><div class="framework-info"><span>Driven - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="../../../../js/utils.js?version=1.9.0"></script><script src="../../../../js/fancybox.js?version=1.9.0"></script><script src="../../../../js/sidebar.js?version=1.9.0"></script><script src="../../../../js/copy.js?version=1.9.0"></script><script src="../../../../js/fireworks.js?version=1.9.0"></script><script src="../../../../js/transition.js?version=1.9.0"></script><script src="../../../../js/scroll.js?version=1.9.0"></script><script src="../../../../js/head.js?version=1.9.0"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script></body></html>

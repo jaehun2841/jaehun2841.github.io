@@ -1,0 +1,104 @@
+<!DOCTYPE html><html lang="lang"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="HikariCP Failed to Validate Connection Warning 이야기"><meta name="keywords" content="Springboot,Hikari CP"><meta name="author" content="Carrey"><meta name="copyright" content="Carrey"><title>HikariCP Failed to Validate Connection Warning 이야기 | Carrey`s 기술블로그</title><link rel="shortcut icon" href="../../../../melody-favicon.ico"><link rel="stylesheet" href="../../../../css/index.css?version=1.9.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.9.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  hexoVersion: '6.0.0'
+} </script><meta name="generator" content="Hexo 6.0.0"></head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#hikari-pool-Failed-to-validate-connection"><span class="toc-number">1.</span> <span class="toc-text">hikari-pool - Failed to validate connection</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%EB%AC%B4%EC%8A%A8%EB%A7%90-%EC%9D%BC%EA%B9%8C%EC%9A%94"><span class="toc-number">1.0.1.</span> <span class="toc-text">무슨말 일까요?</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Hikari-Pool%EC%9D%98-MaxLifetime"><span class="toc-number">2.</span> <span class="toc-text">Hikari Pool의 MaxLifetime</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MySQL%EC%9D%98-wait-timeout"><span class="toc-number">3.</span> <span class="toc-text">MySQL의 wait_timeout</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%A3%BC%EC%9D%98"><span class="toc-number">3.1.</span> <span class="toc-text">주의!</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Hikari-Pool%EC%97%90%EC%84%9C-Connection%EC%9D%84-%EA%B4%80%EB%A6%AC%ED%95%98%EB%8A%94-%EB%B0%A9%EB%B2%95"><span class="toc-number">4.</span> <span class="toc-text">Hikari Pool에서 Connection을 관리하는 방법</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EC%A7%84%EC%A7%9C-validationQuery%EB%8A%94-%ED%95%84%EC%9A%94%EC%97%86%EC%96%B4%EC%A1%8C%EB%82%98"><span class="toc-number">5.</span> <span class="toc-text">진짜 validationQuery는 필요없어졌나?</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EA%B7%B8%EB%9E%98%EC%84%9C-Failed-to-validate-connection-%EB%A1%9C%EA%B7%B8%EB%8A%94-%EC%99%9C-%EB%82%98%EC%98%A4%EB%82%98%EC%9A%94"><span class="toc-number">6.</span> <span class="toc-text">그래서  Failed to validate connection 로그는 왜 나오나요</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#maxLifetime-wait-timeout-%EC%96%B4%EB%96%BB%EA%B2%8C-%EC%84%A4%EC%A0%95%ED%95%B4%EC%95%BC-%ED%95%98%EB%82%98%EC%9A%94"><span class="toc-number">7.</span> <span class="toc-text">maxLifetime, wait_timeout 어떻게 설정해야 하나요?</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EA%B2%B0%EA%B3%BC"><span class="toc-number">8.</span> <span class="toc-text">결과</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EC%B0%B8%EA%B3%A0"><span class="toc-number">9.</span> <span class="toc-text">참고</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://www.gravatar.com/avatar/3f8583b7b0f0c1ebd249dffad42707af?s=300"></div><div class="author-info__name text-center">Carrey</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="../../../../archives"><span class="pull-left">Articles</span><span class="pull-right">112</span></a><a class="author-info-articles__tags article-meta" href="../../../../tags"><span class="pull-left">Tags</span><span class="pull-right">27</span></a></div></div></div><div id="content-outer"><div class="no-bg" id="top-container"><div id="page-header"><span class="pull-left"> <a id="site-name" href="../../../../index.html">Carrey`s 기술블로그</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span><span class="pull-right"></span></div><div id="post-info"><div id="post-title">HikariCP Failed to Validate Connection Warning 이야기</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-01-08</time></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h1 id="hikari-pool-Failed-to-validate-connection"><a href="#hikari-pool-Failed-to-validate-connection" class="headerlink" title="hikari-pool - Failed to validate connection"></a>hikari-pool - Failed to validate connection</h1><p>Springboot2.x를 사용하다 보면 이런 warn level 에러를 마주칠 수 있습니다.</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hikari-pool - Failed to validate connection com.mysql.cj.jdbc.ConnectionImpl@1e2db70  </span><br><span class="line">(No operations allowed after connection closed.).  </span><br><span class="line">Possibly consider using a shorter maxLifetime value.</span><br></pre></td></tr></table></figure>
+
+<p>로그의 내용을 의역하면 아래와 같습니다.</p>
+<ul>
+<li>Hikari pool의 connection을 validate하는데 실패 했다.</li>
+<li>이미 close된 connection에 어떤 operation을 하는것은 안된다.</li>
+<li>HikariPool의 <code>maxLifetime</code> 값을 짧게 하는 것을 생각해봐라</li>
+</ul>
+<h3 id="무슨말-일까요"><a href="#무슨말-일까요" class="headerlink" title="무슨말 일까요?"></a><strong>무슨말 일까요?</strong></h3><p>요약하자면, connection을 갱신하고자 하는데 이미 닫힌 커넥션이라 어떤 행위도 할 수 없다. 입니다.<br>여기서 중요한건 HikariConfig의 MaxLifetime과 MySQL의 wait_timeout의 상관관계를 알아야 합니다.</p>
+<h1 id="Hikari-Pool의-MaxLifetime"><a href="#Hikari-Pool의-MaxLifetime" class="headerlink" title="Hikari Pool의 MaxLifetime"></a>Hikari Pool의 MaxLifetime</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">This property controls the maximum lifetime of a connection in the pool.  </span><br><span class="line">An in-use connection will never be retired, only when it is closed will it then be removed.  </span><br><span class="line">On a connection-by-connection basis, minor negative attenuation is applied to avoid mass-extinction in the pool.  </span><br><span class="line">We strongly recommend setting this value, and it should be several seconds shorter than any  </span><br><span class="line">database or infrastructure imposed connection time limit.   </span><br><span class="line">A value of 0 indicates no maximum lifetime (infinite lifetime),  </span><br><span class="line">subject of course to the idleTimeout setting. Default: 1800000 (30 minutes)</span><br></pre></td></tr></table></figure>
+
+
+
+<p>구글번역기로 대충 돌려보면..</p>
+<ul>
+<li>MaxLifetime은 Hikari pool에서 Connection이 살아 있을 수 있는 시간</li>
+<li>현재 사용중인 Connection은 종료하지 않고 이미 닫혀 있는 경우에만 제거</li>
+<li>Connection을 한번에 대량으로 종료하고 생성하면 비용이 많이 듬 (실제로 2.5%의 유격으로 maxLifetime이 Connection에 설정됨)</li>
+<li>Database에 설정된 Connection time limit 보다 짧아야 한다.</li>
+<li>0으로 설정하면 무한으로 Connection이 살아있음</li>
+<li>default 180000ms (&#x3D; 30분)</li>
+</ul>
+<p>Hikari Pool 내부적으로 Connection의 life time을 관리하는 속성입니다.</p>
+<p>maxLifetime은 최소 30초 이상으로 설정하여야 합니다. (안그러면 180000ms로 설정)</p>
+<p><img src="./minimum-maxLifetime.png" alt="minimum-maxLifetime"></p>
+<h1 id="MySQL의-wait-timeout"><a href="#MySQL의-wait-timeout" class="headerlink" title="MySQL의 wait_timeout"></a>MySQL의 wait_timeout</h1><ul>
+<li>wait_timeout: 활동하지 않는 커넥션을 끊을때까지 서버가 대기하는 시간</li>
+</ul>
+<p>현재 아무것도 안하고 sleep 상태인 Connection을 끊는 주기입니다.</p>
+<h2 id="주의"><a href="#주의" class="headerlink" title="주의!"></a>주의!</h2><p>wait_timeout은 session, global variable 두 개로 구성되어있습니다.</p>
+<ul>
+<li>show variables like ‘wait_timeout’; : 현재 연결된 session에 대한 wait_timeout 값</li>
+<li>show <strong>global</strong> variables like ‘wait_timeout’: global wait_timeout값</li>
+</ul>
+<p>활동하지 않는 커넥션을 종료하는 것은 mysql daemon에서 해주기 때문에 global wait_timeout 값에 의해 종료됩니다.</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> processlist;</span><br></pre></td></tr></table></figure>
+
+<p>위의 명령어는 현재 mysql에서 동작중인 process (&#x3D; connection) 정보입니다. </p>
+<p><img src="./processlist.png" alt="processlist"></p>
+<p>Time 필드의 값이 Sleep Command가 실행되고 경과된 시간입니다.<br>Time 필드의 값이 설정된 global wait_timeout 시간이 지나면 <strong>Connection을 종료하게 됩니다.</strong></p>
+<h1 id="Hikari-Pool에서-Connection을-관리하는-방법"><a href="#Hikari-Pool에서-Connection을-관리하는-방법" class="headerlink" title="Hikari Pool에서 Connection을 관리하는 방법"></a>Hikari Pool에서 Connection을 관리하는 방법</h1><p>JDBC4를 지원하는 드라이버에서는 예전처럼 더이상 <code>validationQuery</code> 를 수행하여 Connection을 갱신하지 않습니다.<br>이제는 Connection이 생성될 때 Hikari PoolEntry에 Scheduled Event를 걸어 maxLifetime 시간 이후에 강제적으로 Connection을 종료하도록 되어있습니다.</p>
+<p><img src="./createPoolEntry.png" alt="createPoolEntry"></p>
+<p>maxLifeTime에 2.5%의 변화를 주어 모든 Connection이 한순간에 종료되지 않도록 설정하였습니다.</p>
+<p><img src="./softEvictConnection.png" alt="softEvictConnection"><br><img src="./reserve-PoolEntry-Status.png" alt="reserve-PoolEntry-Status"><br>softEvict Connection. 말 그대로 status만 변경하여 evict connection을 수행합니다.</p>
+<p><img src="./soft-remove.png" alt="soft-remove"></p>
+<p>위에서 변경한 Connection의 상태에 따라 진짜로 connection을 close 할지 말지 결정합니다.<br>(STATE_RESERVED 상태인 PoolEntry에 대한 Connection을 제거 합니다.)</p>
+<p><img src="./connection-close.png" alt="connection-close"></p>
+<h1 id="진짜-validationQuery는-필요없어졌나"><a href="#진짜-validationQuery는-필요없어졌나" class="headerlink" title="진짜 validationQuery는 필요없어졌나?"></a>진짜 validationQuery는 필요없어졌나?</h1><p>기존에는 validationQuery, ConnectionTestQuery &#x3D; SELECT 1등, test-idle-while 같은 기능을 구현하기 위해 또는<br>Connection의 갱신, validation을 하기 위해 의미 없는 Query를 실행하여, DB에 부하를 계속 주고 있었습니다.</p>
+<p>하지만 JDBC4를 구현한 driver에서는 더 이상 validationQuery, ConnectionTestQuery를 사용하지 않도록 권장합니다.<br>(지금도 Hikari CP에는 기능은 있으나 코드가 실행안됨)</p>
+<p>Connection Pool에서 한 개의 Connection을 받아 사용하기 전에 <code>isConnectionAlive</code> 라는 메서드가 실행됩니다.<br>(내가 지금 받은 커넥션이 유효한가? 에 대한 검사입니다.)</p>
+<p><img src="./isConnectionAlive.png" alt="isConnectionAlive"></p>
+<p>위의 코드를 보면 Jdbc4Validation을 사용하는 경우에는 Connection.isValid 메서드를 통해 현재 커넥션이 유효한지 검사합니다.<br>하지만, Jdbc4Validation을 사용하지 않는 경우에는 직접 ConnectionTestQuery를 실행하여 현재 커넥션에 대한 유효성을 판단합니다.</p>
+<p><img src="./isUseJdbc4Validation.png" alt="isUseJdbc4Validation"></p>
+<p>HikariPool 설정에서는 ConnectionTestQuery property가 null인 경우 Jdbc4Validation으로 동작합니다.</p>
+<h1 id="그래서-Failed-to-validate-connection-로그는-왜-나오나요"><a href="#그래서-Failed-to-validate-connection-로그는-왜-나오나요" class="headerlink" title="그래서  Failed to validate connection 로그는 왜 나오나요"></a>그래서  Failed to validate connection 로그는 왜 나오나요</h1><p>저의 경우에는<br>mysql의 global wait_timeout 값이 60초로 설정되어 있었습니다.<br>Hikari Pool의 maxLifetime 값은 default로 180000ms (&#x3D; 30분) 으로 되어져 있었습니다 .</p>
+<p>따라서 30분마다 PoolEntry에서 놀고 있는 Connection을 종료하고자 하였지만, 이미 MySQL process는 종료되었기에<br><strong>이미 닫힌 커넥션에 왜 무언가를 하려고하는가?</strong> 라고 warning log가 발생하였습니다. </p>
+<p><img src="./isConnectionAlive.png" alt="isConnectionAlive"></p>
+<p>catch 절에서 Exception이 발생하여 해당 로그가 찍히게 됩니다.</p>
+<h1 id="maxLifetime-wait-timeout-어떻게-설정해야-하나요"><a href="#maxLifetime-wait-timeout-어떻게-설정해야-하나요" class="headerlink" title="maxLifetime, wait_timeout 어떻게 설정해야 하나요?"></a>maxLifetime, wait_timeout 어떻게 설정해야 하나요?</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">We strongly recommend setting this value, and it should be at least 30 seconds less than any  </span><br><span class="line">database or infrastructure imposed connection time limit.</span><br></pre></td></tr></table></figure>
+
+<p>Hikari CP에서는 maxLifetime을 MySQL의 wait_timeout보다 최소 30초 이상 적게 주도록 권장하고 있습니다.<br>(하지만 이는 잘못되었다고 합니다. <a target="_blank" rel="noopener" href="https://pkgonan.github.io/2018/04/HikariCP-test-while-idle">pkgonan님 질문 참고</a>)</p>
+<p>pkgonan님이 받으신 답변을 참고하면 </p>
+<p>답변 요약</p>
+<ul>
+<li>max_lifetime을 Database의 wait_timeout보다 30초 이상 짧게 주라는 것은 잘못 되었다.<br>공식 문서 업데이트를 진행하지 않은 것이다.</li>
+<li>HikariCP는 DBA를 존중하기 때문에 DBA가 설정한 wait_timeout을 지킨다.</li>
+<li>HikariCP는 커넥션 풀을 관리하기 위해 HouseKeeper라는 Thread가 30초마다 돌고 있다.</li>
+<li>HouseKeeper가 30초마다 돌며 커넥션을 종료하였기에, 이전 29.xx초까지의 커넥션들에 대해 유효성 체크가 누락될 수 있어서 30초의 여유를 준 것이다.</li>
+<li>현재 방식은, ThreadLocal에서 각각 타이머를 통해 max-lifetime에 도달했는지 체크를 하는 방식으로 변경되었다.</li>
+<li><code>따라서, max-lifetime은 네트워크 통신 등을 감안해서 Database의 wait_timeout으로 부터 2~3초 정도 짧게 주면 된다.</code></li>
+<li><code>커넥션이 사용중일 경우 즉시 종료를 하지 않기에 커넥션이 매우 바쁜 상황을 감안해서 여유있게 준다면 wait_timeout으로 부터 5초정도까지 짧게 주면 된다는 개발자의 추가 답변.</code></li>
+</ul>
+<p>결론적으로<br>maxLifetime &#x3D; wait_timeout - (2~5초) 정도로 설정하면 됩니다. </p>
+<h1 id="결과"><a href="#결과" class="headerlink" title="결과"></a>결과</h1><p>저의 경우에는 maxLifetime의 Default를 더 존중하여 30분을 유지하도록 하고<br>MySQL의 global wait_timeout 값을 1830초 정도로(그냥 넉넉하게) 수정하여 사용하도록 변경하였습니다.<br>(maxLifetime을 바꾸자니 너무 잦은 커넥션 생성 비용이 염려스러웠습니다.)  </p>
+<p>이렇게 설정하고 나니 더 이상 Failed to validate connection WARN 로그는 발생하지 않았습니다. </p>
+<h1 id="참고"><a href="#참고" class="headerlink" title="참고"></a>참고</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/brettwooldridge/HikariCP">https://github.com/brettwooldridge/HikariCP</a></li>
+<li><a target="_blank" rel="noopener" href="https://pkgonan.github.io/2018/04/HikariCP-test-while-idle">https://pkgonan.github.io/2018/04/HikariCP-test-while-idle</a></li>
+</ul>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">Carrey</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://jaehun2841.github.io/2020/01/08/2020-01-08-hikari-pool-validate-connection/">https://jaehun2841.github.io/2020/01/08/2020-01-08-hikari-pool-validate-connection/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="../../../../tags/Springboot/">Springboot</a><a class="post-meta__tags" href="../../../../tags/Hikari-CP/">Hikari CP</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="../../27/2020-01-27-hikaricp-maximum-pool-size-tuning/"><i class="fa fa-chevron-left">  </i><span>HikariCP Maximum Pool Size 설정 시, 고려해야할 부분</span></a></div><div class="next-post pull-right"><a href="../../../../2019/12/23/2019-12-23-kafka-streams-binder-feature/"><span>Spring-Kafka-Streams Serde 내부 이야기</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="disqus_thread"></div><script>var unused = null;
+var disqus_config = function () {
+  this.page.url = 'https://jaehun2841.github.io/2020/01/08/2020-01-08-hikari-pool-validate-connection/';
+  this.page.identifier = '2020/01/08/2020-01-08-hikari-pool-validate-connection/';
+  this.page.title = 'HikariCP Failed to Validate Connection Warning 이야기';
+}
+var d = document, s = d.createElement('script');
+s.src = "https://" + 'Carrey' +".disqus.com/embed.js";
+s.setAttribute('data-timestamp', '' + +new Date());
+(d.head || d.body).appendChild(s);</script></div></div><footer><div class="layout" id="footer"><div class="copyright">&copy;2018 - 2022 By Carrey</div><div class="framework-info"><span>Driven - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="../../../../js/utils.js?version=1.9.0"></script><script src="../../../../js/fancybox.js?version=1.9.0"></script><script src="../../../../js/sidebar.js?version=1.9.0"></script><script src="../../../../js/copy.js?version=1.9.0"></script><script src="../../../../js/fireworks.js?version=1.9.0"></script><script src="../../../../js/transition.js?version=1.9.0"></script><script src="../../../../js/scroll.js?version=1.9.0"></script><script src="../../../../js/head.js?version=1.9.0"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script></body></html>

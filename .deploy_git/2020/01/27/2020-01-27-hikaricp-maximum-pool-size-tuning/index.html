@@ -1,0 +1,175 @@
+<!DOCTYPE html><html lang="lang"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="HikariCP Maximum Pool Size 설정 시, 고려해야할 부분"><meta name="keywords" content="Springboot,Hikari CP"><meta name="author" content="Carrey"><meta name="copyright" content="Carrey"><title>HikariCP Maximum Pool Size 설정 시, 고려해야할 부분 | Carrey`s 기술블로그</title><link rel="shortcut icon" href="../../../../melody-favicon.ico"><link rel="stylesheet" href="../../../../css/index.css?version=1.9.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.9.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  hexoVersion: '6.0.0'
+} </script><meta name="generator" content="Hexo 6.0.0"></head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%EC%9D%B4-%EA%B8%80%EC%9D%98-%EC%98%88%EC%83%81-%EB%8F%85%EC%9E%90"><span class="toc-number">1.</span> <span class="toc-text">이 글의 예상 독자</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EC%9E%A5%EC%95%A0%EB%A5%BC-%EB%A7%9E%EC%95%98%EC%8A%B5%EB%8B%88%EB%8B%A4"><span class="toc-number">2.</span> <span class="toc-text">장애를 맞았습니다.</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HikariCP%EC%97%90%EC%84%9C%EB%8A%94-Connection%EC%9D%84-%EC%96%B4%EB%96%BB%EA%B2%8C-%EA%B4%80%EB%A6%AC%ED%95%98%EB%82%98"><span class="toc-number">3.</span> <span class="toc-text">HikariCP에서는 Connection을 어떻게 관리하나?</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%ED%95%98%EB%82%98%EC%9D%98-Query%EA%B0%80-%EC%8B%A4%ED%96%89%EB%90%98%EB%8A%94-%EA%B3%BC%EC%A0%95"><span class="toc-number">3.1.</span> <span class="toc-text">하나의 Query가 실행되는 과정</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hikari%EB%8B%98-Connection-%ED%95%98%EB%82%98%EB%A7%8C-%EC%A3%BC%EC%84%B8%EC%97%AC"><span class="toc-number">3.2.</span> <span class="toc-text">Hikari님! Connection 하나만 주세여</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Hikari%EB%8B%98-Connection-%EB%8B%A4-%EC%8D%BC%EC%96%B4%EC%9A%94"><span class="toc-number">3.3.</span> <span class="toc-text">Hikari님! Connection 다 썼어요</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#HikariCP%EC%97%90%EC%84%9C-Dead-lock%EC%9D%B4-%EB%B0%9C%EC%83%9D%ED%95%98%EB%8A%94-Case"><span class="toc-number">4.</span> <span class="toc-text">HikariCP에서 Dead lock이 발생하는 Case</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EC%9C%84%EC%97%90%EB%8A%94-%EC%98%88%EC%8B%9C%EC%9D%B4%EA%B3%A0-%EC%8B%A4%EC%A0%9C-%EC%83%81%ED%99%A9%EC%9D%80-%EB%AD%90%EC%98%80%EC%96%B4%EC%9A%94"><span class="toc-number">5.</span> <span class="toc-text">위에는 예시이고, 실제 상황은 뭐였어요?</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#GeneratedValue-strategy-x3D-GenerationType-AUTO"><span class="toc-number">5.1.</span> <span class="toc-text">@GeneratedValue(strategy &#x3D; GenerationType.AUTO)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%ED%95%98%EB%82%98%EC%9D%98-Task%EC%97%90%EC%84%9C-%ED%95%84%EC%9A%94%ED%95%9C-Connection%EC%9D%80-2%EA%B0%9C%EC%9D%B8%EB%8D%B0-%EC%99%9C-Dead-Lock%EC%9D%B4-%EA%B1%B8%EB%A6%AC%EC%A3%A0"><span class="toc-number">5.2.</span> <span class="toc-text">하나의 Task에서 필요한 Connection은 2개인데 왜 Dead Lock이 걸리죠?</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Dead-lock%EC%9D%84-%ED%94%BC%ED%95%98%EB%8A%94-Maximum-pool-size%EB%8A%94-%EC%96%B4%EB%96%BB%EA%B2%8C-%EC%84%A4%EC%A0%95%ED%95%98%EB%82%98%EC%9A%94"><span class="toc-number">6.</span> <span class="toc-text">Dead lock을 피하는 Maximum pool size는 어떻게 설정하나요?</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#pool-size-x3D-Tn-x-Cm-1-1"><span class="toc-number">6.0.1.</span> <span class="toc-text">pool size &#x3D; Tn x (Cm - 1) + 1</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%8B%A4%EC%A0%9C%EB%A1%9C-%EB%A7%9E%EB%8A%94-%EA%B3%B5%EC%8B%9D%EC%9D%B8%EC%A7%80-%EC%95%8C%EC%95%84%EB%B3%B4%EC%9E%90"><span class="toc-number">6.1.</span> <span class="toc-text">실제로 맞는 공식인지 알아보자</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EC%9D%B4-%EA%B8%80%EC%9D%84-%EC%93%B0%EA%B3%A0%EB%82%98%EB%8B%88-%EC%83%9D%EA%B8%B0%EB%8A%94-%EC%A7%88%EB%AC%B8"><span class="toc-number">7.</span> <span class="toc-text">이 글을 쓰고나니 생기는 질문</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Limited-Resources"><span class="toc-number">7.0.0.1.</span> <span class="toc-text">Limited Resources</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EC%B0%B8%EA%B3%A0"><span class="toc-number">8.</span> <span class="toc-text">참고</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://www.gravatar.com/avatar/3f8583b7b0f0c1ebd249dffad42707af?s=300"></div><div class="author-info__name text-center">Carrey</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="../../../../archives"><span class="pull-left">Articles</span><span class="pull-right">112</span></a><a class="author-info-articles__tags article-meta" href="../../../../tags"><span class="pull-left">Tags</span><span class="pull-right">27</span></a></div></div></div><div id="content-outer"><div class="no-bg" id="top-container"><div id="page-header"><span class="pull-left"> <a id="site-name" href="../../../../index.html">Carrey`s 기술블로그</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span><span class="pull-right"></span></div><div id="post-info"><div id="post-title">HikariCP Maximum Pool Size 설정 시, 고려해야할 부분</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-01-27</time></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h1 id="이-글의-예상-독자"><a href="#이-글의-예상-독자" class="headerlink" title="이 글의 예상 독자"></a>이 글의 예상 독자</h1><p>아래와 같은 에러의 원인을 찾아헤멘 개발자</p>
+<ul>
+<li>o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Error: 0, SQLState: null</li>
+<li>o.h.engine.jdbc.spi.SqlExceptionHelper   : hikari-pool-1 - Connection is not available, request timed out after 30000ms.</li>
+<li>unable to obtain isolated JDBC connection; nested exception is org.hibernate.exception.JDBCConnectionException: unable to obtain isolated JDBC connection</li>
+<li>Could not open JPA EntityManager for transaction; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to acquire JDBC Connection</li>
+</ul>
+<p>또는 HikariCP maximum pool size 설정할 때, 고려할게 있나?  그냥 대충 많이 만들어 두면 되는거 아니었어? 라고 하시는 개발자</p>
+<h1 id="장애를-맞았습니다"><a href="#장애를-맞았습니다" class="headerlink" title="장애를 맞았습니다."></a>장애를 맞았습니다.</h1><p><img src="./db-insert-flow.png" alt="db-insert-flow"></p>
+<p>사내에서 사용하는 시스템의 간략한 모식도 입니다.<br>Message Queue를 통해 Data를 application에서 consume하여 consume 한 데이터를 DB에 insert하고 있습니다.</p>
+<p><img src="./db-write-lag.png" alt="db-write-lag"></p>
+<p>시스템 운영중 Message Queue에 많은 데이터가 한번에 유입되었습니다. 그로 인해</p>
+<ol>
+<li>DB에 insert하는 과정에서 쓰기지연이 발생 하였습니다. </li>
+<li>쓰기 지연이 발생하여, Message Queue의 lag이 증가하여 많은 량의 Data를 처리하지 못하고 밀리는 상황이 되었습니다.</li>
+</ol>
+<p>원인은 분석하니, Message Queue Consumer Thread 갯수와 HikariCP maximum pool size간의 상관관계가 있음을 발견하였고,<br>그 과정에서 <strong>HikariCP의 Pool Size로 인한 Thread dead lock이 발생하여 Insert Query가 실패하고 있음을 알게 되었습니다.</strong><br>이번 장애를 통해 알게 된 <strong>Dead lock을 피할 수 있는 HikariCP maximum pool size 갯수</strong>를 설정하는 방법에 대해 공유하고자 합니다.</p>
+<h1 id="HikariCP에서는-Connection을-어떻게-관리하나"><a href="#HikariCP에서는-Connection을-어떻게-관리하나" class="headerlink" title="HikariCP에서는 Connection을 어떻게 관리하나?"></a>HikariCP에서는 Connection을 어떻게 관리하나?</h1><p>Springboot 2.x가 출범하면서 HikariCP를 default JDBC Connection Pool로 사용하고 있고,  성능이 좋고 빠르기로 이미 검증된 Connection Pool입니다.<br>이번 문제를 해결하면서 하나의 스레드가 Hikari Pool에서 커넥션을 얻고 <strong>(getConnection)</strong>, 커넥션을 반납 <strong>(close)</strong> 하는 과정을 살펴보았습니다.</p>
+<p>아래 내용을 보시기 전에…</p>
+<ul>
+<li>HikariPool에서는 Connection 객체를 한번 wrapping한  PoolEntry라는 Type으로 내부적으로 Connection을 관리합니다.<br>아래 글에서는 이해를 편하게 하도록 Connection이라는 용어로 언급하도록 하겠습니다.</li>
+<li><strong>1인칭 Thread 시점</strong>을 통해 생각해 보았습니다.</li>
+</ul>
+<h2 id="하나의-Query가-실행되는-과정"><a href="#하나의-Query가-실행되는-과정" class="headerlink" title="하나의 Query가 실행되는 과정"></a>하나의 Query가 실행되는 과정</h2><p>내부적인 코드는 더 잘 구성이 되어있지만, 간략한 코드로 표현하자면 아래와 같을 것 입니다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Connection</span> <span class="variable">connection</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line"><span class="type">PreparedStatement</span> <span class="variable">preparedStatement</span> <span class="operator">=</span> <span class="literal">null</span>;</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">  connection = hikariDataSource.getConnection(); </span><br><span class="line">  preparedStatement = connection.prepareStatement(sql);</span><br><span class="line">  preparedStatement.executeQuery();</span><br><span class="line">&#125; <span class="keyword">catch</span>(Throwable e) &#123;</span><br><span class="line">  <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(e);</span><br><span class="line">&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">  <span class="keyword">if</span>(preparedStatement != <span class="literal">null</span>) &#123;</span><br><span class="line">    preparedStatement.close();</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span>(connection != <span class="literal">null</span>) &#123;</span><br><span class="line">    connection.close(); <span class="comment">// this returns the connection to the pool</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>hikariDataSource.getConnection()을 통해 hikariPool에서 Connection을 하나 얻습니다.</li>
+<li>execute()를 통해 쿼리를 실행하고 connection.close()을 통해 hikari pool에 connection을 반납합니다.</li>
+</ol>
+<p>getConnection(), close()를 조금 더 내려가서 HikariPool에서의 처리를 자세하게 살펴보겠습니다.</p>
+<h2 id="Hikari님-Connection-하나만-주세여"><a href="#Hikari님-Connection-하나만-주세여" class="headerlink" title="Hikari님! Connection 하나만 주세여"></a>Hikari님! Connection 하나만 주세여</h2><p>Hikari Pool에서 getConnection 로직은 3단계를 통해 Connection 객체를 얻을 수 있게 되어있습니다.<br><strong>(HikariCP에서 얼마나 성능을 올리기 위해 노력했는지 코드로 보입니다.)</strong><br>Hikari CP에서는 <strong>ConcurrentBag</strong>이라는 구조체를 이용해 Connection을 관리하고 있습니다.<br><strong>HikariPool.getConnection() -&gt; concurrentBag.borrow()</strong> 라는 메서드를 통해 사용가능한 Connection을 리턴하도록 되어있습니다.</p>
+<p>1인칭 Thread 시점으로 Hikari Pool에게 Connection을 하나 요청해 보았습니다.<br><em><strong>(개발은 유치하게 이해할수록 이해도 잘되고 기억에 잘 남는것 같아서.. 각본을 준비해봤습니다.)</strong></em></p>
+<p><em><strong>[Thread-1님]</strong> 안녕하세요 Hikari님! Connection 하나만 주세요~</em><br><strong>[Hikari님]</strong> 안녕하세요 Thread-1님! 저희 pool에서는 Connection을 주는 규칙이 있답니다. 확인해볼게요~<br><strong>[Hikari님]</strong> 이전에 Thread-1님이 저희 pool에 방문한 내역 먼저 살펴볼게요!<br><strong>[Hikari님]</strong> 오! 이전에 방문한 내역이 있으시네요~ 근데 그때 사용한 Connection은 다른 Thread 님이 사용 중(IN_USE) 이시네요~<br>&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;다른 Thread님이 안 쓰셨으면 빠르게 이 Connection 먼저 드렸을 텐데 아쉽네요ㅠㅠ<br><em><strong>[Thread-1님]</strong> 괜찮아요! Hikari님 다른 Connection 주세요~</em><br><strong>[Hikari님]</strong> Pool 전체에서 사용 가능한(idle) Connection이 있는지 찾아볼께요~<br><strong>[Hikari님]</strong> (Loop 돌면서 찾는중…)<br><strong>[Hikari님]</strong> Thread-1님 지금 전체 Connection이 다 사용중이에요! ㅠㅠ<br>&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;저기 handoffQueue 앞에 가서 좀 기다리셔야 할 것 같아요 ㅜㅜ<br><em><strong>[Thread-1님]</strong> 네 괜찮아요! (안 괜찮음) 저기서 30초만 기다려보고 없으면 Exception내면 되죠^^<br>&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; <strong>(깨알 Tip. HikariCP default Connection timeout은 30초 입니다.)</strong></em><br><strong>[Hikari님]</strong> 네 죄송합니다 Thread-1님. 다음에 또 다시 방문해주세요~<br><em><strong>[Thread-1님]</strong> (handoffQueue에서 다른 Thread가 쓰고 반납한 Connection을 얻었다!)</em></p>
+<p>혹시 잘 이해가 가셨을까요..?<br>이해가 아직 안되신 분들을 위한 Flow chart를 준비해보았습니다.</p>
+<p><img src="./getConnection-flow.png" alt="getConnection-flow"></p>
+<p>코드 레벨로 확인해보시려면 -&gt; <a target="_blank" rel="noopener" href="https://github.com/brettwooldridge/HikariCP/blob/dev/src/main/java/com/zaxxer/hikari/util/ConcurrentBag.java#L126">ConcurrentBag.borrow()</a></p>
+<h2 id="Hikari님-Connection-다-썼어요"><a href="#Hikari님-Connection-다-썼어요" class="headerlink" title="Hikari님! Connection 다 썼어요"></a>Hikari님! Connection 다 썼어요</h2><p>HikariCP에서 얻은 Connection은 <code>(ProxyConnection) Connection.close()</code>를 하게 되면 HikariPool에 반납이 됩니다.<br>(HikariPool에서 얻은 Connection은 ProxyConnection 타입입니다.)<br>정상적인 transaction이 마무리 되거나, Rollback이 호출 되어도 <code>connection.close()</code>가 호출되어 Connection을 반납합니다.<br>getConnection과 마찬가지로 <code>connection.close()</code> 시, <code>concurrentBag.requite()</code>이 실행되며 Connection이 반납됩니다.</p>
+<p>위와 같이 1인칭 Thread 시점으로 각본을 짜보겠습니다. </p>
+<p><em><strong>[Thread-1님]</strong> Transaction내의 쿼리를 모두 수행하고 Commit이 되었어 이제 Connection을 반납해볼까?</em><br><em><strong>[Thread-1님]</strong> Thread-1님이 (ProxyConnection) connection.close()을 실행하였습니다.</em><br><strong>[Hikari님]</strong> 안녕하세요 Thread-1님! Connection 이용은 만족스러우셨나요? Connection 반납 절차 도와드리겠습니다.<br><strong>[Hikari님]</strong> 일단 PoolEntry의 상태를 STATE_NOT_IN_USE로 바꿀게요. <strong>(여기서 idle connection이 됩니다.)</strong><br><strong>[Hikari님]</strong> handOffQueue에서 Connection을 받길 원하는 다른 Thread님이 있나봐요~<br><strong>[Hikari님]</strong> (handOffQueue에 Connection 삽입)<br><strong>[Hikari님]</strong> Thread-1님 고생하셨습니다~ 이번에 사용한 Connection 정보 등록해 드릴께요<del>! 다음에 빠르게 이용하실 수 있으실거에요<br>***[Thread-1님]** 감사합니다! Hikari님 또 Connection 받으러 올께요</del>*  </p>
+<p>혹시 잘 이해가 가셨을까요..?<br>이해가 아직 안되신 분들을 위한 Flow chart를 준비해보았습니다.</p>
+<p><img src="./close-flow.png" alt="close-flow"></p>
+<p>코드 레벨로 확인해보시려면 -&gt; <a target="_blank" rel="noopener" href="https://github.com/brettwooldridge/HikariCP/blob/dev/src/main/java/com/zaxxer/hikari/util/ConcurrentBag.java#L181">ConcurrentBag.requite()</a></p>
+<h1 id="HikariCP에서-Dead-lock이-발생하는-Case"><a href="#HikariCP에서-Dead-lock이-발생하는-Case" class="headerlink" title="HikariCP에서 Dead lock이 발생하는 Case"></a>HikariCP에서 Dead lock이 발생하는 Case</h1><p>consumer thread 갯수에 따른 충분한 HikariCP의 maximum pool size를 설정하지 못해 Dead lock이 발생하여 이번 장애로 이어지게 되었습니다.<br>도데체 무슨 관계가 있다고 Dead lock이 발생했을까요?<br>간단한 예시를 통해 알아보도록 하겠습니다.</p>
+<p>Thread count와 maximum pool size의 조건은 아래와 같습니다.</p>
+<ul>
+<li>Thread Count: 1개</li>
+<li>HikariCP MaximumPoolSize: 1개</li>
+<li>하나의 트랜잭션에서 요구되는 Connection 갯수: <strong>2개!!</strong></li>
+</ul>
+<p>조금은 감이 오시나요?<br>그림으로 살펴보도록 하겠습니다.</p>
+<p><img src="./dead-lock-case.png" alt="dead-lock-case"></p>
+<ol>
+<li>하나의 Thread가 Repository.save(entity) 라는 insert query를 실행하기 위해 Transaction을 구성합니다.</li>
+<li>Transaction용 Connection을 하나 가져옵니다. <strong>(PoolStats : total&#x3D;1, active&#x3D;1, idle&#x3D;0, waiting&#x3D;0)</strong></li>
+<li>Transaction을 시작하였고 Repository.save를 하기 위해 Connection이 하나 더 필요하다고 <strong>가정</strong>해보겠습니다.</li>
+<li>Thread-1은 Hikari Pool에 Connection을 요청합니다.<ol>
+<li>위의 3단계 절차대로, 현재 자기 Thread의 방문내역을 살펴봅니다.<br>아직 방문내역이 등록된 게 없습니다.</li>
+<li>전체 Hikari Pool에서 idle상태의 Connection을 스캔합니다.<br>Pool Size는 1개이고 1개 있던 Connection은 Thread-1에서 이미 사용중입니다.</li>
+<li>마지막으로 handOffQueue에서 누군가 반납한 Connection이 있길 기대하며 30초 동안 기다립니다.<br>하나 있던 Connection을 자기 자신이 사용하고 있기 때문에 자기 자신이 반납하지 않는 이상 사용할 Connection이 없습니다.<br><strong>(PoolStats : total&#x3D;1, active&#x3D;1, idle&#x3D;0, waiting&#x3D;1)</strong></li>
+<li>결국 30초가 지나고 Connection Timeout이 발생하고<br><code>hikari-pool-1 - Connection is not available, request timed out after 30000ms.</code> 와 같은 에러가 발생</li>
+</ol>
+</li>
+<li>Transaction에 대한 evictMark가 찍히고 트랜잭션이 롤백 됩니다. </li>
+<li>롤백 됨과 동시에 Transaction용 Connection은 다시 Pool에 반납됩니다. <strong>(PoolStats : total&#x3D;1, active&#x3D;0, idle&#x3D;0, waiting&#x3D;0)</strong></li>
+</ol>
+<p>이렇게 Thread내에서 하나의 Task에 수행하는데 필요한 Connection갯수가 모자라게 되면<br><strong>Dead Lock 상태에 빠져 Insert Query를 실행할 수 없게 됩니다.</strong></p>
+<h1 id="위에는-예시이고-실제-상황은-뭐였어요"><a href="#위에는-예시이고-실제-상황은-뭐였어요" class="headerlink" title="위에는 예시이고, 실제 상황은 뭐였어요?"></a>위에는 예시이고, 실제 상황은 뭐였어요?</h1><p>제가 장애를 맞았던 실제 환경에 대해 설명해드리겠습니다.</p>
+<p>장애 환경에 대한 Thread count와 maximum pool size의 조건은 아래와 같습니다.</p>
+<ul>
+<li><p>CPU Core : 4개</p>
+</li>
+<li><p>Thread Count: 16개</p>
+</li>
+<li><p>HikariCP MaximumPoolSize: 10개</p>
+</li>
+<li><p>하나의 트랜잭션에서 요구되는 Connection 갯수: <strong>2개</strong><br>(처음엔 1개일거라 생각했지만, getConnection에 대한 디버깅을 해보니 2번의 getConnection 요청이 발생했습니다.)</p>
+</li>
+</ul>
+<p>실제 구현부의 간단한 코드입니다.</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Entity</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Message</span> &#123;</span><br><span class="line">  <span class="meta">@Id</span></span><br><span class="line">  <span class="meta">@GeneratedValue(strategy = GenerationType.AUTO)</span></span><br><span class="line">  <span class="keyword">private</span> <span class="type">long</span> id;</span><br><span class="line">  <span class="keyword">private</span> String title;</span><br><span class="line">  <span class="keyword">private</span> String contents;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Transactional</span></span><br><span class="line"><span class="keyword">public</span> Message <span class="title function_">save</span><span class="params">(<span class="keyword">final</span> Message message)</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> repository.save(message)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>혹시 이 코드에서 왜 Connection이 2개나 필요한지 짐작이 되시나요?<br>코드만 보면 하나의 Connection으로 Insert가 잘 될 것 같습니다.<br>여태까지 그런줄 알았고 이번 장애가 아니었다면 몰랐을 것이었습니다.</p>
+<h2 id="GeneratedValue-strategy-x3D-GenerationType-AUTO"><a href="#GeneratedValue-strategy-x3D-GenerationType-AUTO" class="headerlink" title="@GeneratedValue(strategy &#x3D; GenerationType.AUTO)"></a>@GeneratedValue(strategy &#x3D; GenerationType.AUTO)</h2><p>이 사건의 범인은 이 코드로 부터 시작됩니다.<br>GeneratedValue(strategy &#x3D; GenerationType.AUTO)인 경우에는 JPA 구현체가 자동으로 ID값 생성전략을 결정합니다.<br>사내에서 사용하는 RDB는 MySQL을 사용하고 있습니다.<br>ID의 Type이 long 타입이고, <code>hibernate.id_new_generator_mappings</code> 값이<code>true</code> (default true)이기 때문에<br>ID 필드에 대한 Generator는 내부적으로 SequenceStyleGenerator를 사용하게 됩니다.<br>하지만 MySQL에서는 Oracle처럼 Sequence라는게 존재하지 않기 때문에 <code>hibernate_sequence</code>라는 테이블을 생성하고, 테이블에 단일 로우로 된 id값을 계속 update하며 sequence처럼 관리합니다.  </p>
+<p>getConnection에 대한 call tree를 역주행하면서 hibernate 내부 코드까지 보게 되었습니다.<br>call tree에 대한 대략적인 단계는 아래와 같습니다.</p>
+<ol>
+<li>repository.save(entity): 내부적으로 SimpleJpaRepository.save가 호출됩니다.</li>
+<li>DefaultPersistEventListener에 의해 saveWithGeneratedId가 호출됩니다.</li>
+<li>saveWithGeneratedId가 실행되며, Entity의 Id값을 생성할 때 SequenceStyleGenerator를 이용하여 생성합니다.</li>
+<li>SequenceStyleGenerator.generate 코드에서 databaseStructure.buildCallback()이 실행되며, TableStructure.buildCallBack()이 실행됩니다<br>(이 코드에서 hibernate_sequence에 대한 조회, update가 이루어집니다.)</li>
+<li>hibernate_sequence를 조회, update를 하는데에 있어서 별도의 Transaction으로 동작하게 됩니다.<br>  <code>select next_val as id_val from hibernate_sequence for update</code> 쿼리를 실행하게 되고, 트랜잭션이 끝나기 전까지 Table Lock이 걸리게 됩니다.<br>(만약 같은 Transaction 내에서 동작했다면은 hibernate_sequence table에 대한 Table Lock이 동작해 다른 스레드에서 id값을 생성하지 못할 것입니다.)</li>
+<li><strong>별도의 트랜잭션으로 동작하게 되면서 새로운 Connection을 하나 받아오게 됩니다</strong> (여기서 2번째 connection을 받아옵니다.)</li>
+</ol>
+<p>위의 call tree에 대한 코드 입니다.</p>
+<p><img src="./save.png" alt="save"></p>
+<p><img src="./AbstractSaveEventListener.saveWithGeneratedId.png" alt="AbstractSaveEventListener.saveWithGeneratedId"></p>
+<p><img src="./id_generator.png" alt="id_generator"></p>
+<p><img src="./execute_hibernate_sequence.png" alt="execute_hibernate_sequence"></p>
+<p><img src="./TableStructure.delegateWork.png" alt="TableStructure.delegateWork"></p>
+<h2 id="하나의-Task에서-필요한-Connection은-2개인데-왜-Dead-Lock이-걸리죠"><a href="#하나의-Task에서-필요한-Connection은-2개인데-왜-Dead-Lock이-걸리죠" class="headerlink" title="하나의 Task에서 필요한 Connection은 2개인데 왜 Dead Lock이 걸리죠?"></a>하나의 Task에서 필요한 Connection은 2개인데 왜 Dead Lock이 걸리죠?</h2><p>부하가 크게 걸리지 않는 일반적인 상황에서는 문제가 없을 것입니다. 스레드 전체가 일을 하지 않을 것이기 때문입니다.<br>문제는 전체 스레드가 동시에 일을 하게 되는 부하 상황 시에 발생합니다.  </p>
+<p><img src="./dead-lock-case2.png" alt="dead-lock-case2"></p>
+<p>이런 식으로 16개의 스레드 중 10개의 스레드가 10개의 Connection을 모두 잡고 있으면 10개의 스레드 중 하나의 스레드에서<br>2번째 Connection에 대한 timeout이 발생하지 않으면 계속 30초씩 지연이 발생하게 됩니다.<br>하물며 idle Connection이 다시 발생한들 남은 6개의 Thread들 중 하나가 Connection을 가져가면 dead lock의 악순환의 고리에 빠지게 됩니다.<br>간혹 운이 좋게 하나의 스레드가 Connection 2개를 획득하여 트랜잭션이 성공하는 case도 있을 것 입니다.<br>(이런 경우 간헐적으로 동작하기 때문에 원인 파악이 매우 힘들어 집니다.)</p>
+<h1 id="Dead-lock을-피하는-Maximum-pool-size는-어떻게-설정하나요"><a href="#Dead-lock을-피하는-Maximum-pool-size는-어떻게-설정하나요" class="headerlink" title="Dead lock을 피하는 Maximum pool size는 어떻게 설정하나요?"></a>Dead lock을 피하는 Maximum pool size는 어떻게 설정하나요?</h1><p>HikariCP의 Dead lock에 대한 case는 이미 HikariCP issue에 등록되어있다.<br>HikariCP에서는 Dead Lock을 피하기 위한 최적의 Maximum Pool Size를 방법을 제시하고 있다.  </p>
+<p>공식은 아래와 같다.</p>
+<blockquote>
+<h3 id="pool-size-x3D-Tn-x-Cm-1-1"><a href="#pool-size-x3D-Tn-x-Cm-1-1" class="headerlink" title="pool size &#x3D; Tn x (Cm - 1) + 1"></a><em>pool size &#x3D; Tn x (Cm - 1) + 1</em></h3></blockquote>
+<ul>
+<li><em>Tn</em> : Thread의 최대 수</li>
+<li><em>Cm</em>: 하나의 Task에서 필요한 Connection 갯수</li>
+</ul>
+<h2 id="실제로-맞는-공식인지-알아보자"><a href="#실제로-맞는-공식인지-알아보자" class="headerlink" title="실제로 맞는 공식인지 알아보자"></a>실제로 맞는 공식인지 알아보자</h2><ul>
+<li>Thread Count : 8개</li>
+<li>하나의 Task에 필요한 Connection 갯수: 2개</li>
+<li>pool Size &#x3D; 8 x ( 2 - 1) + 1 &#x3D; 9개</li>
+</ul>
+<p><img src="./avoid-dead-lock.png" alt="avoid-dead-lock"></p>
+<ul>
+<li>thread 8개가 골고루 Connection을 하나씩 얻었고 7개의 스레드가 2번째 스레드를 기다리고 있다.  </li>
+<li>이렇게 되면 스레드 2번의 2번째 Connection은 빠르게 hibernate_sequence만 조회, update하고 빠르게 반납되게 된다.  </li>
+<li>이로 인해 다른 스레드에서도 Connection을 받을 수 있게 된다</li>
+<li>thread 2번에서도 정상적으로 트랜잭션이 처리되게 된다. -&gt; connection이 반납된다.</li>
+<li>위와 같은 pool size로 dead lock을 피할 수 있는 최소한의 pool size를 얻을 수 있게 되었다.</li>
+</ul>
+<h1 id="이-글을-쓰고나니-생기는-질문"><a href="#이-글을-쓰고나니-생기는-질문" class="headerlink" title="이 글을 쓰고나니 생기는 질문"></a>이 글을 쓰고나니 생기는 질문</h1><ul>
+<li><p>Embedded Tomcat의 default thread count는 200개인데 공식을 적용하면 hikari pool size가 수백개가 될 수도 있다.</p>
+<ul>
+<li>기본적으로 task당 1개의 connection만 필요하면 poolSize 1개로도 모든 요청은 다 처리할 수 있다.</li>
+<li>2개 이상의 connection이 필요한 경우에는 tomcat thread count를 줄이고 hikari pool size도 100개 이하로 조정한다.</li>
+<li>퍼포먼스가 안나오는 경우에는 DB에 insert하는 application의 아키텍쳐를 수정하는 방법도 있을 것 같다.</li>
+</ul>
+</li>
+<li><p>퍼포먼스 저하는 없었나?</p>
+<ul>
+<li>기존 16개인 thread를 4개 정도로 조절했다.</li>
+<li>1 thread 당 300 TPS정도의 성능이 나와 4 core인 환경에서는 문제 없이 처리할 수 있다.</li>
+<li>오히려 thread 수를 줄여 message queue의 throttling을 할 수 있게 되었다.</li>
+<li>core 수에 맞게 제한된 리소스를 사용하는 것이 오히려 context-switching에 대한 overhead를 줄여 성능상의 이점이 있다고 한다.<br>([About Pool Sizing] - &lt;<a target="_blank" rel="noopener" href="https://github.com/brettwooldridge/HikariCP/wiki/About-Pool-Sizing">https://github.com/brettwooldridge/HikariCP/wiki/About-Pool-Sizing</a>)</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<h4 id="Limited-Resources"><a href="#Limited-Resources" class="headerlink" title="Limited Resources"></a>Limited Resources</h4><p>It is not quite as simple as stated above, but it’s close. There are a few other factors at play. When we look at what the major bottlenecks for a database are, they can be summarized as three basic categories: <em>CPU</em>, <em>Disk</em>, <em>Network</em>. We could add <em>Memory</em> in there, but compared to <em>Disk</em> and <em>Network</em> there are several orders of magnitude difference in bandwidth.</p>
+<p>If we ignored <em>Disk</em> and <em>Network</em> it would be simple. On a server with 8 computing cores, setting the number of connections to 8 would provide optimal performance, and anything beyond this would start slowing down due to the overhead of context switching. But we cannot ignore <em>Disk</em> and <em>Network</em>. Databases typically store data on a <em>Disk</em>, which traditionally is comprised of spinning plates of metal with read&#x2F;write heads mounted on a stepper-motor driven arm. The read&#x2F;write heads can only be in one place at a time (reading&#x2F;writing data for a single query) and must “seek” to a new location to read&#x2F;write data for a different query. So there is a seek-time cost, and also a rotational cost whereby the disk has to wait for the data to “come around again” on the platter to be read&#x2F;written. Caching of course helps here, but the principle still applies.</p>
+</blockquote>
+<h1 id="참고"><a href="#참고" class="headerlink" title="참고"></a>참고</h1><ul>
+<li>[About Pool Sizing] - <a target="_blank" rel="noopener" href="https://github.com/brettwooldridge/HikariCP/wiki/About-Pool-Sizing">https://github.com/brettwooldridge/HikariCP/wiki/About-Pool-Sizing</a></li>
+<li>[Down the Rabbit Hole] - <a target="_blank" rel="noopener" href="https://github.com/brettwooldridge/HikariCP/wiki/Down-the-Rabbit-Hole">https://github.com/brettwooldridge/HikariCP/wiki/Down-the-Rabbit-Hole</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/brettwooldridge/HikariCP">https://github.com/brettwooldridge/HikariCP</a></li>
+</ul>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">Carrey</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://jaehun2841.github.io/2020/01/27/2020-01-27-hikaricp-maximum-pool-size-tuning/">https://jaehun2841.github.io/2020/01/27/2020-01-27-hikaricp-maximum-pool-size-tuning/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="../../../../tags/Springboot/">Springboot</a><a class="post-meta__tags" href="../../../../tags/Hikari-CP/">Hikari CP</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="../../../05/09/object-chapter1/"><i class="fa fa-chevron-left">  </i><span>Objects Study - Chapter1. 객체, 설계</span></a></div><div class="next-post pull-right"><a href="../../08/2020-01-08-hikari-pool-validate-connection/"><span>HikariCP Failed to Validate Connection Warning 이야기</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="disqus_thread"></div><script>var unused = null;
+var disqus_config = function () {
+  this.page.url = 'https://jaehun2841.github.io/2020/01/27/2020-01-27-hikaricp-maximum-pool-size-tuning/';
+  this.page.identifier = '2020/01/27/2020-01-27-hikaricp-maximum-pool-size-tuning/';
+  this.page.title = 'HikariCP Maximum Pool Size 설정 시, 고려해야할 부분';
+}
+var d = document, s = d.createElement('script');
+s.src = "https://" + 'Carrey' +".disqus.com/embed.js";
+s.setAttribute('data-timestamp', '' + +new Date());
+(d.head || d.body).appendChild(s);</script></div></div><footer><div class="layout" id="footer"><div class="copyright">&copy;2018 - 2022 By Carrey</div><div class="framework-info"><span>Driven - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="../../../../js/utils.js?version=1.9.0"></script><script src="../../../../js/fancybox.js?version=1.9.0"></script><script src="../../../../js/sidebar.js?version=1.9.0"></script><script src="../../../../js/copy.js?version=1.9.0"></script><script src="../../../../js/fireworks.js?version=1.9.0"></script><script src="../../../../js/transition.js?version=1.9.0"></script><script src="../../../../js/scroll.js?version=1.9.0"></script><script src="../../../../js/head.js?version=1.9.0"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script></body></html>

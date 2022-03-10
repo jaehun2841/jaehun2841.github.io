@@ -1,0 +1,301 @@
+<!DOCTYPE html><html lang="lang"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="Objects Study - Chapter13. 서브클래싱과 서브타이핑"><meta name="keywords" content="Object-Study"><meta name="author" content="Carrey"><meta name="copyright" content="Carrey"><title>Objects Study - Chapter13. 서브클래싱과 서브타이핑 | Carrey`s 기술블로그</title><link rel="shortcut icon" href="../../../../melody-favicon.ico"><link rel="stylesheet" href="../../../../css/index.css?version=1.9.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.9.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  hexoVersion: '6.0.0'
+} </script><meta name="generator" content="Hexo 6.0.0"></head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%EC%83%81%EC%86%8D%EC%9D%98-%EC%9A%A9%EB%8F%84"><span class="toc-number">1.</span> <span class="toc-text">상속의 용도</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D-vs-%EA%B0%9D%EC%B2%B4%EA%B8%B0%EB%B0%98-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D"><span class="toc-number">2.</span> <span class="toc-text">객체지향 프로그래밍 vs 객체기반 프로그래밍</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%ED%83%80%EC%9E%85"><span class="toc-number">3.</span> <span class="toc-text">타입</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%EA%B0%9C%EB%85%90-%EA%B4%80%EC%A0%90%EC%9D%98-%ED%83%80%EC%9E%85"><span class="toc-number">3.1.</span> <span class="toc-text">개념 관점의 타입</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D-%EC%96%B8%EC%96%B4-%EA%B4%80%EC%A0%90%EC%9D%98-%ED%83%80%EC%9E%85"><span class="toc-number">3.2.</span> <span class="toc-text">프로그래밍 언어 관점의 타입</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%ED%83%80%EC%9E%85%EC%97%90-%EC%88%98%ED%96%89%EB%90%A0-%EC%88%98-%EC%9E%88%EB%8A%94-%EC%9C%A0%ED%9A%A8%ED%95%9C-%EC%98%A4%ED%8D%BC%EB%A0%88%EC%9D%B4%EC%85%98%EC%9D%98-%EC%A7%91%ED%95%A9%EC%9D%84-%EC%A0%95%EC%9D%98%ED%95%9C%EB%8B%A4"><span class="toc-number">3.2.1.</span> <span class="toc-text">타입에 수행될 수 있는 유효한 오퍼레이션의 집합을 정의한다</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%ED%83%80%EC%9E%85%EC%97%90-%EC%88%98%ED%96%89%EB%90%98%EB%8A%94-%EC%98%A4%ED%8D%BC%EB%A0%88%EC%9D%B4%EC%85%98%EC%97%90-%EB%8C%80%ED%95%B4-%EB%AF%B8%EB%A6%AC-%EC%95%BD%EC%86%8D%EB%90%9C-%EB%AC%B8%EB%A7%A5%EC%9D%84-%EC%A0%9C%EA%B3%B5%ED%95%9C%EB%8B%A4"><span class="toc-number">3.2.2.</span> <span class="toc-text">타입에 수행되는 오퍼레이션에 대해 미리 약속된 문맥을 제공한다</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5-%ED%8C%A8%EB%9F%AC%EB%8B%A4%EC%9E%84%EC%97%90%EC%84%9C-%EB%B0%94%EB%9D%BC-%EB%B3%B4%EB%8A%94-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D-%EC%96%B8%EC%96%B4-%EA%B4%80%EC%A0%90%EC%9D%98-%ED%83%80%EC%9E%85"><span class="toc-number">3.3.</span> <span class="toc-text">객체지향 패러다임에서 바라 보는 프로그래밍 언어 관점의 타입</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5-%ED%8C%A8%EB%9F%AC%EB%8B%A4%EC%9E%84%EC%97%90%EC%84%9C-%EB%B0%94%EB%9D%BC-%EB%B3%B4%EB%8A%94-%EA%B0%9C%EB%85%90-%EA%B4%80%EC%A0%90%EC%9D%98-%ED%83%80%EC%9E%85"><span class="toc-number">3.4.</span> <span class="toc-text">객체지향 패러다임에서 바라 보는 개념 관점의 타입</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%ED%83%80%EC%9E%85-%EC%82%AC%EC%9D%B4%EC%9D%98-%ED%8F%AC%ED%95%A8%EA%B4%80%EA%B3%84"><span class="toc-number">4.</span> <span class="toc-text">타입 사이의 포함관계</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%ED%83%80%EC%9E%85-%EA%B3%84%EC%B8%B5"><span class="toc-number">4.1.</span> <span class="toc-text">타입 계층</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EB%82%B4%EC%97%B0%EA%B3%BC-%EC%99%B8%EC%97%B0-%EA%B4%80%EC%A0%90%EC%97%90%EC%84%9C%EC%9D%98-%EC%9D%BC%EB%B0%98%ED%99%94%EC%99%80-%ED%8A%B9%EC%88%98%ED%99%94"><span class="toc-number">4.2.</span> <span class="toc-text">내연과 외연 관점에서의 일반화와 특수화</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5-%ED%94%84%EB%A1%9C%EA%B7%B8%EB%9E%98%EB%B0%8D%EA%B3%BC-%ED%83%80%EC%9E%85-%EA%B3%84%EC%B8%B5"><span class="toc-number">5.</span> <span class="toc-text">객체지향 프로그래밍과 타입 계층</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EC%84%9C%EB%B8%8C%ED%81%B4%EB%9E%98%EC%8B%B1%EA%B3%BC-%EC%84%9C%EB%B8%8C%ED%83%80%EC%9D%B4%ED%95%91"><span class="toc-number">6.</span> <span class="toc-text">서브클래싱과 서브타이핑</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%96%B8%EC%A0%9C-%EC%83%81%EC%86%8D%EC%9D%84-%EC%82%AC%EC%9A%A9%ED%95%B4%EC%95%BC-%ED%95%98%EB%8A%94%EA%B0%80"><span class="toc-number">6.1.</span> <span class="toc-text">언제 상속을 사용해야 하는가?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#is-a-%EA%B4%80%EA%B3%84"><span class="toc-number">6.2.</span> <span class="toc-text">is-a 관계</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%ED%96%89%EB%8F%99-%ED%98%B8%ED%99%98%EC%84%B1"><span class="toc-number">6.3.</span> <span class="toc-text">행동 호환성</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%9D%B8%ED%84%B0%ED%8E%98%EC%9D%B4%EC%8A%A4-%EB%B6%84%EB%A6%AC-%EC%9B%90%EC%B9%99-ISP"><span class="toc-number">6.4.</span> <span class="toc-text">인터페이스 분리 원칙 (ISP)</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EC%84%9C%EB%B8%8C%ED%81%B4%EB%9E%98%EC%8B%B1%EA%B3%BC-%EC%84%9C%EB%B8%8C-%ED%83%80%EC%9D%B4%ED%95%91"><span class="toc-number">7.</span> <span class="toc-text">서브클래싱과 서브 타이핑</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EB%A6%AC%EC%8A%A4%EC%BD%94%ED%94%84-%EC%B9%98%ED%99%98-%EC%9B%90%EC%B9%99"><span class="toc-number">8.</span> <span class="toc-text">리스코프 치환 원칙</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Stack%EA%B3%BC-Vector"><span class="toc-number">8.1.</span> <span class="toc-text">Stack과 Vector</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%ED%81%B4%EB%9D%BC%EC%9D%B4%EC%96%B8%ED%8A%B8%EA%B0%80-%EB%B3%B4%EA%B8%B0%EC%97%90%EB%8A%94"><span class="toc-number">8.2.</span> <span class="toc-text">클라이언트가 보기에는..</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%9C%A0%EC%97%B0%ED%95%9C-%EC%84%A4%EA%B3%84%EC%9D%98-%EA%B8%B0%EB%B0%98"><span class="toc-number">8.3.</span> <span class="toc-text">유연한 설계의 기반</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EA%B3%84%EC%95%BD%EC%97%90-%EC%9D%98%ED%95%9C-%EC%84%A4%EA%B3%84%EC%99%80-%EC%84%9C%EB%B8%8C%ED%83%80%EC%9D%B4%ED%95%91"><span class="toc-number">9.</span> <span class="toc-text">계약에 의한 설계와 서브타이핑</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%84%9C%EB%B8%8C%ED%83%80%EC%9E%85%EA%B3%BC-%EA%B3%84%EC%95%BD"><span class="toc-number">9.1.</span> <span class="toc-text">서브타입과 계약</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EC%B0%B8%EA%B3%A0"><span class="toc-number">10.</span> <span class="toc-text">참고</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://www.gravatar.com/avatar/3f8583b7b0f0c1ebd249dffad42707af?s=300"></div><div class="author-info__name text-center">Carrey</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="../../../../archives"><span class="pull-left">Articles</span><span class="pull-right">112</span></a><a class="author-info-articles__tags article-meta" href="../../../../tags"><span class="pull-left">Tags</span><span class="pull-right">27</span></a></div></div></div><div id="content-outer"><div class="no-bg" id="top-container"><div id="page-header"><span class="pull-left"> <a id="site-name" href="../../../../index.html">Carrey`s 기술블로그</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span><span class="pull-right"></span></div><div id="post-info"><div id="post-title">Objects Study - Chapter13. 서브클래싱과 서브타이핑</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-07-18</time></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h1 id="상속의-용도"><a href="#상속의-용도" class="headerlink" title="상속의 용도"></a>상속의 용도</h1><ul>
+<li>타입 계층 구현 : 부모클래스는 일반적인 개념을 구현하고 자식 클래스는 특수한 개념을 구현한다.<ul>
+<li>부모 클래스는 자식 클래스의 <strong>일반화(generalization)</strong></li>
+<li>자식 클래스는 부모 클래스의 <strong>특수화(specialization)</strong></li>
+</ul>
+</li>
+<li>코드 재사용<ul>
+<li>간단한 선언만으로 부모 클래스의 코드를 재사용할 수 있다.</li>
+<li>재사용을 위해 상속을 사용하는 경우 부모 클래스와 자식 클래스가 강하게 결합되어 변경이 어렵다.</li>
+</ul>
+</li>
+</ul>
+<p>상속을 사용하는 이유는 객체의 <strong>행동</strong> 을 기반으로 하는 타입 계층을 구현해야 한다.<br>타입 사이의 관계를 고려하지 않은 채 단순히 코드를 재사용하기 위해 상속을 사용해서는 안된다.</p>
+<h1 id="객체지향-프로그래밍-vs-객체기반-프로그래밍"><a href="#객체지향-프로그래밍-vs-객체기반-프로그래밍" class="headerlink" title="객체지향 프로그래밍 vs 객체기반 프로그래밍"></a>객체지향 프로그래밍 vs 객체기반 프로그래밍</h1><ul>
+<li>객체기반 프로그래밍(Object-Based Programming)<ul>
+<li>상태와 행동을 캡슐화한 객체를 조합해서 프로그램을 구성하는 방식</li>
+<li>상속과 다형성은 지원하지 않는다</li>
+<li>초기 버전의 비쥬얼 베이직은 객체라는 개념은 존재하지만 클래스 사이의 상속과 다형성은 존재x</li>
+<li>클래스를 사용하지 않고 객체만 사용하는 프로그래밍 방식</li>
+</ul>
+</li>
+<li>객체지향 프로그래밍(Object-Oriented Programming)<ul>
+<li>객체기반 프로그래밍의 한 종류</li>
+<li>상속과 다형성을 지원</li>
+<li>Java, C++, 루비, C#등의 언어는 상속과 다형성 지원’</li>
+<li>클래스를 사용하는 프로그래밍 방식</li>
+</ul>
+</li>
+</ul>
+<h1 id="타입"><a href="#타입" class="headerlink" title="타입"></a>타입</h1><p>객체지향 프로그래밍에서 타입의 의미를 이해하려면 두 가지 관점의 타입을 이해할 필요가 있다</p>
+<ul>
+<li>프로그래밍 언어 관점의 타입</li>
+<li>개념 관점의 타입</li>
+</ul>
+<h2 id="개념-관점의-타입"><a href="#개념-관점의-타입" class="headerlink" title="개념 관점의 타입"></a>개념 관점의 타입</h2><p>개념 관점에서 타입이란 우리가 인지하는 세상의 사물의 종류를 의미한다.  </p>
+<ul>
+<li><strong>타입</strong> : 객체들에 적용하는 개념이나 아이디어<ul>
+<li>타입은 사물을 분류하기 위한 틀로 사용된다.  </li>
+<li>예를 들어 자바, 루비, 자바스크립트, C를 프로그래밍 언어라고 부를 때 우리는 이것들을 프로그래밍 언어라는 타입으로 분류하고 있는 것이다.</li>
+</ul>
+</li>
+<li><strong>인스턴스</strong> : 어떤 대상이 타입으로 분류될 때의 대상을 가리켜 인스턴스라고 부른다.</li>
+<li><strong>객체</strong> : 일반적으로 타입의 인스턴스를 가리켜 객체라고 부른다.</li>
+<li><strong>심볼</strong> : 타입에 이름을 붙인 것.</li>
+<li><strong>내연(intension)</strong> : 타입의 정의로서 타입에 속하는 객체들이 가지는 공통적인 속성이나 행동<ul>
+<li>예를 들어 프로그래밍 언어의 정의인 <strong>컴퓨터에게 특정한 작업을 지시하기 위한 어휘와 문법적 규칙의 집합</strong> 이 바로 내연이다.</li>
+</ul>
+</li>
+<li><strong>외연(extension)</strong> : 타입에 속하는 객체들의 집합<ul>
+<li>예를들어 프로그래밍 언어 타입의 경우에는 자바, 루비, 자바스크립트, C가 속한 집합이 외연을 구성한다.</li>
+</ul>
+</li>
+</ul>
+<h2 id="프로그래밍-언어-관점의-타입"><a href="#프로그래밍-언어-관점의-타입" class="headerlink" title="프로그래밍 언어 관점의 타입"></a>프로그래밍 언어 관점의 타입</h2><p>프로그래밍 언어 관점에서의 타입은 연속적인 비트의 의미와 제약을 부여하기 위해 사용된다.<br>비트에 담긴 데이터를 문자열로 다룰지 정수로 다룰지는 전적으로 데이터를 사용하는 애플리케이션에 의해 결정된다.<br>따라서 프로그래밍 언어의 관점에서 타입은 비트 묶음에 의미를 부여하기 위해 정의된 제약과 규칙을 가리킨다.</p>
+<p>프로그래밍 언어에서 타입은 두 가지 목적을 위해 사용된다.</p>
+<h3 id="타입에-수행될-수-있는-유효한-오퍼레이션의-집합을-정의한다"><a href="#타입에-수행될-수-있는-유효한-오퍼레이션의-집합을-정의한다" class="headerlink" title="타입에 수행될 수 있는 유효한 오퍼레이션의 집합을 정의한다"></a>타입에 수행될 수 있는 유효한 오퍼레이션의 집합을 정의한다</h3><ul>
+<li>자바에서 ‘+’ 연산자는 <strong>원시형 숫자 타입이나 문자열 타입의 객체에서는 사용할 수 있지만</strong> 다른 클래스의 인스턴스에 대해서는 사용할 수 없다. </li>
+<li>C++ &#x2F; C# 에서는 연산자 오버로딩을 통해 ‘+’ 연산자 사용이 가능하다</li>
+<li>모든 객체지향 언어들은 객체의 타입에 따라 적용 가능한 연산자의 종류를 제한함으로써 프로그래머의 실수를 막아준다.</li>
+</ul>
+<h3 id="타입에-수행되는-오퍼레이션에-대해-미리-약속된-문맥을-제공한다"><a href="#타입에-수행되는-오퍼레이션에-대해-미리-약속된-문맥을-제공한다" class="headerlink" title="타입에 수행되는 오퍼레이션에 대해 미리 약속된 문맥을 제공한다"></a>타입에 수행되는 오퍼레이션에 대해 미리 약속된 문맥을 제공한다</h3><ul>
+<li><p>정수 a + b는 a와 b를 더한다. 문자열 a + b는 a와 b에 대해 문자열을 합친다 -&gt; 즉, a 와 b에 부여된 타입이 ‘+’ 연산자의 문맥을 정의</p>
+</li>
+<li><p>new 연산자는 타입에 정의된 크기만큼 저장 공간을 할당하고 생성된 객체를 초기화하기 위해 타입의 생성자를 자동으로 호출한다<br>이 경우 객체를 생성하는 방법에 대한 문맥을 결정하는 것은 바로 객체의 타입이다.</p>
+</li>
+</ul>
+<h2 id="객체지향-패러다임에서-바라-보는-프로그래밍-언어-관점의-타입"><a href="#객체지향-패러다임에서-바라-보는-프로그래밍-언어-관점의-타입" class="headerlink" title="객체지향 패러다임에서 바라 보는 프로그래밍 언어 관점의 타입"></a>객체지향 패러다임에서 바라 보는 프로그래밍 언어 관점의 타입</h2><p>프로그래밍 언어 관점에서의 타입은 호출 가능한 오퍼레이션의 집합을 정의한다.<br><strong>객체지향 프로그래밍에서 오퍼레이션 &#x3D; 객체가 수신할 수 있는 메시지</strong> 이다</p>
+<p>객체의 타입이란 객체가 수신할 수 있는 메시지의 종류를 정의하는 것이다.<br><strong>객체가 수신할 수 있는 메시지 &#x3D; 객체의 퍼블릭 인터페이스</strong> 이다</p>
+<p>따라서 객체지향 프로그래밍에서 타입을 정의하는 것은 객체의 퍼블릭 인터페이스를 정의하는 것과 동일하다</p>
+<h2 id="객체지향-패러다임에서-바라-보는-개념-관점의-타입"><a href="#객체지향-패러다임에서-바라-보는-개념-관점의-타입" class="headerlink" title="객체지향 패러다임에서 바라 보는 개념 관점의 타입"></a>객체지향 패러다임에서 바라 보는 개념 관점의 타입</h2><p>개념 관점에서 타입은 공통의 특성을 가진 객체들을 분류하기 위한 기준이다.<br>객체의 퍼블릭 인터페이스가 타입을 결정한다.  따라서 동일한 퍼블릭 인터페이스를 제공하는 객체들은 동일한 타입으로 분류된다.<br><strong>객체들이 동일한 상태를 가지고 있더라도 퍼블릭 인터페이스가 다르면, 서로 다른 타입으로 분류된다.</strong></p>
+<h1 id="타입-사이의-포함관계"><a href="#타입-사이의-포함관계" class="headerlink" title="타입 사이의 포함관계"></a>타입 사이의 포함관계</h1><p>수학에서 집합은 다른 집합을 포함할 수 있다.<br>타입 역시 객체들의 집합이기 때문에 다른 타입을 포함하는 것이 가능하다<br>타입 안에 포함된 객체들은 좀 더 상세한 기준으로 묶어 새로운 타입을 정의하면 이 새로운 타입은 자연스럽게 기존 타입의 부분 집합이 된다.</p>
+<p><img src="./programming-type-instance.jpeg" alt="programming-type-instance"><br>예를 들면 자바, 루비, C++과 같은 프로그래밍 언어들은 <strong>프로그래밍 언어</strong> 라는 타입으로 묶을 수 있다.</p>
+<p><img src="./classified-instance.jpeg" alt="classified-instance"></p>
+<p>집합의 원소들을 상세한 기준으로 분류할 수 있다. </p>
+<ul>
+<li>객체지향 언어</li>
+<li>클래스기반 언어 : 자바, C++, 루비 </li>
+<li>프로토타입 기반 언어: 자바스크립트, 셀프</li>
+<li>절차적 언어: C, 파스칼</li>
+</ul>
+<p>프로그래밍 언어 타입은 <strong>객체지향 언어</strong> 타입과 <strong>절차적 언어</strong> 로 분류할 수 있다.<br>나아가 객체지향 언어타입의 자바와 루비는 <strong>클래스 기반 언어</strong> 자바스크립트는 <strong>프로토타입 기반 언어</strong> 로 분류할 수 있다.  </p>
+<p>타입이 다른 타입에 포함될 수 있기 때문에 동일한 인스턴스가 하나 이상의 타입으로 분류되는 것도 가능하다<br>자바는 <strong>프로그래밍 언어</strong> 인 동시에 <strong>객체지향 언어</strong> 에 속하며 더 세부적으로 <strong>클래스 기반 언어</strong> 타입에 속한다</p>
+<p>다른 타입을 포함하는 타입은 포함되는 타입보다 좀 더 일반화된 의미를 표현할 수 있다.<br><strong>프로그래밍 언어</strong> 타입은 <strong>객체지향 언어</strong> 타입보다 더 일반적이고 <strong>객체지향 언어</strong> 타입은 <strong>클래스 기반 언어</strong> 보다 더 일반적이다.</p>
+<p>포함하는 타입은 외연 관점에서는 더 크고 내연 관점에서는 더 일반적이다.<br>포함되는 타입은 외원 관점에서는 더 작고 내연 관점에서는 더 특수하다.<br>이것은 포함 관계로 연결된 타입 사이에 개념적으로 <strong>일반화(generalization)와 특수화(specialization)</strong> 관계가 존재한다는 것을 의미한다.</p>
+<h2 id="타입-계층"><a href="#타입-계층" class="headerlink" title="타입 계층"></a>타입 계층</h2><p><img src="./type-tree.jpeg" alt="type-tree"></p>
+<p>타입 계층을 표현할 때는 더 일반적인 타입을 위쪽에 더 특수한 타입을 아래쪽에 배치하는 것이 관례다.  </p>
+<ul>
+<li><p><strong>슈퍼타입(supertype)</strong> : 타입계층을 구성하는 두 타입 간의 관계에서 더 일반적인 타입</p>
+<ul>
+<li>프로그래밍 언어 타입은 객체지향 언어, 절차적 언어의 슈퍼타입이다.</li>
+</ul>
+</li>
+<li><p><strong>서브타입(subtype)</strong> : 타입계층을 구성하는 두 타입 간의 관계에서 더 특수한 타입</p>
+</li>
+</ul>
+<h2 id="내연과-외연-관점에서의-일반화와-특수화"><a href="#내연과-외연-관점에서의-일반화와-특수화" class="headerlink" title="내연과 외연 관점에서의 일반화와 특수화"></a>내연과 외연 관점에서의 일반화와 특수화</h2><ul>
+<li>내연 관점<ul>
+<li>일반화 : 어떤 타입의 정의를 좀 더 보편적이고 추상적으로 만드는 과정</li>
+<li>특수화 : 어떤 타입의 정의를 좀 더 구체적이고 문맥 종속적으로 만드는 과정</li>
+</ul>
+</li>
+<li>외연 관점<ul>
+<li>일반화 : 특수한 타입의 인스턴스 집합을 표현하는 슈퍼셋(superset)</li>
+<li>특수화 : 일반적인 타입의 인스턴스 집합에 포함된 서브셋(subset)</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>일반화는 다른 타입을 완전히 포함하거나 내포하는 타입을 식별하는 행위 또는 행위의 결과<br>특수화는 다른 타입 안에 전체적으로 포함되거나 완전히 내포되는 타입을 식별하는 행위 또는 행위의 결과</p>
+</blockquote>
+<ul>
+<li>슈퍼타입(superset)<ul>
+<li>집합이 다른 집합의 모든 멤버를 포함한다</li>
+<li>타입 정의가 다른 타입보다 좀 더 일반적이다</li>
+</ul>
+</li>
+<li>서브타입(subset)<ul>
+<li>집합에 포함되는 인스턴스들이 더 큰 집합에 포함된다</li>
+<li>타입 정의가 다른 타입보다 좀 더 구체적이다</li>
+</ul>
+</li>
+</ul>
+<h1 id="객체지향-프로그래밍과-타입-계층"><a href="#객체지향-프로그래밍과-타입-계층" class="headerlink" title="객체지향 프로그래밍과 타입 계층"></a>객체지향 프로그래밍과 타입 계층</h1><p>객체의 타입을 결정하는 것은 퍼블릭 인터페이스다<br>일반적인 타입이란 비교하려는 타입에 속한 객체들의 퍼블릭 인터페이스보다 더 일반적인 퍼블릭 인터페이스를 가지는 객체들의 타입을 의미한다.  </p>
+<p>퍼블릭 인터페이스의 관점에서 슈퍼타입과 서브타입을 다음과 같이 정의할 수 있다. </p>
+<ul>
+<li><p><strong>슈퍼타입</strong> 이란 서브타입이 정의한 퍼블릭 인터페이스를 일반화 시켜 상대적으로 범용적이고 <strong>넓은 의미</strong> 로 정의한 것이다.</p>
+</li>
+<li><p><strong>서브타입</strong> 이란 슈퍼타입이 정의한 퍼블릭 인터페이스를 특수화 시켜 상대적으로 범용적이고 <strong>좁은 의미</strong> 로 정의한 것이다.</p>
+</li>
+</ul>
+<h1 id="서브클래싱과-서브타이핑"><a href="#서브클래싱과-서브타이핑" class="headerlink" title="서브클래싱과 서브타이핑"></a>서브클래싱과 서브타이핑</h1><p>객체지향 프로그래밍 언어에서 타입을 구현하는 일반적인 방법은 클래스를 이용하는 것이다.<br>그리고 타입 계층을 구현하는 일반적인 방법은 상속을 이용하는 것이다.  </p>
+<ul>
+<li>슈퍼타입 : 부모 클래스</li>
+<li>서브타입 : 자식 클래스</li>
+</ul>
+<h2 id="언제-상속을-사용해야-하는가"><a href="#언제-상속을-사용해야-하는가" class="headerlink" title="언제 상속을 사용해야 하는가?"></a>언제 상속을 사용해야 하는가?</h2><p>아래 질문에 모두 yes라고 답할 수 있을때만 상속을 사용한다</p>
+<ul>
+<li>상속관계가 is-a 관계를 모델링하는가?<ul>
+<li>일반적으로 <strong>자식 클래스 is 부모 클래스</strong> 라고 말해도 이상하지 않다면 상속을 사용할 후보로 간주할 수 있다.</li>
+</ul>
+</li>
+<li>클라이언트 입장에서 부모 클래스의 타입으로 자식 클래스를 사용해도 무방한가?<ul>
+<li>상속 계층을 사용하는 클라이언트 입장에서 부모 클래스와 자식 클래스의 차이점을 몰라야 한다.</li>
+<li>이를 자식 클래스와 부모 클래스 사이의 <strong>행동 호환성</strong> 이라 부른다.</li>
+</ul>
+</li>
+</ul>
+<p>중요한 점은 <strong>클라이언트 입장에서 부모 클래스의 타입으로 자식 클래스를 사용해도 무방한가?</strong> 이 질문에 포커스를 맞춰야 한다.<br>클라이언트 관점에서 두 클래스에 대해 기대하는 <strong>행동</strong> 이 다르라면 is-a 관계가 성립하더라도 상속을 사용해서는 안된다.</p>
+<h2 id="is-a-관계"><a href="#is-a-관계" class="headerlink" title="is-a 관계"></a>is-a 관계</h2><p>두 클래스가 어휘적으로 <strong>is-a</strong> 관계를 모델링할 경우에만 상속을 사용해야 한다<br>하지만 is-a 관계가 직관적이고 명확하지는 않다  </p>
+<p>다음의 예는 is-a 관계가 직관적이지 않음을 보여주는 예시이다</p>
+<ul>
+<li>펭귄은 새다</li>
+<li>새는 날 수 있다</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Bird</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">fly</span><span class="params">()</span> &#123;....&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Penguin</span> <span class="keyword">extends</span> <span class="title class_">Bird</span> &#123;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>펭귄은 분명 새지만 날 수 없는 새이다. 하지만 코드에서는 <strong>펭귄은 새이고 날 수 있다</strong> 라고 표현되고 있다.<br>이 예는 어휘적인 정의가 아니라 기대되는 행동에 따라 타입 계층을 구성해야 한다는 사실을 잘 보여준다.<br>어휘적으로는 펭귄은 새지만 만약 새의 정의에 날 수 있다는 행동이 포함된다면 펭귄은 새의 서브타입이 될 수 없다.  </p>
+<p>타입 계층의 의미는 <strong>행동</strong> 이라는 문맥에 따라 달라질 수 있다.<br>따라서 슈퍼타입과 서브타입 관계에서는 is-a보다 행동 호환성이 더 중요하다</p>
+<h2 id="행동-호환성"><a href="#행동-호환성" class="headerlink" title="행동 호환성"></a>행동 호환성</h2><p>타입 사이에 개념적으로 어떤 연관성이 있다고 하더라도 행동에 연관성이 없다면 is-a 관계를 사용하지 말아야 한다.<br>결론은 두 타입 사이에 행동이 호환되는 경우에만 타입 계층으로 묶어야 한다.  </p>
+<p>행동의 호환 여부를 판단하는 기준은 <strong>클라이언트 관점</strong> 이다.<br>클라이언트가 두 타입이 동일하게 행동할 것이라고 기대한다면 두 타입을 타입 계층으로 묶을 수 있다.<br>하지만 클라이언트가 두 타입이 동일하게 행동하지 않을 것이라고 기대한다면 두 타입을 타입 계층으로 묶어서는 안된다.</p>
+<h2 id="인터페이스-분리-원칙-ISP"><a href="#인터페이스-분리-원칙-ISP" class="headerlink" title="인터페이스 분리 원칙 (ISP)"></a>인터페이스 분리 원칙 (ISP)</h2><p>클라이언트에 따라 인터페이스를 분리하면 변경에 대한 영향을 더 세밀하게 제어할 수 있다.<br>대부분의 경우 인터페이스는 <strong>클라이언트의 요구가 바뀜에 따라 변경된다</strong><br>클라이언트에 따라 인터페이스를 분리하면 각 클라이언트의 요구가 바뀌더라도 영향의 파급효과를 효과적으로 제어할 수 있게 된다.  </p>
+<p>이처럼 <strong>인터페이스를 클라이언트의 기대에 따라 분리함으로써 변경에 의해 영향을 제어</strong> 하는 설계 원칙을<br><strong>인터페이스 분리 원칙(Interface Segregation Principle, ISP)</strong> 라고 한다.</p>
+<p><strong>비대한 인터페이스</strong></p>
+<ul>
+<li>비대한 인터페이스를 가지는 클래스는 응집성이 없는 인터페이스를 가지는 클래스이다.  </li>
+<li>이런 클래스의 인터페이스는 메서드의 그룹으로 분해될 수 있고, 각 그룹은 각기 다른 클라이언트 집합을 지원한다.</li>
+</ul>
+<p><strong>비대한 클래스</strong> </p>
+<ul>
+<li>클라이언트 사이에 이상하고 해로운 결합이 생기게 만든다</li>
+<li>클라이언트가 비대한 클래스에 변경을 가하면 나머지 모든 클래스가 영향을 받는다</li>
+</ul>
+<p><strong>비대한 인터페이스의 단점 해결하기</strong></p>
+<ul>
+<li>클라이언트는 자신이 실제로 호출하는 메서드에만 의존해야 한다.</li>
+<li>비대한 클래스의 인터페이스를 여러개로 분리함으로써 해결할 수 있다.</li>
+<li>호출되지 않는 메서드에 대한 클라이언트의 의존성을 끊고 클라이언트가 서로에 대해 독립적이 되게 만들 수 있다.</li>
+</ul>
+<h1 id="서브클래싱과-서브-타이핑"><a href="#서브클래싱과-서브-타이핑" class="headerlink" title="서브클래싱과 서브 타이핑"></a>서브클래싱과 서브 타이핑</h1><ul>
+<li><strong>서브클래싱(subclassing)</strong> : 다른 클래스의 코드를 재사용할 목적으로 상속을 사용하는 경우<ul>
+<li>자식 클래스와 부모 클래스의 행동이 호환되지 않기 때문에 자식 클래스의 인스턴스가 부모 클래스의 인스턴스를 대체할 수 없다.</li>
+<li>구현상속(implementation inheritance) 또는 클래스 상속 (class inheritance)이라고 부른다</li>
+</ul>
+</li>
+<li><strong>서브타이핑(subtyping)</strong> : 타입 계층을 구성하기 위해 상속을 사용하는 경우<ul>
+<li>자식클래스와 부모 클래스의 행동이 호환되기 때문에 자식 클래스의 인스턴스가 부모 클래스의 인스턴스를 대체할 수 있다.</li>
+<li>서브타이핑을 인터페이스 상속 (interface inheritance) 이라고 한다</li>
+<li>서브타입이 슈퍼타입이 하는 모든 행동을 동일하게 할 수 있어야 한다</li>
+<li>행동 호환성을 만족 시켜야 한다.</li>
+</ul>
+</li>
+</ul>
+<p>슈퍼타입과 서브타입 사이의 관계에서 가장 중요한 것은 <strong>퍼블릭 인터페이스</strong> 이다.<br>슈퍼타입 인스턴스를 요구하는 모든 곳에서 서브타입의 인스턴스를 대신 사용하기 위해 만족해야 하는 최소한의 조건은 서브타입의 퍼블릭 인터페이스가 슈퍼 타입에서 정의한 퍼블릭 인터페이스와 동일하거나 더 많은 오퍼레이션을 포함해야 한다.<br>따라서 개념적으로 서브타입이 슈퍼타입의 퍼블릭 인터페이스를 상속받는 것 처럼 보이게 된다.</p>
+<h1 id="리스코프-치환-원칙"><a href="#리스코프-치환-원칙" class="headerlink" title="리스코프 치환 원칙"></a>리스코프 치환 원칙</h1><p>바바라 리스코프는 올바른 상속 관계의 특징을 정의하기 위해 <strong>리스코프 치환 원칙(Liskov Substitution Principle, LSP)</strong> 을 발표했다.<br>상속 관계로 연결한 두 클래스가 서브타이핑 관계를 만족시키기 위해서는 다음의 조건을 만족해야 한다.</p>
+<blockquote>
+<p>S형의 각 객체 o1에 대해 T형의 객체 o2가 하나 있고,<br>T에 의해 정의된 모든 프로그램 P에서 T가 S로 치환될 때 P의 동작이 변하지 않으면 S는 T의 서브타입이다.</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">S o1 = new S();</span><br><span class="line">T o2 = new T();</span><br><span class="line"> </span><br><span class="line">P(o1); //정상</span><br><span class="line">P(o2); //정상 </span><br></pre></td></tr></table></figure>
+
+<p>리스코프 치환 원칙을 정리하면 <strong>서브타입은 그것의 기반 타입에 대해 대체 가능해야 한다</strong><br>클라이언트가 차이점을 인식하지 못한 채 파생 클래스의 인터페이스를 통해 서브클래스를 사용할 수 있어야 한다는 것이다.<br>리스코프 치환 원칙은 <strong>행동 호환성</strong>을 설계 원칙으로 정리한 것이다.</p>
+<p>따라서 <strong>행동호환성을 유지함으로써 부모 클래스를 대체할 수 있도록 구현된 상속 관계</strong>만을 서브타이핑이라고 해야한다.<br>Stack과 Vector는 리스코프 치환 원칙을 위반하는 전형적인 예이다. </p>
+<h2 id="Stack과-Vector"><a href="#Stack과-Vector" class="headerlink" title="Stack과 Vector"></a>Stack과 Vector</h2><p>클라이언트가 부모 클래스인 Vector에 대해 기대하는 행동을 Stack에서는 기대할 수 없기 때문에 행동 호환성을 만족 시키지 않는다.<br>Vector와 Stack는 Vector의 코드를 재사용하는 목적만으로 상속을 사용했기 때문에 서브클래싱 관계이다.</p>
+<p>리스코프 치환 원칙을 위반하는 가장 큰 이유는 상속으로 인해 Stack에 포함돼서는 안 되는 Vector의 퍼블릭 인터페이스가 Stack의 퍼블릭 인터페이스에 포함됐기 때문이다.<br>Vector를 사용하는 클라이언트의 관점에서 Stack의 행동은 Vector의 행동과 호환되지 않는다.</p>
+<h2 id="클라이언트가-보기에는"><a href="#클라이언트가-보기에는" class="headerlink" title="클라이언트가 보기에는.."></a>클라이언트가 보기에는..</h2><p>상속이 적합한지를 판단하기 위해 두 가지 질문을 다시 한번 보면</p>
+<ul>
+<li>(클라이언트 입장에서) 상속관계가 is-a 관계를 모델링하는가?</li>
+<li>클라이언트 입장에서 부모 클래스의 타입으로 자식 클래스를 사용해도 무방한가?</li>
+</ul>
+<p>is-a 관계는 객체지향에서 중요한 것은 객체의 속성이 아니라 객체의 행동이라는 점을 강조한다.<br>일반적으로 클라이언트를 고려하지 않은 채 개념과 속성의 측면에서 상속 관계를 정할 경우 리스코프 치환 원칙을 위반하는 서브클래싱에 이르게 될 확률이 높다.</p>
+<p>결론적으로 상속이 서브타이핑을 위해 사용될 경우에만 is-a 관계다.<br>서브클래싱을 구현하기 위해 상속을 사용했다면 is-a 관계라고 할 수 없다.</p>
+<h2 id="유연한-설계의-기반"><a href="#유연한-설계의-기반" class="headerlink" title="유연한 설계의 기반"></a>유연한 설계의 기반</h2><p>리스코프 치환 원칙은 클라이언트가 어떤 자식 클래스와도 안정적으로 협력할 수 있는 상속 구조를 구현할 수 있는 가이드라인을 제공한다.<br>새로운 자식 클래스를 추가하더라도 클라이언트 입장에서 동일하게 행동하기만 한다면 클라이언트를 수정하지 않고도 상속 계층을 확장할 수 있다.<br>다시 말해서 클라이언트의 입장에서 퍼블릭 인터페이스와 행동 방식이 변경되지 않는다면 클라이언트의 코드를 변경하지 않고도 새로운 자식 클래스와 협력할 수 있게 된다는 것이다. </p>
+<p>자식 클래스가 클라이언트 관점에서 부모 클래스를 대체할 수 있다면<br>기능 확장을 위해 자식 클래스를 추가하더라도 코드를 수정할 필요가 없어진다.<br>따라서 리스코프 치환 원칙은 <strong>개방-폐쇄 원칙</strong>을 만족하는 설계를 위한 전제 조건이다.</p>
+<h1 id="계약에-의한-설계와-서브타이핑"><a href="#계약에-의한-설계와-서브타이핑" class="headerlink" title="계약에 의한 설계와 서브타이핑"></a>계약에 의한 설계와 서브타이핑</h1><p>클라이언트와 서버 사이의 협력을 의무와 이익으로 구성된 계약의 관점에서 표현하는 것을 <strong>계약에 의한 설계 (Design By Contract, DBC)</strong> 라고 부른다. </p>
+<p>계약에 의한 설계는 사전조건, 사후조건, 클래스 불변식 세 가지 요소로 구성된다.</p>
+<ul>
+<li><strong>사전조건(precondition)</strong> : 클라이언트가 정상적으로 메서드를 실행하기 위해 만족시켜야 하는 조건</li>
+<li><strong>사후조건(postcondition)</strong> : 메서드가 실행된 후에 클라이언트에게 보장해야 하는 조건</li>
+<li><strong>클래스 불변식(class invariant)</strong> : 메서드 실행 전과 실행 후에 인스턴스가 만족시켜야 하는 조건</li>
+</ul>
+<p>리스코프 치환 원칙은 어떤 타입이 서브타입이 되기 위해서는 슈퍼타입의 인스턴스와 협력하는 클라이언트 관점에서<br>서브타입의 인스턴스가 슈퍼타입을 대체하더라도 협력에 지장이 없어야 한다는 것을 의미한다<br>따라서 계약에 의한 설계를 사용하면 리스코프 치환 원칙이 강제하는 조건을 계약의 개념을 이용해 좀 더 명확하게 설명할 수 있다.</p>
+<blockquote>
+<p><strong>리스코프 치환 원칙과 계약에 의한 설계</strong></p>
+<p>서브타입이 리스코프 치환 원칙을 만족시키기 위해서는 클라이언트와 슈퍼타입 간에 체결된 <strong>계약</strong> 을 준수해야한다.</p>
+</blockquote>
+<h2 id="서브타입과-계약"><a href="#서브타입과-계약" class="headerlink" title="서브타입과 계약"></a>서브타입과 계약</h2><p>계약의 관점에서 상속이 초래하는 가장 큰 문제는 자식 클래스가 부모 클래스의 메서드를 오버라이딩할 수 있다는 것이다.</p>
+<p>계약의 관점에서 볼때 아래의 규칙을 지켜야 한다.</p>
+<ul>
+<li>서브타입에서 더 강력한 사전조건을 정의할 수 없다.<ul>
+<li>사전에 슈퍼타입에서 계약한 행동을 위반한다.</li>
+<li>예시) <ul>
+<li>슈퍼타입 메서드의 파라미터는 정수만 들어올 수 있다.</li>
+<li>서브타입 메서드의 파라미터는 양수만 들어올 수 있다. (더 강한 사전조건) <ul>
+<li>슈퍼타입에서는 음수도 들어올 수 있어서 <strong>행동 호환성</strong> 이 맞지 않는다.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>서브타입에 슈퍼타입과 같거나 더 약한 사전조건을 정의할 수 있다.<ul>
+<li>예시)<ul>
+<li>슈퍼타입 메서드의 파라미터는 양수만 들어올 수 있다.</li>
+<li>서브타입 메서드의 파라미터는 정수만 들어올 수 있다. (더 약한 사전조건) <ul>
+<li>슈퍼타입을 사용하는 클라이언트는 어차피 양수만 넣을 것이다.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>서브타입에 슈퍼타입과 같거나 더 강한 사후조건을 정의할 수 있다.<ul>
+<li>예시)<ul>
+<li>슈퍼타입 메서드의 반환 값은 0보다 큰 값이다.</li>
+<li>서브타입 메서드의 반환 값은 1000보다 큰 값이다. (더 강한 사후조건) <ul>
+<li>슈퍼타입을 사용하는 클라이언트는 어차피 0보다 큰 값이면 된다</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>서브타입에 더 약한 사후조건을 정의할 수 없다.<ul>
+<li>예시)<ul>
+<li>슈퍼타입 메서드의 반환 값은 1000보다 큰 값이다.</li>
+<li>서브타입 메서드의 반환 값은 0보다 큰 값이다. (더 약한 사후조건) <ul>
+<li>슈퍼타입을 사용하는 클라이언트는 1000보다 큰 값을 기대하기 때문에 <strong>행동 호환성</strong> 이 맞지 않는다.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>위처럼 서브타이핑을 위해 상속을 사용하는 경우 슈퍼타입에서 클라이언트와 맺고 있는 계약에 대해 고민해야 한다.</p>
+<h1 id="참고"><a href="#참고" class="headerlink" title="참고"></a>참고</h1><ul>
+<li>Objects(코드로 이해하는 객체지향 설계) - chapter13. 서브클래싱과 서브타이핑</li>
+</ul>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">Carrey</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://jaehun2841.github.io/2020/07/18/object-chapter13/">https://jaehun2841.github.io/2020/07/18/object-chapter13/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="../../../../tags/Object-Study/">Object-Study</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="../../25/object-chapter15/"><i class="fa fa-chevron-left">  </i><span>Objects Study - Chapter15. 디자인 패턴과 프레임워크</span></a></div><div class="next-post pull-right"><a href="../../12/object-chapter12/"><span>Objects Study - Chapter12. 다형성</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="disqus_thread"></div><script>var unused = null;
+var disqus_config = function () {
+  this.page.url = 'https://jaehun2841.github.io/2020/07/18/object-chapter13/';
+  this.page.identifier = '2020/07/18/object-chapter13/';
+  this.page.title = 'Objects Study - Chapter13. 서브클래싱과 서브타이핑';
+}
+var d = document, s = d.createElement('script');
+s.src = "https://" + 'Carrey' +".disqus.com/embed.js";
+s.setAttribute('data-timestamp', '' + +new Date());
+(d.head || d.body).appendChild(s);</script></div></div><footer><div class="layout" id="footer"><div class="copyright">&copy;2018 - 2022 By Carrey</div><div class="framework-info"><span>Driven - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="../../../../js/utils.js?version=1.9.0"></script><script src="../../../../js/fancybox.js?version=1.9.0"></script><script src="../../../../js/sidebar.js?version=1.9.0"></script><script src="../../../../js/copy.js?version=1.9.0"></script><script src="../../../../js/fireworks.js?version=1.9.0"></script><script src="../../../../js/transition.js?version=1.9.0"></script><script src="../../../../js/scroll.js?version=1.9.0"></script><script src="../../../../js/head.js?version=1.9.0"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script></body></html>

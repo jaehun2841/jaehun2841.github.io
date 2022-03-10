@@ -1,0 +1,120 @@
+<!DOCTYPE html><html lang="lang"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="Item 61. 박싱된 기본 타입보다는 기본 타입을 사용하라"><meta name="keywords" content="Effective-Java"><meta name="author" content="Carrey"><meta name="copyright" content="Carrey"><title>Item 61. 박싱된 기본 타입보다는 기본 타입을 사용하라 | Carrey`s 기술블로그</title><link rel="shortcut icon" href="../../../../melody-favicon.ico"><link rel="stylesheet" href="../../../../css/index.css?version=1.9.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.9.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  hexoVersion: '6.0.0'
+} </script><meta name="generator" content="Hexo 6.0.0"></head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%EC%84%9C%EB%A1%A0"><span class="toc-number">1.</span> <span class="toc-text">서론</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%EA%B8%B0%EB%B3%B8-%ED%83%80%EC%9E%85-Primitive-Type"><span class="toc-number">1.1.</span> <span class="toc-text">기본 타입 (Primitive Type)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%B0%B8%EC%A1%B0-%ED%83%80%EC%9E%85-Reference-Type"><span class="toc-number">1.2.</span> <span class="toc-text">참조 타입 (Reference Type)</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Auto-Boxing-vs-Auto-UnBoxing"><span class="toc-number">2.</span> <span class="toc-text">Auto Boxing vs Auto UnBoxing</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EA%B8%B0%EB%B3%B8%ED%83%80%EC%9E%85-vs-%EC%B0%B8%EC%A1%B0%ED%83%80%EC%9E%85"><span class="toc-number">3.</span> <span class="toc-text">기본타입 vs 참조타입</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EC%9E%98%EB%AA%BB-%EA%B5%AC%ED%98%84%EB%90%9C-%EB%B9%84%EA%B5%90%EC%9E%90-%EC%98%88%EC%A0%9C"><span class="toc-number">4.</span> <span class="toc-text">잘못 구현된 비교자 예제</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EA%B0%91%EC%9E%90%EA%B8%B0-%EB%B0%9C%EC%83%9D%ED%95%98%EB%8A%94-NullPointerException"><span class="toc-number">5.</span> <span class="toc-text">갑자기 발생하는 NullPointerException</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EC%9D%98%EB%8F%84%ED%95%98%EC%A7%80-%EC%95%8A%EC%9D%80-Auto-Boxing%EC%9C%BC%EB%A1%9C-%EC%9D%B8%ED%95%9C-%EC%84%B1%EB%8A%A5%EC%A0%80%ED%95%98"><span class="toc-number">6.</span> <span class="toc-text">의도하지 않은 Auto Boxing으로 인한 성능저하</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EB%B0%95%EC%8B%B1%EB%90%9C-%EA%B8%B0%EB%B3%B8%ED%83%80%EC%9E%85%EC%9D%80-%EC%96%B8%EC%A0%9C-%EC%82%AC%EC%9A%A9%ED%95%B4%EC%95%BC-%ED%95%98%EB%8A%94%EA%B0%80"><span class="toc-number">7.</span> <span class="toc-text">박싱된 기본타입은 언제 사용해야 하는가?</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EC%A0%95%EB%A6%AC"><span class="toc-number">8.</span> <span class="toc-text">정리</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EC%B0%B8%EA%B3%A0"><span class="toc-number">9.</span> <span class="toc-text">참고</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://www.gravatar.com/avatar/3f8583b7b0f0c1ebd249dffad42707af?s=300"></div><div class="author-info__name text-center">Carrey</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="../../../../archives"><span class="pull-left">Articles</span><span class="pull-right">112</span></a><a class="author-info-articles__tags article-meta" href="../../../../tags"><span class="pull-left">Tags</span><span class="pull-right">27</span></a></div></div></div><div id="content-outer"><div class="no-bg" id="top-container"><div id="page-header"><span class="pull-left"> <a id="site-name" href="../../../../index.html">Carrey`s 기술블로그</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span><span class="pull-right"></span></div><div id="post-info"><div id="post-title">Item 61. 박싱된 기본 타입보다는 기본 타입을 사용하라</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2019-03-01</time></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h1 id="서론"><a href="#서론" class="headerlink" title="서론"></a>서론</h1><p>자바의 데이터 타입은 크게 두 가지로 나눌 수 있다.<br><strong>기본 타입 (Primitive type) vs 참조 타입 (Reference Type)</strong> 으로 구분 할 수 있다.  </p>
+<h2 id="기본-타입-Primitive-Type"><a href="#기본-타입-Primitive-Type" class="headerlink" title="기본 타입 (Primitive Type)"></a>기본 타입 (Primitive Type)</h2><ul>
+<li>int</li>
+<li>long</li>
+<li>short</li>
+<li>double</li>
+<li>char</li>
+<li>boolean</li>
+</ul>
+<h2 id="참조-타입-Reference-Type"><a href="#참조-타입-Reference-Type" class="headerlink" title="참조 타입 (Reference Type)"></a>참조 타입 (Reference Type)</h2><ul>
+<li>String</li>
+<li>Integer</li>
+<li>Long</li>
+<li>Double</li>
+<li>Boolean</li>
+</ul>
+<p>기본 타입에 대응되는 참조 타입이 하나씩 있으며, 이를 박싱된 기본 타입이라고 한다.</p>
+<h1 id="Auto-Boxing-vs-Auto-UnBoxing"><a href="#Auto-Boxing-vs-Auto-UnBoxing" class="headerlink" title="Auto Boxing vs Auto UnBoxing"></a>Auto Boxing vs Auto UnBoxing</h1><p>Java 1.5 부터 기본 타입과 래퍼 타입(Wrapper Type, 참조 타입에 대한 클래스를 래퍼 클래스라고 함)을 자동으로 변환해 주는 기능이 추가되었다.    </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Integer</span> <span class="variable">i</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Integer</span>(<span class="number">5</span>);</span><br><span class="line"><span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> i; <span class="comment">// Auto UnBoxing</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="variable">k</span> <span class="operator">=</span> <span class="number">10</span>;</span><br><span class="line"><span class="type">Integer</span> <span class="variable">l</span> <span class="operator">=</span> k; <span class="comment">//Auto Boxing</span></span><br></pre></td></tr></table></figure>
+
+<p>이 기능 때문에 개발자는 별도로 Boxing과 UnBoxing을 수행해 주지 않아도 되지만, 그렇다고 두 개가 같은 것은 아니다.<br>기본 타입과 래퍼 타입에는 차이가 있으니 어떤 타입을 사용하는지는 상당히 중요하다.</p>
+<h1 id="기본타입-vs-참조타입"><a href="#기본타입-vs-참조타입" class="headerlink" title="기본타입 vs 참조타입"></a>기본타입 vs 참조타입</h1><p>기본 타입과 참조 타입의 차이점은 크게 3가지이다.</p>
+<ul>
+<li><p>기본 타입은 값만 가지고 있으나, 박싱된 기본 타입은 값에 더해 식별성(identity)란 속성을 갖는다.</p>
+<ul>
+<li><p>기본 타입은 흔히 말하는 리터럴(Literal)이다.</p>
+<blockquote>
+<p>리터럴(Literal)이란?</p>
+<p>소스 코드의 고정된 값을 의미하는 용어이다.<br>상수(Constants) 또는 변수(Variable)에 할당 할 수 있는 값 자체를 일컫는 용어이다.</p>
+</blockquote>
+</li>
+<li><p>기본 타입의 값은 JVM내의 Stack 메모리에 저장된다.</p>
+</li>
+<li><p>참조 타입의 값은 객체 내의 상수에 저장된다. 따라서 JVM 내의 Heap 메모리에 저장된다.</p>
+</li>
+<li><p>따라서 박싱된 타입의 객체는 같은 값이라 하더라도 다른 객체일 경우에는 다르다고 식별이 가능하다.</p>
+</li>
+</ul>
+</li>
+<li><p>기본 타입의 값은 언제나 유효한 값을 가지고 있으나 박싱된 기본타입은 유효하지 않을 수 있다.</p>
+<ul>
+<li>기본타입의 값은 Java의 경우 초기화 되지 않으면 0으로 초기화 된다.</li>
+<li>박싱된 기본 타입의 경우에는 초기화 되지 않으면 null이 될 수 있다.</li>
+</ul>
+</li>
+<li><p>기본 타입이 박싱된 기본 타입보다 시간과 메모리 사용면에서 더 효율적이다.</p>
+<ul>
+<li>박싱된 타입은 heap에 객체를 생성하기 때문에 메모리 사용면에서 더 안좋다.</li>
+<li>기본타입은 변수에 값이 있는 반면, 박싱된 기본 타입은 변수의 객체참조 정보를 바탕으로 heap에서 찾으므로<br>시간적인 측면에서 기본타입보다 값에 접근하는 시간이 더 들게 된다.</li>
+</ul>
+</li>
+</ul>
+<h1 id="잘못-구현된-비교자-예제"><a href="#잘못-구현된-비교자-예제" class="headerlink" title="잘못 구현된 비교자 예제"></a>잘못 구현된 비교자 예제</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Comparator&lt;Integer&gt; naturalOrder = (i, j) -&gt; (i &lt; j) ? -<span class="number">1</span> : (i == j ? <span class="number">0</span> : <span class="number">1</span>); </span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>위의 코드를 기반으로 Integer비교가 실행되면 같은 값을 비교한다고 해도 1이 나올 수 있다.</li>
+<li>첫번째 i &lt; j 에 대한 연산 시, Integer타입인 i와 j는 기본타입 int로 언박싱된다.</li>
+<li>첫번째 연산이 false이면 두번째 연산 i &#x3D;&#x3D; j에서도 false가 발생하게 된다.</li>
+<li>이유는, (i, j)의 타입이 Integer로 추론되기 때문에 i &#x3D;&#x3D; j 연산이 이루어질 때 객체의 동일성검사가 이루어져 false가 발생하기 때문이다. (i와 j는 내부 값은 같지만 서로 다른 객체이기 때문이다.)</li>
+</ul>
+<p><strong>이처럼 같은 객체가 아니라면 박싱된 기본타입에 &#x3D;&#x3D; 연산자를 이용하여 비교하면 예상과는 다른 결과가 나올 수 있다.</strong>  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Comparator&lt;Integer&gt; naturalOrder = (i, j) -&gt; &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">unBoxi</span> <span class="operator">=</span> i;</span><br><span class="line">    	<span class="type">int</span> <span class="variable">unBoxj</span> <span class="operator">=</span> j;</span><br><span class="line">    	<span class="keyword">return</span> (unBoxi &lt; unBoxj) ? -<span class="number">1</span> : (unBoxi == unBoxj ? <span class="number">0</span> : <span class="number">1</span>); </span><br><span class="line">&#125;	</span><br></pre></td></tr></table></figure>
+
+<p>위와 같이 수정하면 정상적인 결과를 얻을 수 있다.</p>
+<h1 id="갑자기-발생하는-NullPointerException"><a href="#갑자기-발생하는-NullPointerException" class="headerlink" title="갑자기 발생하는 NullPointerException"></a>갑자기 발생하는 NullPointerException</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Unbelievable</span> &#123;</span><br><span class="line">    <span class="keyword">static</span> Integer i;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (i == <span class="number">42</span>) &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;믿을 수 없군&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>이 프로그램은 “믿을 수 없군”을 출력하지는 않지만, 전혀 예상하지 못한 결과를 보여준다.<br>i &#x3D;&#x3D; 42를 검사하는 과정에서 NullPointerException을 던진다.<br>원인은 i가 literal 값인 42와 비교하는 과정에서 i는 Auto UnBoxing을 수행한다.<br>하지만  i는 null이기 때문에 Auto UnBoxing을 수행하는 과정에서 NullPointerException을 발생시키게 된다.  </p>
+<p><strong>기본 타입과 박싱된 기본 타입을 혼용한 연산에서는 박싱된 기본 타입의 박싱이 자동으로 풀린다.</strong><br>하지만 박싱된 기본타입이 null인 경우에는 NullPointerException이 발생하니 주의 해야 한다.</p>
+<h1 id="의도하지-않은-Auto-Boxing으로-인한-성능저하"><a href="#의도하지-않은-Auto-Boxing으로-인한-성능저하" class="headerlink" title="의도하지 않은 Auto Boxing으로 인한 성능저하"></a>의도하지 않은 Auto Boxing으로 인한 성능저하</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    <span class="type">Long</span> <span class="variable">sum</span> <span class="operator">=</span> <span class="number">0L</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">long</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0L</span>; i &lt; Integer.MAX_VALUE; i++) &#123;</span><br><span class="line">        sum += i; <span class="comment">//sum이 UnBoxing되어 i와 연산되고 연산 후에 AutoBoxing되어 Long타입으로 변환된다.</span></span><br><span class="line">    &#125;</span><br><span class="line">    System.out.println(sum);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>위 코드는 sum을 Long으로 선언하였기 때문에 엄청난 성능상 안좋은 코드이다.<br>sum +&#x3D; i;를 수행하는 과정에서 <strong>sum이 long타입으로 UnBoxing되고</strong> sum + i 연산이 이루어진다음 <strong>Long타입으로 AutoBoxing되기 때문이다.</strong></p>
+<h1 id="박싱된-기본타입은-언제-사용해야-하는가"><a href="#박싱된-기본타입은-언제-사용해야-하는가" class="headerlink" title="박싱된 기본타입은 언제 사용해야 하는가?"></a>박싱된 기본타입은 언제 사용해야 하는가?</h1><ul>
+<li>컬렉션의 원소, 키, 값으로 쓴다.<ul>
+<li>컬렉션은 기본타입을 담을 수 없으므로 어쩔 수 없이 박싱된 기본타입을 사용해야 한다.</li>
+</ul>
+</li>
+<li>제네릭(Generics) 타입을 이용하는 경우에도 박싱된 기본타입을 사용한다.<ul>
+<li>제네릭 타입에서는 int, double과 같은 기본타입을 지원하지 않기 때문이다.</li>
+</ul>
+</li>
+<li>리플렉션(Reflection)을 통해 메서드를 호출할 때에도 박싱된 기본타입을 사용한다.</li>
+</ul>
+<h1 id="정리"><a href="#정리" class="headerlink" title="정리"></a>정리</h1><ul>
+<li>기본 타입과 박싱된 기본 타입을 사용해야 한다면,  가능하면 기본 타입을 사용하는 것이 좋다.</li>
+<li>기본타입은 간단하고 빠르다.</li>
+<li>박싱된 기본 타입을 사용한다면 주의를 기울이자</li>
+<li>AutoBoxing이 기본타입을 변경할 때 번거로움을 줄여주지만 그 위험까지 없애주지는 않는다.<ul>
+<li>박싱된 기본 타입을 &#x3D;&#x3D; 연산자로 비교한다면 객체의 동일성 비교가 이뤄지는데<br>개발자가 의도한 결과가 나오지 않을 가능성이 크다.</li>
+<li>&#x3D;&#x3D; 연산에서 기본 타입과 박싱된 기본 타입의 연산이 이루어지면, 박싱된 기본 타입이 UnBoxing되는데<br>박싱된 기본 타입이 null인 경우 NullPointerException이 발생한다.</li>
+</ul>
+</li>
+<li>기본 타입을 Boxing하는 것은 필요없는 객체를 생성하는 부작용이 나올 수 있다.</li>
+</ul>
+<h1 id="참고"><a href="#참고" class="headerlink" title="참고"></a>참고</h1><ul>
+<li>Effective Java 3rd Edition - Item 61. 박싱된 기본 타입보다는 기본 타입을 사용하라</li>
+</ul>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">Carrey</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://jaehun2841.github.io/2019/03/01/effective-jave-item61/">https://jaehun2841.github.io/2019/03/01/effective-jave-item61/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="../../../../tags/Effective-Java/">Effective-Java</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="../effective-java-item62/"><i class="fa fa-chevron-left">  </i><span>Item 62. 다른 타입이 적절하다면 문자열 사용을 피하라</span></a></div><div class="next-post pull-right"><a href="../../../02/28/effective-java-item60/"><span>Item 60. 정확한 답이 필요하다면 Float와 Double은 피하라</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="disqus_thread"></div><script>var unused = null;
+var disqus_config = function () {
+  this.page.url = 'https://jaehun2841.github.io/2019/03/01/effective-jave-item61/';
+  this.page.identifier = '2019/03/01/effective-jave-item61/';
+  this.page.title = 'Item 61. 박싱된 기본 타입보다는 기본 타입을 사용하라';
+}
+var d = document, s = d.createElement('script');
+s.src = "https://" + 'Carrey' +".disqus.com/embed.js";
+s.setAttribute('data-timestamp', '' + +new Date());
+(d.head || d.body).appendChild(s);</script></div></div><footer><div class="layout" id="footer"><div class="copyright">&copy;2018 - 2022 By Carrey</div><div class="framework-info"><span>Driven - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="../../../../js/utils.js?version=1.9.0"></script><script src="../../../../js/fancybox.js?version=1.9.0"></script><script src="../../../../js/sidebar.js?version=1.9.0"></script><script src="../../../../js/copy.js?version=1.9.0"></script><script src="../../../../js/fireworks.js?version=1.9.0"></script><script src="../../../../js/transition.js?version=1.9.0"></script><script src="../../../../js/scroll.js?version=1.9.0"></script><script src="../../../../js/head.js?version=1.9.0"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script></body></html>
