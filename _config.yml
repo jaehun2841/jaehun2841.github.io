@@ -80,7 +80,7 @@ theme: melody
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repository: https://github.com/jaehun2841/jaehun2841.github.io
+  repository: git@github.com:jaehun2841/jaehun2841.github.io.git
   branch: master
 
 # Crawler
