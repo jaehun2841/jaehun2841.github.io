@@ -1,0 +1,70 @@
+<!DOCTYPE html><html lang="lang"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="Item 57. 지역변수의 범위를 최소화하라"><meta name="keywords" content="Effective-Java"><meta name="author" content="Carrey"><meta name="copyright" content="Carrey"><title>Item 57. 지역변수의 범위를 최소화하라 | Carrey`s 기술블로그</title><link rel="shortcut icon" href="../../../../melody-favicon.ico"><link rel="stylesheet" href="../../../../css/index.css?version=1.9.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.9.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  hexoVersion: '6.0.0'
+} </script><meta name="generator" content="Hexo 6.0.0"></head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%EC%84%9C%EB%A1%A0"><span class="toc-number">1.</span> <span class="toc-text">서론</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EA%B0%80%EC%9E%A5-%EC%B2%98%EC%9D%8C-%EC%93%B0%EC%9D%BC-%EB%95%8C-%EC%84%A0%EC%96%B8%ED%95%98%EB%9D%BC"><span class="toc-number">2.</span> <span class="toc-text">가장 처음 쓰일 때 선언하라</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EB%AA%A8%EB%93%A0-%EC%A7%80%EC%97%AD%EB%B3%80%EC%88%98%EB%8A%94-%EC%84%A0%EC%96%B8%EA%B3%BC-%EB%8F%99%EC%8B%9C%EC%97%90-%EC%B4%88%EA%B8%B0%ED%99%94-%ED%95%98%EB%9D%BC"><span class="toc-number">3.</span> <span class="toc-text">모든 지역변수는 선언과 동시에 초기화 하라</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#while-%EB%AC%B8%EC%9D%84-%EC%82%AC%EC%9A%A9%ED%95%98%EB%8A%94-%EA%B2%BD%EC%9A%B0%EC%97%90%EB%8F%84-for%EB%AC%B8%EC%9D%84-%EC%82%AC%EC%9A%A9%ED%95%98%EB%8A%94-%EA%B2%83%EC%9D%B4-%EB%82%AB%EB%8B%A4"><span class="toc-number">4.</span> <span class="toc-text">while 문을 사용하는 경우에도 for문을 사용하는 것이 낫다.</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EB%A9%94%EC%84%9C%EB%93%9C%EB%A5%BC-%EC%9E%91%EA%B2%8C-%EC%9C%A0%EC%A7%80%ED%95%98%EA%B3%A0-%ED%95%9C-%EA%B0%80%EC%A7%80-%EA%B8%B0%EB%8A%A5%EC%97%90-%EC%A7%91%EC%A4%91%ED%95%98%EB%9D%BC"><span class="toc-number">5.</span> <span class="toc-text">메서드를 작게 유지하고 한 가지 기능에 집중하라</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EC%B0%B8%EA%B3%A0"><span class="toc-number">6.</span> <span class="toc-text">참고</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://www.gravatar.com/avatar/3f8583b7b0f0c1ebd249dffad42707af?s=300"></div><div class="author-info__name text-center">Carrey</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="../../../../archives"><span class="pull-left">Articles</span><span class="pull-right">112</span></a><a class="author-info-articles__tags article-meta" href="../../../../tags"><span class="pull-left">Tags</span><span class="pull-right">27</span></a></div></div></div><div id="content-outer"><div class="no-bg" id="top-container"><div id="page-header"><span class="pull-left"> <a id="site-name" href="../../../../index.html">Carrey`s 기술블로그</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span><span class="pull-right"></span></div><div id="post-info"><div id="post-title">Item 57. 지역변수의 범위를 최소화하라</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2019-02-28</time></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h1 id="서론"><a href="#서론" class="headerlink" title="서론"></a>서론</h1><p><strong>클래스의 멤버와 접근권한을 최소화하라 (Item 15)</strong> 와 취지가 비슷한 장이다.<br>지역변수의 유효범위를 최소로 줄이면 코드 가독성과 유지보수성이 높아지고 오류 가능성은 낮아진다.  </p>
+<h1 id="가장-처음-쓰일-때-선언하라"><a href="#가장-처음-쓰일-때-선언하라" class="headerlink" title="가장 처음 쓰일 때 선언하라"></a>가장 처음 쓰일 때 선언하라</h1><ul>
+<li>사용하려면 멀었는데 미리 변수부터 선언하는 코드는 어수선하고 가독성이 좋지 못하다. </li>
+<li>막상 쓰일 시점에 되서는 무슨 타입이었는지, 무슨 값으로 초기화 했는지 기억이 나지 않을 경우가 있다. </li>
+<li>변수가 쓰이는 범위보다 너무 앞서 선언하거나, 다 쓴 뒤에도 할당해제가 되지 않고 여전히 살아있게 된다.</li>
+<li>변수의 scope를 제한하지 못하면 예상하지 못한 결과를 초래할 수 있으니 주의해야 한다.</li>
+</ul>
+<h1 id="모든-지역변수는-선언과-동시에-초기화-하라"><a href="#모든-지역변수는-선언과-동시에-초기화-하라" class="headerlink" title="모든 지역변수는 선언과 동시에 초기화 하라"></a>모든 지역변수는 선언과 동시에 초기화 하라</h1><ul>
+<li><p>초기화에 필요한 정보가 충분하지 않다면 충분해질 때까지 선언을 미뤄야한다.</p>
+</li>
+<li><p>try-catch-finally 구문에서는 예외다.</p>
+</li>
+<li><p>변수를 초기화 하는 표현식에서 checked exception을 던질 가능성이 있으면, try 절 안에서 초기화 해야한다.</p>
+</li>
+<li><p>만약, catch나 finally절에서 변수를 이용해야 한다면, try절 바로 앞에 변수를 선언해야 한다.</p>
+</li>
+<li><p>반복문에서는 반복 변수(loop variable)의 범위가 반복문의 몸체, 그리고 for 키워드와 몸체 사이 괄호 안으로 제한된다.</p>
+</li>
+<li><p>반복자 (index)를 사용해야 하는 경우에는 for-each 구문보다 전통적인 for문이 낫다.</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (Element e : c) &#123;</span><br><span class="line">    <span class="comment">// e로 무언가를 반복하는 로직을 구성</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(Iterator&lt;Element&gt; i = c.iterator(); i.hasNext();) &#123;</span><br><span class="line">    <span class="type">Element</span> <span class="variable">e</span> <span class="operator">=</span> i.next(); <span class="comment">//e와 i로 무언가를 한다.</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="while-문을-사용하는-경우에도-for문을-사용하는-것이-낫다"><a href="#while-문을-사용하는-경우에도-for문을-사용하는-것이-낫다" class="headerlink" title="while 문을 사용하는 경우에도 for문을 사용하는 것이 낫다."></a>while 문을 사용하는 경우에도 for문을 사용하는 것이 낫다.</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Iterator&lt;Element&gt; i = c.iterator();</span><br><span class="line"><span class="keyword">while</span>(i.hasNext()) &#123;</span><br><span class="line">    doSomeThing(i.next());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Iterator&lt;Element&gt; i2 = c2.iterator();</span><br><span class="line"><span class="keyword">while</span>(i.hasNext()) &#123; </span><br><span class="line">    doSomeThing(i2.next());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>복붙의 여파로 i2.hasNext()이지만 i.hasNext()를 사용하였다.</li>
+<li>컴파일도 잘되고 실행도 잘되지만, 기대한 결과가 도출되지 않는다.</li>
+<li>for문을 포함한 for-each문을 사용하는 경우에는 이러한 문제를 컴파일 타임에 잡아준다.<br>(반복자의 유효범위가 for문의 종료와 함께 끝나기 때문이다.)</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(Iterator&lt;Element&gt; i = c.iterator(); i.hasNext();) &#123;</span><br><span class="line">    <span class="type">Element</span> <span class="variable">e</span> <span class="operator">=</span> i.next();</span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(Iterator&lt;Element&gt; i2 = c2.iterator(); i.hasNext();) &#123;</span><br><span class="line">    <span class="type">Element</span> <span class="variable">e2</span> <span class="operator">=</span> i2.next();</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>두번째 코드의 i.hasNext()에서 i를 찾을 수 없다는 오류를 보여준다.</li>
+</ul>
+<h1 id="메서드를-작게-유지하고-한-가지-기능에-집중하라"><a href="#메서드를-작게-유지하고-한-가지-기능에-집중하라" class="headerlink" title="메서드를 작게 유지하고 한 가지 기능에 집중하라"></a>메서드를 작게 유지하고 한 가지 기능에 집중하라</h1><ul>
+<li>한 메서드에서 여러 가지 기능을 처리한다면 그중 한 기능과만 관련된 지역변수라도 다른 기능을 수행하는 코드에서 접근할 수 있다.</li>
+<li>단순히 메서드를 기능별로만 쪼개자</li>
+</ul>
+<h1 id="참고"><a href="#참고" class="headerlink" title="참고"></a>참고</h1><ul>
+<li>Effective Java 3rd Edition - Item 57. 지역변수의 범위를 최소화하라</li>
+</ul>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">Carrey</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://jaehun2841.github.io/2019/02/28/effective-java-item57/">https://jaehun2841.github.io/2019/02/28/effective-java-item57/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="../../../../tags/Effective-Java/">Effective-Java</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="../effective-java-item58/"><i class="fa fa-chevron-left">  </i><span>Item 58. 전통적인 for 문보다는 For-Each문을 사용하라</span></a></div><div class="next-post pull-right"><a href="../../24/2019-02-24-mongodb-3/"><span>Mongo DB Aggregation Pipeline - SpringBoot에서 사용하기</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="disqus_thread"></div><script>var unused = null;
+var disqus_config = function () {
+  this.page.url = 'https://jaehun2841.github.io/2019/02/28/effective-java-item57/';
+  this.page.identifier = '2019/02/28/effective-java-item57/';
+  this.page.title = 'Item 57. 지역변수의 범위를 최소화하라';
+}
+var d = document, s = d.createElement('script');
+s.src = "https://" + 'Carrey' +".disqus.com/embed.js";
+s.setAttribute('data-timestamp', '' + +new Date());
+(d.head || d.body).appendChild(s);</script></div></div><footer><div class="layout" id="footer"><div class="copyright">&copy;2018 - 2022 By Carrey</div><div class="framework-info"><span>Driven - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="../../../../js/utils.js?version=1.9.0"></script><script src="../../../../js/fancybox.js?version=1.9.0"></script><script src="../../../../js/sidebar.js?version=1.9.0"></script><script src="../../../../js/copy.js?version=1.9.0"></script><script src="../../../../js/fireworks.js?version=1.9.0"></script><script src="../../../../js/transition.js?version=1.9.0"></script><script src="../../../../js/scroll.js?version=1.9.0"></script><script src="../../../../js/head.js?version=1.9.0"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script></body></html>

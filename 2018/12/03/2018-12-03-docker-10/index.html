@@ -1,0 +1,240 @@
+<!DOCTYPE html><html lang="lang"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="Docker기반 Redis 구축하기 - (10) Redis Cluster Mode 설정하기"><meta name="keywords" content="Docker"><meta name="author" content="Carrey"><meta name="copyright" content="Carrey"><title>Docker기반 Redis 구축하기 - (10) Redis Cluster Mode 설정하기 | Carrey`s 기술블로그</title><link rel="shortcut icon" href="../../../../melody-favicon.ico"><link rel="stylesheet" href="../../../../css/index.css?version=1.9.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.9.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  hexoVersion: '6.0.0'
+} </script><meta name="generator" content="Hexo 6.0.0"></head><body><canvas class="fireworks"></canvas><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="Toggle article">Toggle site</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%EB%93%A4%EC%96%B4%EA%B0%80%EB%A9%B0"><span class="toc-number">1.</span> <span class="toc-text">들어가며</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EA%B8%B0%EC%A1%B4%EC%97%90-%EC%84%A4%EC%B9%98%ED%95%9C-Redis-%EA%B5%AC%EC%A1%B0%EC%99%80-%EB%8B%A4%EB%A5%B8-%EC%A0%90%EC%9D%80"><span class="toc-number">2.</span> <span class="toc-text">기존에 설치한 Redis 구조와 다른 점은?</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%9D%B4%EC%A0%84-%EC%9E%A5%EA%B9%8C%EC%A7%80-%EC%84%A4%EC%B9%98-%ED%96%88%EB%8D%98-Redis-%EA%B5%AC%EC%A1%B0"><span class="toc-number">2.1.</span> <span class="toc-text">이전 장까지 설치 했던 Redis 구조</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EC%83%88%EB%A1%AD%EA%B2%8C-%EA%B5%AC%EC%84%B1%ED%95%9C-Redis-Cluster"><span class="toc-number">2.2.</span> <span class="toc-text">새롭게 구성한 Redis Cluster</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Cluster-Mode%EC%97%90%EC%84%9C-%EC%A7%80%EC%9B%90%ED%95%98%EB%8A%94-%EA%B8%B0%EB%8A%A5"><span class="toc-number">3.</span> <span class="toc-text">Cluster Mode에서 지원하는 기능</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Fail-Over"><span class="toc-number">3.1.</span> <span class="toc-text">Fail Over</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Auto-Sharding"><span class="toc-number">3.2.</span> <span class="toc-text">Auto Sharding</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis-cli%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-cluster-%EB%AA%85%EB%A0%B9"><span class="toc-number">3.3.</span> <span class="toc-text">Redis-cli를 이용한 cluster 명령</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis-Cluster-%EC%83%9D%EC%84%B1"><span class="toc-number">3.3.1.</span> <span class="toc-text">Redis Cluster 생성</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis-Node-ADD-x2F-REMOVE"><span class="toc-number">3.3.2.</span> <span class="toc-text">Redis Node ADD &#x2F; REMOVE</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Master-%EC%B6%94%EA%B0%80"><span class="toc-number">3.3.3.</span> <span class="toc-text">Master 추가</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Slave-%EC%B6%94%EA%B0%80"><span class="toc-number">3.3.4.</span> <span class="toc-text">Slave 추가</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Node-%EC%A0%9C%EA%B1%B0"><span class="toc-number">3.4.</span> <span class="toc-text">Node 제거</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Re-sharding"><span class="toc-number">3.4.1.</span> <span class="toc-text">Re-sharding</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Redis-%EC%84%A4%EC%B9%98"><span class="toc-number">4.</span> <span class="toc-text">Redis 설치</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-%EC%84%A4%EC%A0%95%ED%95%98%EA%B8%B0"><span class="toc-number">4.1.</span> <span class="toc-text">Docker 설정하기</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#docker-compose-yml"><span class="toc-number">4.1.1.</span> <span class="toc-text">docker-compose.yml</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#docker-entrypoint-sh"><span class="toc-number">4.1.2.</span> <span class="toc-text">docker-entrypoint.sh</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Failover-Test"><span class="toc-number">5.</span> <span class="toc-text">Failover Test</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Sharding-Test"><span class="toc-number">6.</span> <span class="toc-text">Sharding Test</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Node-ADD-x2F-REMOVE"><span class="toc-number">7.</span> <span class="toc-text">Node ADD&#x2F;REMOVE</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Re-Sharding-Test"><span class="toc-number">8.</span> <span class="toc-text">Re-Sharding Test</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%EC%B0%B8%EA%B3%A0"><span class="toc-number">9.</span> <span class="toc-text">참고</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://www.gravatar.com/avatar/3f8583b7b0f0c1ebd249dffad42707af?s=300"></div><div class="author-info__name text-center">Carrey</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="../../../../archives"><span class="pull-left">Articles</span><span class="pull-right">112</span></a><a class="author-info-articles__tags article-meta" href="../../../../tags"><span class="pull-left">Tags</span><span class="pull-right">27</span></a></div></div></div><div id="content-outer"><div class="no-bg" id="top-container"><div id="page-header"><span class="pull-left"> <a id="site-name" href="../../../../index.html">Carrey`s 기술블로그</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span><span class="pull-right"></span></div><div id="post-info"><div id="post-title">Docker기반 Redis 구축하기 - (10) Redis Cluster Mode 설정하기</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2018-12-03</time></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h1 id="들어가며"><a href="#들어가며" class="headerlink" title="들어가며"></a>들어가며</h1><p>이전 장 까지 했던 Redis 구조는 <code>Redis Replication + Redis Sentinel</code>을 이용한 failover 기능을 구성하고 있었습니다. Spring Application에서 Jedis를 이용하여 Application sharding을 구성하여 사용을 하였습니다. 이렇게 Redis를 잘 사용하나 싶었지만, 최근 Spring Cache Abstraction에 대해 공부했었고, Redis Replication + Sharding + Failover를 사용하면서 <strong>Spring-Data-Redis를 사용할 방법이 없을까?</strong> 라는 생각을 하게 되었습니다.</p>
+<p>맨 처음에 회사에서 Spring + Redis연동을 할 때 당연히 Spring-Data-Redis를 염두하고 시작을 했었지만, 어느 블로그에서 <strong>Spring-Data-Redis는 Sharding을 지원하지 않는다!</strong> 라는 절망적인 얘기를 보고 여태까지 Docker를 이용해 설치한 방식에서 Jedis를 이용한 Sharding을 이용하고 있었습니다.</p>
+<p>그 이후, Redis 관련 문서를 쭉 보던 중.. Redis 공식 홈페이지에서 <code>Redis Cluster Mode</code>에 대한 내용을 보게 되었습니다.<br>그 내용을 요약하자면</p>
+<ul>
+<li>Redis3 버전 부터 Redis는 <code>Cluster Mode</code>를 지원한다.</li>
+<li>Cluster Mode에서는 Redis Sentinel의 도움없이 <code>Cluster 자체적으로 Failover를 진행</code>한다.</li>
+<li>Cluster Mode에서는 Master-Slave 노드 구조를 가질 수 있고, <code>노드 간 Replication을 지원</code>한다.</li>
+<li>Cluster Mode에서는 redis key의 HashCode에 대해 CRC16의 16384 modules (key%16384) 연산을 실행<br><code>Auto Sharding을 지원</code>한다 (이야!!!!!!!!!!!!)</li>
+<li>Application Sharding이 필요없기 때문에, <code>Spring-Data-Redis 사용이 가능하다.</code><br>(사실은 이 목적 때문에 Cluster Mode 설치를 해보게 되었습니다.)</li>
+</ul>
+<h1 id="기존에-설치한-Redis-구조와-다른-점은"><a href="#기존에-설치한-Redis-구조와-다른-점은" class="headerlink" title="기존에 설치한 Redis 구조와 다른 점은?"></a>기존에 설치한 Redis 구조와 다른 점은?</h1><h2 id="이전-장까지-설치-했던-Redis-구조"><a href="#이전-장까지-설치-했던-Redis-구조" class="headerlink" title="이전 장까지 설치 했던 Redis 구조"></a>이전 장까지 설치 했던 Redis 구조</h2><p><img src="./Redis-Cluster-archi.PNG" alt="Redis-Cluster-archi"></p>
+<ul>
+<li>Master - Slave -Slave 구조</li>
+<li>Redis Sentinel을 이용한 Master 감시 + Fail over 기능 지원</li>
+<li>HAProxy를 이용한 Master &#x2F; Slave 접근 Port 분리</li>
+</ul>
+<h2 id="새롭게-구성한-Redis-Cluster"><a href="#새롭게-구성한-Redis-Cluster" class="headerlink" title="새롭게 구성한 Redis Cluster"></a>새롭게 구성한 Redis Cluster</h2><p><img src="./new-redis-cluster.PNG" alt="new-redis-cluster"></p>
+<ul>
+<li><p>HAProxy는 5000번 포트만 사용하도록 축소 5001~5005는 불필요하기 때문</p>
+<ul>
+<li>앞으로는 무조건 Master에만 통신</li>
+<li>어떤 Node와 통신하여 데이터를 set하거나 get 할 수 있음 (Cluster Mode 지원)</li>
+<li>어떤 Node에 set하더라도 자동으로 Sharding</li>
+</ul>
+</li>
+<li><p>감시자 역할의 Sentinel 제거 </p>
+<ul>
+<li>Cluster Mode에서는 Redis Node끼리 감시하며 Fail over가 가능합니다.</li>
+</ul>
+</li>
+<li><p>Slave 갯수도 한개로 축소</p>
+</li>
+</ul>
+<h1 id="Cluster-Mode에서-지원하는-기능"><a href="#Cluster-Mode에서-지원하는-기능" class="headerlink" title="Cluster Mode에서 지원하는 기능"></a>Cluster Mode에서 지원하는 기능</h1><h2 id="Fail-Over"><a href="#Fail-Over" class="headerlink" title="Fail Over"></a>Fail Over</h2><p><img src="./new-redis-cluster2.PNG" alt="new-redis-cluster2"></p>
+<ul>
+<li>Redis Cluster Mode에서는 기존의 Sentinel을 별도로 설치하여 감시자 역할을 하는 것에서 벗어나 Cluster 자체적으로 Node들을 감시하고 Failover를 수행 할 수 있습니다.</li>
+<li>Redis Cluster Mode를 사용하기 위해서는 각 Redis Node 별로 2개의 port가 열려 있어야 합니다.<ul>
+<li>6379, 6380 default - Redis 서버 접속 포트</li>
+<li>16379, 16380 default  <code>(접속 포트 + 10000)</code> - Redis Cluster Bus</li>
+</ul>
+</li>
+<li>Cluster Bus를 이용해 Redis Cluster는 각 노드를 감시하고 서버 다운 시 또는 Connection 유실 시 Fail over를 수행합니다.</li>
+<li>Cluster Bus는 노드 간 데이터 교환에 대해 다른 바이너리 프로토콜을 사용합니다.</li>
+<li>이 프로토콜은 대역폭과 처리 시간을 적게 사용하여 노드 간에 정보를 교환하는 데 더 적합합니다.</li>
+</ul>
+<h2 id="Auto-Sharding"><a href="#Auto-Sharding" class="headerlink" title="Auto Sharding"></a>Auto Sharding</h2><ul>
+<li>Redis Cluster Mode에서는 자동으로 Cluster Node에 대한 자동 샤딩을 제공합니다.</li>
+<li>Redis Cluster에는 16384개의 slot이 있으며, slot에 대한 구간 별로 샤딩이 가능합니다.</li>
+<li>slot을 계산하기 위해 redis key의 HashCode에 대해 CRC16의 16384 modules (key%16384) 연산을 실행합니다.<ul>
+<li>[0-5500] 까지는 1번 Redis Node에 저장</li>
+<li>[5501-11000] 까지는 2번 Redis Node에 저장</li>
+<li>[11001-16384] 까지는 3번 Redis Node에 저장</li>
+<li>Redis Node가 scale out 되는 경우 Master Node 수를 나눈 만큼 대역이 할당</li>
+</ul>
+</li>
+</ul>
+<h2 id="Redis-cli를-이용한-cluster-명령"><a href="#Redis-cli를-이용한-cluster-명령" class="headerlink" title="Redis-cli를 이용한 cluster 명령"></a>Redis-cli를 이용한 cluster 명령</h2><p>Redis 5버전에 포함된 redis-cli 버전 부터 cluster 옵션이 추가 되었습니다.<br>Redis 4버전 이하에 대해서는 별도로 Ruby 기반의 프로그램을 설치해야 되서 번거로워서, Redis 5버전으로 설치를 해보았습니다. (성능도 더 좋을라나?ㅎ)</p>
+<h3 id="Redis-Cluster-생성"><a href="#Redis-Cluster-생성" class="headerlink" title="Redis Cluster 생성"></a>Redis Cluster 생성</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">redis-cli --cluster create 192.168.137.101:6379 192.168.137.102:6379 192.168.137.103:6379 \</span><br><span class="line">192.168.137.102:6380 192.168.137.103:6380 192.168.137.101:6380 \</span><br><span class="line">--cluster-replicas 1</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Redis Cluster를 생성하기 위해서는 Master Node가 최소 3개 이상 필요합니다.</li>
+<li>맨 처음 등록하는 3개의 노드가 Master Node</li>
+<li><code>--cluster-replicas 1</code> 의 의미는 각 Slave Node가 1개임을 의미합니다.</li>
+<li>6개의 노드가 등록 되었다면 처음 3개는 Master, 뒤의 3개는 Slave가 됩니다</li>
+<li>Slave는 선언된 순서 대로 Master의 Slave로 등록 됩니다<ul>
+<li>192.168.137.101:6379 -&gt; 192.168.137.102:6380</li>
+<li>192.168.137.102:6379 -&gt; 192.168.137.103:6380</li>
+<li>192.168.137.103:6379 -&gt; 192.168.137.101:6380</li>
+</ul>
+</li>
+</ul>
+<p><img src="./cluster-setting.PNG" alt="cluster-setting"></p>
+<p><img src="./cluster-setting2.PNG" alt="cluster-setting2"></p>
+<p>redis-cli에 접속하여 cluster nodes 명령어로 cluster를 구성하는 nodes에 대한 정보를 조회해 보았습니다.</p>
+<p><img src="./cluster-nodes.png" alt="cluster-nodes"></p>
+<h3 id="Redis-Node-ADD-x2F-REMOVE"><a href="#Redis-Node-ADD-x2F-REMOVE" class="headerlink" title="Redis Node ADD &#x2F; REMOVE"></a>Redis Node ADD &#x2F; REMOVE</h3><p>새로운 노드를 추가하는 과정은 기본적으로 2가지입니다.</p>
+<ul>
+<li>새로운 Master를 추가하는 경우</li>
+<li>새로운 Slave를 추가하는 경우</li>
+</ul>
+<h3 id="Master-추가"><a href="#Master-추가" class="headerlink" title="Master 추가"></a>Master 추가</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-cli --cluster add-node 192.168.137.104:6379 192.168.137.101:6379</span><br></pre></td></tr></table></figure>
+<ul>
+<li>위 명령은 cluster에 새로운 노드를 추가하는 명령어입니다.</li>
+<li>192.168.137.101:6379 구성 된 Cluster에 192.168.137.104:6379 추가한다는 명령어입니다.</li>
+<li>cluster를 지정할 때는 master node를 아무거나 지정하면 됩니다. (192.168.137.101~103:6379)</li>
+<li>여기까지 했을 때는 Cluster에 일원이 되어 Cluster로 묶여는지나, <code>실제로 데이터는 저장 되지 않습니다.</code></li>
+<li>hash slot이 할당 되지 않았기 때문에 데이터는 저장되지 않습니다.</li>
+<li><code>re-sharding</code>을 통해 slot의 대역을 할당 받아야 합니다.</li>
+</ul>
+<h3 id="Slave-추가"><a href="#Slave-추가" class="headerlink" title="Slave 추가"></a>Slave 추가</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-cli --cluster add-node 192.168.137.104:6380 192.168.137.101:6379 --cluster-slave</span><br></pre></td></tr></table></figure>
+<ul>
+<li>위 명령은 Redis cluster에 slave를 추가하는 명령어입니다.</li>
+<li>이 경우에는 새롭게 추가된 노드를 <code>복제본의 수가 적은 마스터</code> 나 임의의 마스터에 대한 Slave로 추가됩니다.</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">redis-cli --cluster add-node 192.168.137.104:6380 192.168.137.101:6379 --cluster-slave\</span><br><span class="line">--cluster-master-id 3c3a0c74aae0b56170ccb03a76b60cfe7dc1912e1</span><br></pre></td></tr></table></figure>
+<ul>
+<li>위 명령은 Redis cluster에 slave를 추가하는 명령어입니다.</li>
+<li>이 경우에는 master node를 지정하기 때문에 특정 master-id에 해당하는 master node의 slave로 추가됩니다.</li>
+</ul>
+<h2 id="Node-제거"><a href="#Node-제거" class="headerlink" title="Node 제거"></a>Node 제거</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">redis-cli --cluster del-node 192.168.137.101:6379 `&lt;node-id&gt;`</span><br><span class="line">redis-cli --cluster del-node 192.168.137.101:6379</span><br><span class="line">3c3a0c74aae0b56170ccb03a76b60cfe7dc1912e</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>위 명령은 Redis Cluster의 node를 제거하는 명령어입니다.</li>
+<li>Redis Cluster에 포함된 아무 node를 적어준다 <code>192.168.137.101:6379 는 Redis Cluster 노드 중 하나</code></li>
+<li>node-id는 삭제하고자 하는 node의 id입니다.</li>
+<li>node-id는 cluster nodes 명령어를 통해 검색하여 적어줍니다.</li>
+<li>Slave는 막 지울 수 있습니다!</li>
+<li>하지만 <strong>Master는 노드에 저장된 내용이 하나도 없어야 삭제가 가능합니다.</strong></li>
+<li>지울 수 있는 대안으로는 수동으로 failover를 하여 slave로 만든 다음에 삭제를 하는 방법이 있습니다.</li>
+</ul>
+<h3 id="Re-sharding"><a href="#Re-sharding" class="headerlink" title="Re-sharding"></a>Re-sharding</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-cli --cluster reshard 192.168.137.101:6379</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>위 명령은 현재 cluster에 대한 reshard를 수행하는 명령어입니다.</li>
+<li>cluster내의 master node 아무거나 써주면 자동으로 cluster node를 스캔하여 reshard를 수행합니다.</li>
+<li>resharding 중에도 무중단으로 redis를 사용할 수 있습니다.</li>
+<li>하지만 resharding을 <strong>수행하는 key에 대해서는 lock이 걸립니다.</strong></li>
+<li>만약 resharding 대상이 많은 경우에는 redis 서버가 중지되었다가 다시 시작 될 수 있습니다.</li>
+</ul>
+<h1 id="Redis-설치"><a href="#Redis-설치" class="headerlink" title="Redis 설치"></a>Redis 설치</h1><h2 id="Docker-설정하기"><a href="#Docker-설정하기" class="headerlink" title="Docker 설정하기"></a>Docker 설정하기</h2><h3 id="docker-compose-yml"><a href="#docker-compose-yml" class="headerlink" title="docker-compose.yml"></a>docker-compose.yml</h3><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;3&#x27;</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">   <span class="attr">redis-master:</span></span><br><span class="line">      <span class="attr">image:</span> <span class="string">redis:5.0-alpine</span></span><br><span class="line">      <span class="attr">build:</span></span><br><span class="line">         <span class="attr">context:</span> <span class="string">..</span></span><br><span class="line">         <span class="attr">dockerfile:</span> <span class="string">Dockerfile</span></span><br><span class="line">      <span class="attr">network_mode:</span> <span class="string">&quot;host&quot;</span></span><br><span class="line">      <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">REQUIREPASS=&lt;password&gt;</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">CLIENTHOST=192.168.137.101</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">CLIENTPORT=6379</span></span><br><span class="line">      <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;../../new_redis-data/redis1:/data&quot;</span></span><br><span class="line">      <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line"></span><br><span class="line">   <span class="attr">redis-slave:</span></span><br><span class="line">      <span class="attr">image:</span> <span class="string">redis:5.0-alpine</span></span><br><span class="line">      <span class="attr">build:</span></span><br><span class="line">         <span class="attr">context:</span> <span class="string">..</span></span><br><span class="line">         <span class="attr">dockerfile:</span> <span class="string">Dockerfile</span></span><br><span class="line">      <span class="attr">network_mode:</span> <span class="string">&quot;host&quot;</span></span><br><span class="line">      <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">REQUIREPASS=&lt;password&gt;</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">CLIENTHOST=192.168.137.101</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">CLIENTPORT=6380</span></span><br><span class="line">      <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;../../new_redis-data/redis2:/data&quot;</span></span><br><span class="line">      <span class="attr">restart:</span> <span class="string">always</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>redis-cli의 cluster option을 사용하기 위해 redis:5.0-alpine 버전을 사용하였습니다.</li>
+<li>redis:5.0.0이 RELEASE 버전이지만, Dockerfile에서 sed 명령어 사용 시, <code>Permission denied</code>가 발생하는 버그가 있습니다.</li>
+<li>network_mode 는 <code>host</code>로 설정. <code>Docker Redis는 NAT에 대한 지원을 하지 않습니다.</code></li>
+<li>외부 볼륨 연동을 위해 ..&#x2F;..&#x2F;new_redis-data&#x2F;master 폴더와 docker container 내의 &#x2F;data 폴더를 연동하였습니다.</li>
+<li>container down 시 항상 재시작 하도록 restart policy를 always로 설정 하였습니다.</li>
+</ul>
+<h3 id="docker-entrypoint-sh"><a href="#docker-entrypoint-sh" class="headerlink" title="docker-entrypoint.sh"></a>docker-entrypoint.sh</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line"><span class="built_in">set</span> -e</span><br><span class="line"></span><br><span class="line"><span class="comment">## from redis-5</span></span><br><span class="line">sed -i <span class="string">&quot;s/bind 127.0.0.1/bind <span class="variable">$CLIENTHOST</span> 127.0.0.1/g&quot;</span> /usr/local/bin/redis.conf</span><br><span class="line">sed -i <span class="string">&quot;s/port 6379/port <span class="variable">$CLIENTPORT</span>/g&quot;</span> /usr/local/bin/redis.conf</span><br><span class="line">sed -i <span class="string">&quot;s/# requirepass foobared/requirepass <span class="variable">$REQUIREPASS</span>/g&quot;</span> /usr/local/bin/redis.conf</span><br><span class="line">sed -i <span class="string">&quot;s/# masterauth &lt;master-password&gt;/masterauth <span class="variable">$REQUIREPASS</span>/g&quot;</span> /usr/local/bin/redis.conf</span><br><span class="line">sed -i <span class="string">&quot;s/# cluster-enabled yes/cluster-enabled yes/g&quot;</span> /usr/local/bin/redis.conf</span><br><span class="line">sed -i <span class="string">&quot;s/# cluster-config-file nodes-6379.conf/cluster-config-file nodes.conf/g&quot;</span> /usr/local/bin/redis.conf</span><br><span class="line">sed -i <span class="string">&quot;s/# cluster-node-timeout 15000/cluster-node-timeout 5000/g&quot;</span> /usr/local/bin/redis.conf</span><br><span class="line"></span><br><span class="line"><span class="comment"># first arg is `-f` or `--some-option`</span></span><br><span class="line"><span class="comment"># or first arg is `something.conf`</span></span><br><span class="line"><span class="keyword">if</span> [ <span class="string">&quot;<span class="variable">$&#123;1#-&#125;</span>&quot;</span> != <span class="string">&quot;<span class="variable">$1</span>&quot;</span> ] || [ <span class="string">&quot;<span class="variable">$&#123;1%.conf&#125;</span>&quot;</span> != <span class="string">&quot;<span class="variable">$1</span>&quot;</span> ]; <span class="keyword">then</span></span><br><span class="line">	<span class="built_in">set</span> -- redis-server <span class="string">&quot;<span class="variable">$@</span>&quot;</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># allow the container to be started with `--user`</span></span><br><span class="line"><span class="keyword">if</span> [ <span class="string">&quot;<span class="variable">$1</span>&quot;</span> = <span class="string">&#x27;redis-server&#x27;</span> -a <span class="string">&quot;<span class="subst">$(id -u)</span>&quot;</span> = <span class="string">&#x27;0&#x27;</span> ]; <span class="keyword">then</span></span><br><span class="line">	<span class="built_in">chown</span> -R redis .</span><br><span class="line">    <span class="built_in">exec</span> su-exec redis <span class="string">&quot;<span class="variable">$@</span>&quot;</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">exec</span> <span class="string">&quot;<span class="variable">$@</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>sed명령어를 통해 container내의 redis.conf파일을 치환<br>   <code>치환자에 대한 설정은 docker-compose.yml &gt; environment에 등록</code><ul>
+<li>bind 옵션에 대해 CLINET IP를 설정</li>
+<li>port도 기본 6379 port에서 6379, 6380으로 치환하였습니다.</li>
+<li>requirepass도 설정</li>
+<li>masterauth도 requirepass와 동일하게 설정</li>
+<li>cluster-mode를 사용하기 위해 <code>cluster-enable yes</code>로 설정</li>
+<li>cluster에 대한 로그를 볼 수 있도록 <code>cluster-config-file nodes.conf</code> conf 파일 지정 (여기에 로그 생성)</li>
+<li>cluster failover를 위해 <code>cluster-node-timeout</code>을 5초로 지정</li>
+</ul>
+</li>
+</ul>
+<h1 id="Failover-Test"><a href="#Failover-Test" class="headerlink" title="Failover Test"></a>Failover Test</h1><p>테스트를 위해 192.168.137.101:6379 (master1)에 대한 docker container를 죽여보았습니다.</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker stop 030bb02a246e</span><br></pre></td></tr></table></figure>
+
+<p><img src="./master-down.png" alt="master-down"></p>
+<ul>
+<li>docker ps -a 명령으로 볼 때 192.168.137.101:6379 (master1)에 대한 docker container가 다운!!</li>
+</ul>
+<p><img src="./failover-1.png" alt="failover-1"></p>
+<ul>
+<li><p>5초 정도 지나니 무슨 로그가 올라왔습니다. epoch vote라는 로그를 보아하니 새로운 마스터를 선출하였습니다.</p>
+</li>
+<li><p>redis-cli를 통해 <code>cluster nodes</code>를 검색해 보니 <code>192.168.137.101:6379 (master1)</code>의 slave였던 <code>192.168.137.103:6380 (slave1)</code> 가 새로운 master로 promote 되었습니다.</p>
+</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker start 030bb02a246e</span><br></pre></td></tr></table></figure>
+<ul>
+<li>docker start 명령으로 다시 container를 살려보았습니다.</li>
+</ul>
+<p><img src="./failover2.png" alt="failover2"></p>
+<ul>
+<li>기존의 master는 slave로 편입되어 정상적인 cluster가 작동하고 있습니다.</li>
+</ul>
+<h1 id="Sharding-Test"><a href="#Sharding-Test" class="headerlink" title="Sharding Test"></a>Sharding Test</h1><p><img src="./cluster-keys-command.PNG" alt="cluster-keys-command"></p>
+<ul>
+<li>redis-cli를 통해 foo1~foo10까지 key를 만들어 set해 보았습니다.</li>
+<li>set할때 마다 16384 modules 연산을 통해 slot별로 sharding이 되는 모습입니다.</li>
+<li>각 redis-cli에서 keys * 명령을 통해 조회 해보면 고르게 sharding이 되어있음을 확인 할 수 있습니다.</li>
+</ul>
+<h1 id="Node-ADD-x2F-REMOVE"><a href="#Node-ADD-x2F-REMOVE" class="headerlink" title="Node ADD&#x2F;REMOVE"></a>Node ADD&#x2F;REMOVE</h1><p><img src="./cluster-add.PNG" alt="cluster-add"></p>
+<ul>
+<li>신규 Master node (192.168.137.104:6379)를 새로이 추가해 보았습니다.</li>
+</ul>
+<p><img src="./cluster-add-node-slave.PNG" alt="cluster-add-node-slave"><br><img src="./slave-add-result.png" alt="slave-add-result"></p>
+<ul>
+<li>신규 Slave node (192.168.137.104:6380)를 새로이 추가해 보았습니다.</li>
+<li>신규 Master node (192.168.137.104:6379)의 slave로 추가해보았다.</li>
+<li>정상적으로 모두 등록 되었다.</li>
+</ul>
+<p><img src="./slave-del.png" alt="slave-del"></p>
+<ul>
+<li>slave를 삭제해 보았습니다.</li>
+</ul>
+<p><img src="./slave-del-result.png" alt="slave-del-result"></p>
+<ul>
+<li>slave가 정상적으로 삭제 되었습니다.</li>
+</ul>
+<p><img src="./master-del-fail.png" alt="master-del-fail"></p>
+<ul>
+<li>master 삭제를 시도해 보았습니다.</li>
+<li>slot이 비어있지 않아 삭제가 불가능 했습니다.</li>
+<li>이런 경우 reshard를 통해 slot을 비워준뒤에 삭제 해야합니다.</li>
+</ul>
+<p><img src="./sub-reshard.PNG" alt="sub-reshard"></p>
+<ul>
+<li>reshard 명령을 다시 실행 합니다.</li>
+<li><code>What is the receiving node ID?</code> 라는 질문에 192.168.137.101:6379 node-id를 지정합니다.</li>
+<li><code>Source node</code> 항목에는 우리가 삭제할 192.168.137.104:6379 node-id를 지정합니다.</li>
+<li><code>source node</code> 두번째 항목에는 done을 입력하여 Source node 항목을 모두 입력하였음을 선언해 줍니다.</li>
+</ul>
+<p><img src="./master-del-success.png" alt="master-del-success"></p>
+<ul>
+<li>다시 master를 삭제하니 정상적으로 삭제가 됩니다.</li>
+</ul>
+<h1 id="Re-Sharding-Test"><a href="#Re-Sharding-Test" class="headerlink" title="Re-Sharding Test"></a>Re-Sharding Test</h1><p><img src="./reshard-test-1-3831920.PNG" alt="reshard-test-1"></p>
+<ul>
+<li>새롭게 추가한 노드에 reshard를 해보았습니다.</li>
+<li>4000개정도를 새로이 옮긴다고 조건을 주고 Resharding을 실행 해보았습니다.<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Do you want to proceed with the proposed reshard plan (yes/no)? yes</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p><img src="./reshard-test-2-3832564.PNG" alt="reshard-test-2"></p>
+<p><img src="./reshard-test-3.PNG" alt="reshard-test-3"></p>
+<ul>
+<li>정상적으로 resharding이 되어 데이터가 4개의 node에 고르게 분포 되었습니다.</li>
+</ul>
+<h1 id="참고"><a href="#참고" class="headerlink" title="참고"></a>참고</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://redis.io/topics/cluster-tutorial">https://redis.io/topics/cluster-tutorial</a></li>
+</ul>
+</div></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">Carrey</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://jaehun2841.github.io/2018/12/03/2018-12-03-docker-10/">https://jaehun2841.github.io/2018/12/03/2018-12-03-docker-10/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="post-meta__tag-list"><a class="post-meta__tags" href="../../../../tags/Docker/">Docker</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="../../07/2018-12-07-docker-11/"><i class="fa fa-chevron-left">  </i><span>Docker기반 Redis 구축하기 - (11) Redis-Cli Docker로 사용하기</span></a></div><div class="next-post pull-right"><a href="../2018-12-03-redis-stats/"><span>Docker기반 Redis 구축하기 - (9) Redis-Stats을 이용한 모니터링</span><i class="fa fa-chevron-right"></i></a></div></nav><div id="disqus_thread"></div><script>var unused = null;
+var disqus_config = function () {
+  this.page.url = 'https://jaehun2841.github.io/2018/12/03/2018-12-03-docker-10/';
+  this.page.identifier = '2018/12/03/2018-12-03-docker-10/';
+  this.page.title = 'Docker기반 Redis 구축하기 - (10) Redis Cluster Mode 설정하기';
+}
+var d = document, s = d.createElement('script');
+s.src = "https://" + 'Carrey' +".disqus.com/embed.js";
+s.setAttribute('data-timestamp', '' + +new Date());
+(d.head || d.body).appendChild(s);</script></div></div><footer><div class="layout" id="footer"><div class="copyright">&copy;2018 - 2022 By Carrey</div><div class="framework-info"><span>Driven - </span><a target="_blank" rel="noopener" href="http://hexo.io"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a target="_blank" rel="noopener" href="https://github.com/Molunerfinn/hexo-theme-melody"><span>Melody</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="../../../../js/utils.js?version=1.9.0"></script><script src="../../../../js/fancybox.js?version=1.9.0"></script><script src="../../../../js/sidebar.js?version=1.9.0"></script><script src="../../../../js/copy.js?version=1.9.0"></script><script src="../../../../js/fireworks.js?version=1.9.0"></script><script src="../../../../js/transition.js?version=1.9.0"></script><script src="../../../../js/scroll.js?version=1.9.0"></script><script src="../../../../js/head.js?version=1.9.0"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script></body></html>
