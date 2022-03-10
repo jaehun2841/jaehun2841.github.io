@@ -133,7 +133,7 @@ avatar: https://www.gravatar.com/avatar/3f8583b7b0f0c1ebd249dffad42707af?s=300
 
 top_img: true # false or url of img
 
-top_img_height: 30 # best range: 60 - 100
+top_img_height: 45 # best range: 60 - 100
 
 post_meta:
   date_type: created # created or updated
