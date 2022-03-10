@@ -269,7 +269,7 @@ spring cloud bus를 사용하는 클라이언트의 destination 이름은 아래
 프로퍼티 정보 갱신 후 클라이언트 1개에 /actuator/busrefresh를 호출하기가 어렵습니다.  
 어떻게 하면 좋을까요?
 
-이런 고통과 고민을 덜어주기 위해 다음 글에서는 Spring Cloud Config Monitor라는 기능을 소개합니다.
+이런 고통과 고민을 덜어주기 위해 다음 글에서는 [Spring Cloud Config Monitor](../2022-03-11-spring-cloud-config-monitor)라는 기능을 소개합니다.
 
 # 참고
 
