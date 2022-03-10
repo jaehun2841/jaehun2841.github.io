@@ -3,8 +3,12 @@ title: Spring Cloud Config 주기적으로 Polling 하기
 catalog: true
 Categories:
   - Spring
+  - Spring Cloud
+  - Spring Cloud Config
 tags:
   - Spring
+  - Spring Cloud
+  - Spring Cloud Config
 typora-root-url: 2022-03-11-spring-cloud-config-polling
 typora-copy-images-to: 2022-03-11-spring-cloud-config-polling
 date: 2022-03-11 03:12:33
