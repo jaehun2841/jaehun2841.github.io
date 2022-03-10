@@ -43,6 +43,7 @@ pwa:
 
 # Highlight theme
 # ---------------
+# https://molunerfinn.com/hexo-theme-melody-doc/theme-config.html#highlight-theme
 highlight_theme: ocean
 
 code_word_wrap: true #or false

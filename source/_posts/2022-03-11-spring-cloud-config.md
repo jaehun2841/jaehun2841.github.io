@@ -27,9 +27,9 @@ header-img:
 Spring Cloud Config 관련 글은 총 4개의 글로 작성되었습니다.
 
 - **Spring Cloud Config 시작하기**
-- Spring Cloud Bus 시작하기
-- Spring Cloud Config Monitor 시작하기
-- Spring Cloud Config 주기적으로 Polling 하기
+- [Spring Cloud Bus 시작하기](../2022-03-11-spring-cloud-bus)
+- [Spring Cloud Config Monitor 시작하기](../2022-03-11-spring-cloud-config-monitor)
+- [Spring Cloud Config 주기적으로 Polling 하기](../2022-03-11-spring-cloud-config-polling)
 
 # Spring Cloud Config란
 
