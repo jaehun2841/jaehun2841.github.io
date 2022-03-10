@@ -81,7 +81,7 @@ theme: melody
 deploy:
   type: git
   repository: git@github.com:jaehun2841/jaehun2841.github.io.git
-  branch: master
+  branch: gh-pages
 
 # Crawler
 sitemap:
